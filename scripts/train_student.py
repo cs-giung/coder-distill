@@ -1,0 +1,462 @@
+import argparse
+import json
+import os
+from datetime import datetime
+
+import deepspeed
+import torch
+import torch.distributed as dist
+import torch.nn.functional as F
+from peft import LoraConfig, TaskType, get_peft_model
+from rich.console import Console
+from rich.progress import (
+    BarColumn,
+    MofNCompleteColumn,
+    Progress,
+    SpinnerColumn,
+    TextColumn,
+    TimeElapsedColumn,
+    TimeRemainingColumn,
+)
+from torch.utils.data import DataLoader, Dataset
+from torch.utils.data.distributed import DistributedSampler
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+progress_console = Console(stderr=True, force_terminal=True)
+
+
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--teacher_jsonl", type=str, required=True)
+    parser.add_argument("--student_jsonl", type=str, required=True)
+    parser.add_argument("--teacher_model", type=str, required=True)
+    parser.add_argument("--student_model", type=str, required=True)
+    parser.add_argument("--tokenizer", type=str, required=True)
+    parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument("--output_dir", type=str, default="checkpoints/train_student")
+    parser.add_argument("--lr", type=float, default=1e-05)
+    parser.add_argument("--batch_size", type=int, default=128)
+    parser.add_argument("--max_length", type=int, default=2048)
+    parser.add_argument("--fwd_kl_student", type=float, default=0.0)
+    parser.add_argument("--rev_kl_student", type=float, default=0.0)
+    parser.add_argument("--fwd_kl_teacher", type=float, default=1.0)
+    parser.add_argument("--rev_kl_teacher", type=float, default=0.0)
+    parser.add_argument("--resume_from_checkpoint", type=str, default=None)
+    parser.add_argument("--use_lora", action="store_true")
+    parser.add_argument("--lora_r", type=int, default=16)
+    parser.add_argument("--lora_alpha", type=int, default=128)
+    parser.add_argument("--lora_dropout", type=float, default=0.05)
+    parser.add_argument(
+        "--local_rank",
+        type=int,
+        default=-1,
+        help="local rank passed from distributed launcher",
+    )
+
+    # Include DeepSpeed arguments
+    parser = deepspeed.add_config_arguments(parser)
+    args = parser.parse_args()
+    return args
+
+
+class GeneratedDataset(Dataset):
+    def __init__(self, data):
+        self.data = data
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        return self.data[idx]
+
+
+def print_fn(log, output_dir):
+    if dist.get_rank() == 0:
+        log_msg = f"{datetime.now()}: {log}\n"
+        print(log_msg, end="", flush=True)
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir, exist_ok=True)
+        with open(os.path.join(output_dir, "console.log"), "a") as f:
+            f.write(log_msg)
+
+
+def load_jsonl(path, limit=None, rank=0):
+    data = []
+    if path and os.path.exists(path):
+        if rank == 0:
+            print(f"Loading data: {path}")
+        with open(path, "r") as f:
+            for line in f:
+                item = json.loads(line)
+                data.append((item["instruction"], item["response"]))
+        if limit:
+            data = data[:limit]
+    return data
+
+
+def main():
+    args = get_args()
+
+    # Initialize Distributed
+    # Get local rank and set device to prevent memory imbalance (context on GPU 0)
+    if args.local_rank == -1:
+        args.local_rank = int(os.environ.get("LOCAL_RANK", -1))
+
+    if args.local_rank != -1:
+        torch.cuda.set_device(args.local_rank)
+
+    deepspeed.init_distributed()
+
+    world_size = dist.get_world_size()
+    rank = dist.get_rank()
+
+    # Calculate Gradient Accumulation Steps
+    need_backward_loss_s = args.fwd_kl_student > 0 or args.rev_kl_student > 0
+    need_backward_loss_t = args.fwd_kl_teacher > 0 or args.rev_kl_teacher > 0
+    assert need_backward_loss_s or need_backward_loss_t
+
+    micro_batch_size = 1
+    gradient_accumulation_steps = args.batch_size // (world_size * micro_batch_size)
+    if need_backward_loss_s and need_backward_loss_t:
+        gradient_accumulation_steps *= 2
+
+    if rank == 0:
+        print_fn(
+            f"world_size={world_size}, "
+            f"micro_batch_size={micro_batch_size}, "
+            f"gradient_accumulation_steps={gradient_accumulation_steps}",
+            args.output_dir,
+        )
+
+    # ------------------------------------------------------------------------ #
+    # Load and Patch DeepSpeed Configs
+    # ------------------------------------------------------------------------ #
+    with open("ds_configs/ds_config_student.json", "r") as f:
+        student_ds_config = json.load(f)
+    with open("ds_configs/ds_config_teacher.json", "r") as f:
+        teacher_ds_config = json.load(f)
+
+    # Patch Student Config
+    student_ds_config["train_batch_size"] = (
+        micro_batch_size * gradient_accumulation_steps * world_size
+    )
+    student_ds_config["train_micro_batch_size_per_gpu"] = micro_batch_size
+    student_ds_config["gradient_accumulation_steps"] = gradient_accumulation_steps
+
+    # Patch Teacher Config
+    teacher_ds_config["train_batch_size"] = (
+        micro_batch_size * gradient_accumulation_steps * world_size
+    )
+    teacher_ds_config["train_micro_batch_size_per_gpu"] = micro_batch_size
+    teacher_ds_config["gradient_accumulation_steps"] = gradient_accumulation_steps
+
+    # ------------------------------------------------------------------------ #
+    # Model Setup
+    # ------------------------------------------------------------------------ #
+    # NOTE: make sure the tokenizer is shared across student and teacher models
+    tokenizer = AutoTokenizer.from_pretrained(args.tokenizer)
+    tokenizer.pad_token = tokenizer.eos_token
+
+    # Student Model
+    student_model = AutoModelForCausalLM.from_pretrained(
+        args.student_model,
+        torch_dtype=torch.bfloat16,
+        attn_implementation="eager",
+    )
+    student_model.resize_token_embeddings(len(tokenizer))
+
+    if args.use_lora:
+        peft_config = LoraConfig(
+            task_type=TaskType.CAUSAL_LM,
+            inference_mode=False,
+            r=args.lora_r,
+            lora_alpha=args.lora_alpha,
+            lora_dropout=args.lora_dropout,
+            target_modules="all-linear",
+        )
+        student_model = get_peft_model(student_model, peft_config)
+    else:
+        # student_model.gradient_checkpointing_enable()
+        pass
+
+    # Teacher Model
+    teacher_model = AutoModelForCausalLM.from_pretrained(
+        args.teacher_model,
+        torch_dtype=torch.bfloat16,
+        attn_implementation="eager",
+    )
+    teacher_model.resize_token_embeddings(len(tokenizer))
+    for p in teacher_model.parameters():
+        p.requires_grad = False
+
+    # Optimizer
+    optimizer = torch.optim.AdamW(
+        student_model.parameters(),
+        lr=args.lr,
+        betas=(0.9, 0.95),
+        eps=1e-08,
+        weight_decay=0.0,
+        fused=True,
+    )
+
+    # ------------------------------------------------------------------------ #
+    # DeepSpeed Initialization
+    # ------------------------------------------------------------------------ #
+    student_engine, optimizer, _, _ = deepspeed.initialize(
+        model=student_model, optimizer=optimizer, config=student_ds_config
+    )
+    teacher_engine, _, _, _ = deepspeed.initialize(
+        model=teacher_model, config=teacher_ds_config
+    )
+
+    # Load Checkpoint if requested
+    if args.resume_from_checkpoint:
+        if rank == 0:
+            print_fn(
+                f"Resuming from checkpoint: {args.resume_from_checkpoint}",
+                args.output_dir,
+            )
+        load_path, _ = student_engine.load_checkpoint(
+            os.path.dirname(args.resume_from_checkpoint),
+            tag="final_state",
+            load_module_strict=False,
+        )
+
+    # ------------------------------------------------------------------------ #
+    # Data Setup
+    # ------------------------------------------------------------------------ #
+    combined_data = [
+        {"instruction": e1, "student_response": e2, "teacher_response": e4}
+        for (e1, e2), (e3, e4) in zip(
+            load_jsonl(args.student_jsonl, limit=args.limit, rank=rank),
+            load_jsonl(args.teacher_jsonl, limit=args.limit, rank=rank),
+        )
+        if e1 == e3
+    ]
+
+    if rank == 0:
+        print_fn(f"Loaded {len(combined_data)} combined samples.", args.output_dir)
+
+    dataset = GeneratedDataset(combined_data)
+    sampler = DistributedSampler(dataset)
+    dloader = DataLoader(
+        dataset, batch_size=micro_batch_size, sampler=sampler, shuffle=False
+    )  # Shuffle handled by sampler
+
+    # ------------------------------------------------------------------------ #
+    # Training Loop
+    # ------------------------------------------------------------------------ #
+    def process_batch_chunk(prompts, source_label, instructions_for_mask):
+        inputs = tokenizer(
+            prompts,
+            return_tensors="pt",
+            padding=True,
+            padding_side="left",
+            max_length=args.max_length,
+            truncation=True,
+        ).to(student_engine.device)  # use engine device
+
+        # Loss Mask logic (same as legacy)
+        prompt_only_texts = []
+        for inst in instructions_for_mask:
+            messages = [{"role": "user", "content": inst}]
+            text = tokenizer.apply_chat_template(
+                messages, tokenize=False, add_generation_prompt=True
+            )
+            prompt_only_texts.append(text)
+
+        prompt_inputs = tokenizer(
+            prompt_only_texts, return_tensors="pt", padding=False, truncation=True
+        )
+
+        loss_mask = torch.zeros_like(inputs.input_ids, dtype=torch.float32)
+
+        for b in range(inputs.input_ids.shape[0]):
+            p_len = len(prompt_inputs.input_ids[b])
+            non_pad_len = torch.sum(inputs.attention_mask[b]).item()
+            pad_len = inputs.input_ids.shape[1] - non_pad_len
+            start_response = pad_len + p_len
+            if start_response < inputs.input_ids.shape[1]:
+                loss_mask[b, start_response:] = 1.0
+
+        loss_mask = loss_mask * inputs.attention_mask.float()
+        loss_mask = loss_mask.to(student_engine.device)
+
+        # Forward pass Teacher
+        with torch.no_grad():
+            teacher_outputs = teacher_engine(**inputs)
+            teacher_logits = teacher_outputs.logits
+
+        # Forward pass Student
+        student_outputs = student_engine(**inputs)
+        student_logits = student_outputs.logits
+
+        teacher_logits_shifted = teacher_logits[:, :-1, :]
+        student_logits_shifted = student_logits[:, :-1, :]
+        loss_mask_shifted = loss_mask[:, 1:]
+
+        # Shifted probabilities
+        teacher_probs = F.softmax(teacher_logits_shifted, dim=-1)
+        teacher_log_probs = F.log_softmax(teacher_logits_shifted, dim=-1)
+        student_log_probs = F.log_softmax(student_logits_shifted, dim=-1)
+        student_probs = F.softmax(student_logits_shifted, dim=-1)
+
+        fwd_kl_pt = torch.sum(
+            teacher_probs * (teacher_log_probs - student_log_probs), dim=-1
+        )
+        rev_kl_pt = torch.sum(
+            student_probs * (student_log_probs - teacher_log_probs), dim=-1
+        )
+
+        fwd_coeff = 0.0
+        rev_coeff = 0.0
+
+        if source_label == "student":
+            fwd_coeff = args.fwd_kl_student
+            rev_coeff = args.rev_kl_student
+        elif source_label == "teacher":
+            fwd_coeff = args.fwd_kl_teacher
+            rev_coeff = args.rev_kl_teacher
+
+        total_loss_map = (fwd_kl_pt * fwd_coeff) + (rev_kl_pt * rev_coeff)
+        masked_loss = total_loss_map * loss_mask_shifted
+        num_valid_tokens = torch.sum(loss_mask_shifted)
+        loss = torch.sum(masked_loss) / (num_valid_tokens + 1e-9)
+
+        return loss, fwd_kl_pt, rev_kl_pt, loss_mask_shifted
+
+    student_engine.train()
+    teacher_engine.eval()
+
+    start_time = datetime.now()
+    if rank == 0:
+        print_fn(f"Training started at {start_time}", args.output_dir)
+
+    global_step = 0
+    if args.resume_from_checkpoint:
+        global_step = student_engine.global_steps
+
+    with Progress(
+        TextColumn("[progress.description]{task.description}"),
+        MofNCompleteColumn(),
+        BarColumn(bar_width=30),
+        TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
+        TimeElapsedColumn(),
+        TimeRemainingColumn(),
+        SpinnerColumn(),
+        console=progress_console,
+        disable=rank != 0,
+    ) as progress:
+        for step, batch_data in progress.track(
+            enumerate(dloader),
+            description="Training",
+            total=len(dloader),
+        ):
+            instructions = batch_data["instruction"]
+            student_resps = batch_data["student_response"]
+            teacher_resps = batch_data["teacher_response"]
+
+            # Student prompts
+            student_prompts = []
+            for inst, resp in zip(instructions, student_resps):
+                messages = [
+                    {"role": "user", "content": inst},
+                    {"role": "assistant", "content": resp},
+                ]
+                student_prompts.append(
+                    tokenizer.apply_chat_template(messages, tokenize=False)
+                )
+
+            # Teacher prompts
+            teacher_prompts = []
+            for inst, resp in zip(instructions, teacher_resps):
+                messages = [
+                    {"role": "user", "content": inst},
+                    {"role": "assistant", "content": resp},
+                ]
+                teacher_prompts.append(
+                    tokenizer.apply_chat_template(messages, tokenize=False)
+                )
+
+            is_log_boundary = (step + 1) % gradient_accumulation_steps == 0
+            do_process_s = need_backward_loss_s or is_log_boundary
+            do_process_t = need_backward_loss_t or is_log_boundary
+
+            # --- Micro-Step 1: Student Data ---
+            if do_process_s:
+                with torch.set_grad_enabled(need_backward_loss_s):
+                    loss_s, fwd_s, rev_s, mask_s = process_batch_chunk(
+                        student_prompts, "student", instructions
+                    )
+                if need_backward_loss_s:
+                    student_engine.backward(loss_s)
+                    student_engine.step()
+
+            # --- Micro-Step 2: Teacher Data ---
+            if do_process_t:
+                with torch.set_grad_enabled(need_backward_loss_t):
+                    loss_t, fwd_t, rev_t, mask_t = process_batch_chunk(
+                        teacher_prompts, "teacher", instructions
+                    )
+                if need_backward_loss_t:
+                    student_engine.backward(loss_t)
+                    student_engine.step()
+
+            # Logging logic
+            current_global_step = student_engine.global_steps
+            if current_global_step > global_step:
+                global_step = current_global_step
+                # Log
+                if rank == 0:
+
+                    def mean_metric(val_map, mask):
+                        valid_mask = mask > 0
+                        if valid_mask.sum() > 0:
+                            return (
+                                val_map * valid_mask.float()
+                            ).sum() / valid_mask.sum()
+                        return 0.0
+
+                    m_fwd_s = mean_metric(fwd_s, mask_s).item()
+                    m_rev_s = mean_metric(rev_s, mask_s).item()
+                    m_fwd_t = mean_metric(fwd_t, mask_t).item()
+                    m_rev_t = mean_metric(rev_t, mask_t).item()
+
+                    log_str = f"[{datetime.now() - start_time}] Step {global_step}"
+                    log_str += f" | Loss(S): {loss_s.item():.3e}"
+                    log_str += f" | Loss(T): {loss_t.item():.3e}"
+                    log_str += f" | fwd_S: {m_fwd_s:.3e} | rev_S: {m_rev_s:.3e}"
+                    log_str += f" | fwd_T: {m_fwd_t:.3e} | rev_T: {m_rev_t:.3e}"
+                    print_fn(log_str, args.output_dir)
+
+    # Save
+    if rank == 0:
+        print_fn("Training finished. Saving...", args.output_dir)
+
+    # 1. Save DeepSpeed Checkpoint (for resuming)
+    # This saves to args.output_dir/final_state
+    student_engine.save_checkpoint(args.output_dir, tag="final_state")
+    if rank == 0:
+        print_fn(
+            f"Saved DeepSpeed checkpoint to {os.path.join(args.output_dir, 'final_state')}",
+            args.output_dir,
+        )
+
+    # 2. Save HF Model (for evaluation/generation)
+    # Ensure all processes verify save is done if needed, but save_pretrained is usually rank 0 only or handles it.
+    # But wait, student_engine is wrapped.
+    if rank == 0:
+        final_model_path = os.path.join(args.output_dir, "final_model")
+        # Unwrapped model via DeepSpeed
+        # For ZeRO-2, module access is fine.
+        unwrapped_model = student_engine.module
+        unwrapped_model.save_pretrained(final_model_path)
+        tokenizer.save_pretrained(final_model_path)
+        print_fn(f"Saved HF model to {final_model_path}", args.output_dir)
+
+    # Wait for all processes to ensure saving is complete before exiting (important for loop scripts)
+    dist.barrier()
+
+
+if __name__ == "__main__":
+    main()
