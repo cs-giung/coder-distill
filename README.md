@@ -13,7 +13,7 @@ p_{\text{tea}}(\cdot|x,y_{<t})
 \parallel
 p_{\text{stu}}(\cdot|x,y_{<t}))$$
 
-1. For $x \sim \mathcal{D}$: We utilize the first 32k samples from nickrosh/Evol-Instruct-Code-80k-v1 and meta-math/MetaMathQA. Refer to data/32k/code.jsonl and data/32k/math.jsonl for the specific instances.
+1. For $x \sim \mathcal{D}$: We utilize the first 32k samples from `nickrosh/Evol-Instruct-Code-80k-v1` and `meta-math/MetaMathQA`. Refer to `data/32k/code.jsonl` and `data/32k/math.jsonl` for the specific instances.
 
 2. For $y_{1:T} \sim p_{\text{gen}}(\cdot | x)$: We distinguish between two distillation settings based on the generator:
     - Knowledge Distillation (KD): $p_{\text{gen}}$ is the teacher model $p_{\text{tea}}$.
