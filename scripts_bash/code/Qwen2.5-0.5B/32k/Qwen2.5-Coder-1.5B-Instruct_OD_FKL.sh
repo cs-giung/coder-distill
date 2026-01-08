@@ -98,7 +98,7 @@ do
         --tensor_parallel_size $TENSOR_PARALLEL_SIZE \
         --seed $epoch
     
-    CURRENT_TEACHER_JSONL="data/32k/code/42/$epoch/$TEACHER_MODEL.jsonl"
+    CURRENT_TEACHER_JSONL="data/32k/code/$epoch/$TEACHER_MODEL.jsonl"
 
 done
 
