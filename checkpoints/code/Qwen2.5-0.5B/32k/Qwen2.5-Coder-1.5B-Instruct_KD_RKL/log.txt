@@ -1,0 +1,28 @@
+========================================
+Epoch 0: Distillation Training
+Student Data: data/32k/code/42/checkpoints/code/Qwen2.5-0.5B/init.jsonl
+Teacher Data: data/32k/code/42/Qwen/Qwen2.5-Coder-1.5B-Instruct.jsonl
+========================================
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-08 15:58:52.210671: world_size=2, micro_batch_size=1, gradient_accumulation_steps=64
+Before initializing optimizer states
+MA 1.84 GB         Max_MA 2.3 GB         CA 2.31 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 24.67 GB, percent = 6.5%
+After initializing optimizer states
+MA 1.84 GB         Max_MA 2.76 GB         CA 3.23 GB         Max_CA 3 GB 
+CPU Virtual Memory:  used = 24.38 GB, percent = 6.5%
+After initializing ZeRO optimizer
+MA 1.84 GB         Max_MA 1.84 GB         CA 3.23 GB         Max_CA 3 GB 
+CPU Virtual Memory:  used = 24.37 GB, percent = 6.5%
+DeepSpeedZeRoOffload initialize [begin]
+MA 4.72 GB         Max_MA 4.72 GB         CA 4.85 GB         Max_CA 5 GB 
+CPU Virtual Memory:  used = 23.96 GB, percent = 6.3%
+Parameter Offload - Persistent parameters statistics: param_count = 141, numel = 144896
+DeepSpeedZeRoOffload initialize [end]
+MA 3.28 GB         Max_MA 4.93 GB         CA 5.07 GB         Max_CA 5 GB 
+CPU Virtual Memory:  used = 23.98 GB, percent = 6.3%
+Loading data: data/32k/code/42/checkpoints/code/Qwen2.5-0.5B/init.jsonl
+Loading data: data/32k/code/42/Qwen/Qwen2.5-Coder-1.5B-Instruct.jsonl
+2026-01-08 15:59:04.765325: Loaded 32768 combined samples.
+2026-01-08 15:59:04.769188: Training started at 2026-01-08 15:59:04.769171
