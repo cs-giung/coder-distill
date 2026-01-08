@@ -31,7 +31,6 @@ def get_args():
     parser.add_argument("--student_jsonl", type=str, required=True)
     parser.add_argument("--teacher_model", type=str, required=True)
     parser.add_argument("--student_model", type=str, required=True)
-    parser.add_argument("--tokenizer", type=str, required=True)
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--output_dir", type=str, default="checkpoints/train_student")
     parser.add_argument("--lr", type=float, default=1e-05)
@@ -154,7 +153,11 @@ def main():
     # Model Setup
     # ------------------------------------------------------------------------ #
     # NOTE: make sure the tokenizer is shared across student and teacher models
-    tokenizer = AutoTokenizer.from_pretrained(args.tokenizer)
+    assert (
+        AutoTokenizer.from_pretrained(args.teacher_model).vocab
+        == AutoTokenizer.from_pretrained(args.student_model).vocab
+    )
+    tokenizer = AutoTokenizer.from_pretrained(args.student_model)
     tokenizer.pad_token = tokenizer.eos_token
 
     # Student Model
