@@ -1,0 +1,51 @@
+========================================
+Epoch 0: Evaluation
+Model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+========================================
+humaneval (base tests)
+pass@1:	0.329
+humaneval+ (base + extra tests)
+pass@1:	0.299
+mbpp (base tests)
+pass@1:	0.392
+mbpp+ (base + extra tests)
+pass@1:	0.328
+
+========================================
+Epoch 1: Evaluation
+Model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+========================================
+humaneval (base tests)
+pass@1:	0.366
+humaneval+ (base + extra tests)
+pass@1:	0.305
+mbpp (base tests)
+pass@1:	0.413
+mbpp+ (base + extra tests)
+pass@1:	0.349
+
+========================================
+Epoch 2: Evaluation
+Model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+========================================
+humaneval (base tests)
+pass@1:	0.341
+humaneval+ (base + extra tests)
+pass@1:	0.293
+mbpp (base tests)
+pass@1:	0.370
+mbpp+ (base + extra tests)
+pass@1:	0.307
+
+========================================
+Epoch 3: Evaluation
+Model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+========================================
+humaneval (base tests)
+pass@1:	0.360
+humaneval+ (base + extra tests)
+pass@1:	0.317
+mbpp (base tests)
+pass@1:	0.376
+mbpp+ (base + extra tests)
+pass@1:	0.304

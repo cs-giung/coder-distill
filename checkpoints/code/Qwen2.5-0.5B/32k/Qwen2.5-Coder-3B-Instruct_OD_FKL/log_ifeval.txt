@@ -1,0 +1,43 @@
+========================================
+Epoch 0: Evaluation
+Model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_FKL/epoch_0/final_model
+========================================
+|Tasks |Version|Filter|n-shot|        Metric         |   |Value |   |Stderr|
+|------|------:|------|-----:|-----------------------|---|-----:|---|------|
+|ifeval|      4|none  |     0|inst_level_loose_acc   |↑  |0.3177|±  |   N/A|
+|      |       |none  |     0|inst_level_strict_acc  |↑  |0.2986|±  |   N/A|
+|      |       |none  |     0|prompt_level_loose_acc |↑  |0.1941|±  |0.0170|
+|      |       |none  |     0|prompt_level_strict_acc|↑  |0.1738|±  |0.0163|
+
+========================================
+Epoch 1: Evaluation
+Model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_FKL/epoch_1/final_model
+========================================
+|Tasks |Version|Filter|n-shot|        Metric         |   |Value |   |Stderr|
+|------|------:|------|-----:|-----------------------|---|-----:|---|------|
+|ifeval|      4|none  |     0|inst_level_loose_acc   |↑  |0.3273|±  |   N/A|
+|      |       |none  |     0|inst_level_strict_acc  |↑  |0.2686|±  |   N/A|
+|      |       |none  |     0|prompt_level_loose_acc |↑  |0.1904|±  |0.0169|
+|      |       |none  |     0|prompt_level_strict_acc|↑  |0.1460|±  |0.0152|
+
+========================================
+Epoch 2: Evaluation
+Model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_FKL/epoch_2/final_model
+========================================
+|Tasks |Version|Filter|n-shot|        Metric         |   |Value |   |Stderr|
+|------|------:|------|-----:|-----------------------|---|-----:|---|------|
+|ifeval|      4|none  |     0|inst_level_loose_acc   |↑  |0.3153|±  |   N/A|
+|      |       |none  |     0|inst_level_strict_acc  |↑  |0.2950|±  |   N/A|
+|      |       |none  |     0|prompt_level_loose_acc |↑  |0.2126|±  |0.0176|
+|      |       |none  |     0|prompt_level_strict_acc|↑  |0.1867|±  |0.0168|
+
+========================================
+Epoch 3: Evaluation
+Model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_FKL/epoch_3/final_model
+========================================
+|Tasks |Version|Filter|n-shot|        Metric         |   |Value |   |Stderr|
+|------|------:|------|-----:|-----------------------|---|-----:|---|------|
+|ifeval|      4|none  |     0|inst_level_loose_acc   |↑  |0.3070|±  |   N/A|
+|      |       |none  |     0|inst_level_strict_acc  |↑  |0.2878|±  |   N/A|
+|      |       |none  |     0|prompt_level_loose_acc |↑  |0.1904|±  |0.0169|
+|      |       |none  |     0|prompt_level_strict_acc|↑  |0.1738|±  |0.0163|

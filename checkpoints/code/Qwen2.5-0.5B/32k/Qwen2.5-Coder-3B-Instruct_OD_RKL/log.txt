@@ -1,0 +1,1139 @@
+========================================
+Epoch 0: Distillation Training
+Student Data: /mnt/home2/giung2/coder-distill/data/Qwen/Qwen2.5-0.5B.jsonl
+Teacher Data: /mnt/home2/giung2/coder-distill/data/Qwen/Qwen2.5-Coder-3B-Instruct.jsonl
+========================================
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-03 17:03:17.028949: world_size=4, micro_batch_size=1, gradient_accumulation_steps=32
+Before initializing optimizer states
+MA 1.38 GB         Max_MA 1.61 GB         CA 1.62 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 39.72 GB, percent = 10.5%
+After initializing optimizer states
+MA 1.38 GB         Max_MA 1.84 GB         CA 2.08 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 39.73 GB, percent = 10.5%
+After initializing ZeRO optimizer
+MA 1.38 GB         Max_MA 1.38 GB         CA 2.08 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 39.71 GB, percent = 10.5%
+DeepSpeedZeRoOffload initialize [begin]
+MA 7.22 GB         Max_MA 7.22 GB         CA 7.35 GB         Max_CA 7 GB 
+CPU Virtual Memory:  used = 39.17 GB, percent = 10.4%
+Parameter Offload - Persistent parameters statistics: param_count = 181, numel = 241664
+DeepSpeedZeRoOffload initialize [end]
+MA 2.83 GB         Max_MA 7.36 GB         CA 7.5 GB         Max_CA 7 GB 
+CPU Virtual Memory:  used = 39.56 GB, percent = 10.5%
+Loading data: /mnt/home2/giung2/coder-distill/data/Qwen/Qwen2.5-0.5B.jsonl
+Loading data: /mnt/home2/giung2/coder-distill/data/Qwen/Qwen2.5-Coder-3B-Instruct.jsonl
+2026-01-03 17:03:36.121424: Loaded 32768 combined samples.
+2026-01-03 17:03:36.126523: Training started at 2026-01-03 17:03:36.126507
+2026-01-03 21:18:08.297606: Training finished. Saving...
+2026-01-03 21:18:20.661575: Saved DeepSpeed checkpoint to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_state
+2026-01-03 21:18:24.058312: Saved HF model to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+========================================
+Epoch 0: Evaluation
+Model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+========================================
+Greedy decoding ON (--greedy): setting bs=1, n_samples=1, temperature=0
+Initializing a decoder model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model ...
+INFO 01-03 21:18:44 [utils.py:253] non-default args: {'dtype': 'bfloat16', 'max_model_len': 2048, 'tensor_parallel_size': 2, 'enable_prefix_caching': True, 'disable_log_stats': True, 'model': '/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model'}
+INFO 01-03 21:18:44 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-03 21:18:44 [model.py:1661] Using max model len 2048
+INFO 01-03 21:18:50 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m INFO 01-03 21:18:51 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model', speculative_config=None, tokenizer='/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=2048, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m WARNING 01-03 21:18:51 [multiproc_executor.py:882] Reducing Torch parallelism from 48 threads to 1 to avoid unnecessary CPU contention. Set OMP_NUM_THREADS in the external environment to tune this value as needed.
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m INFO 01-03 21:18:53 [parallel_state.py:1203] world_size=2 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:35513 backend=nccl
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m INFO 01-03 21:18:53 [parallel_state.py:1203] world_size=2 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:35513 backend=nccl
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m INFO 01-03 21:18:53 [pynccl.py:111] vLLM is using nccl==2.27.5
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m WARNING 01-03 21:18:53 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m WARNING 01-03 21:18:53 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m WARNING 01-03 21:18:53 [custom_all_reduce.py:165] Custom allreduce is disabled because your platform lacks GPU P2P capability or P2P test failed. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m WARNING 01-03 21:18:53 [custom_all_reduce.py:165] Custom allreduce is disabled because your platform lacks GPU P2P capability or P2P test failed. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m INFO 01-03 21:18:54 [parallel_state.py:1411] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m INFO 01-03 21:18:54 [parallel_state.py:1411] rank 1 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 1, EP rank 1
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m [0;36m(Worker_TP0 pid=2768115)[0;0m INFO 01-03 21:18:55 [gpu_model_runner.py:3562] Starting to load model /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model...
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m [0;36m(Worker_TP0 pid=2768115)[0;0m INFO 01-03 21:18:55 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m [0;36m(Worker_TP0 pid=2768115)[0;0m INFO 01-03 21:18:56 [default_loader.py:308] Loading weights took 0.14 seconds
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m [0;36m(Worker_TP0 pid=2768115)[0;0m INFO 01-03 21:18:56 [gpu_model_runner.py:3659] Model loading took 0.4643 GiB memory and 0.468832 seconds
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m [0;36m(Worker_TP0 pid=2768115)[0;0m INFO 01-03 21:19:03 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/7039adbde7/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m [0;36m(Worker_TP0 pid=2768115)[0;0m INFO 01-03 21:19:03 [backends.py:703] Dynamo bytecode transform time: 5.89 s
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m [0;36m(Worker_TP1 pid=2768117)[0;0m INFO 01-03 21:19:05 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m [0;36m(Worker_TP0 pid=2768115)[0;0m INFO 01-03 21:19:05 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m [0;36m(Worker_TP0 pid=2768115)[0;0m INFO 01-03 21:19:06 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 1.60 s
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m [0;36m(Worker_TP0 pid=2768115)[0;0m INFO 01-03 21:19:06 [monitor.py:34] torch.compile takes 7.49 s in total
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m [0;36m(Worker_TP0 pid=2768115)[0;0m INFO 01-03 21:19:08 [gpu_worker.py:375] Available KV cache memory: 19.28 GiB
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m INFO 01-03 21:19:08 [kv_cache_utils.py:1291] GPU KV cache size: 3,370,176 tokens
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m INFO 01-03 21:19:08 [kv_cache_utils.py:1296] Maximum concurrency for 2,048 tokens per request: 1645.59x
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m [0;36m(Worker_TP0 pid=2768115)[0;0m INFO 01-03 21:19:12 [gpu_model_runner.py:4587] Graph capturing finished in 4 secs, took 0.95 GiB
+[0;36m(EngineCore_DP0 pid=2768109)[0;0m INFO 01-03 21:19:12 [core.py:259] init engine (profile, create kv cache, warmup model) took 15.43 seconds
+INFO 01-03 21:19:13 [llm.py:360] Supported tasks: ['generate']
+Sanitized code outputs will be saved to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model/humaneval/mnt--home2--giung2--coder-distill--checkpoints--Qwen2.5-0.5B--32k--Qwen2.5-Coder-3B-Instruct_OD_RKL--epoch_0--final_model_vllm_temp_0.0.jsonl
+Raw outputs will be saved to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model/humaneval/mnt--home2--giung2--coder-distill--checkpoints--Qwen2.5-0.5B--32k--Qwen2.5-Coder-3B-Instruct_OD_RKL--epoch_0--final_model_vllm_temp_0.0.raw.jsonl
+Codegen: HumanEval/0 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/1 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/2 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/3 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/4 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/5 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/6 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/7 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/8 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/9 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/10 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/11 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/12 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/13 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/14 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/15 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/16 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/17 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/18 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/19 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/20 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/21 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/22 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/23 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/24 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/25 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/26 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/27 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/28 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/29 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/30 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/31 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/32 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/33 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/34 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/35 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/36 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/37 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/38 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/39 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/40 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/41 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/42 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/43 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/44 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/45 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/46 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/47 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/48 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/49 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/50 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/51 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/52 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/53 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/54 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/55 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/56 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/57 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/58 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/59 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/60 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/61 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/62 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/63 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/64 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/65 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/66 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/67 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/68 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/69 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/70 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/71 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/72 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/73 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/74 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/75 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/76 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/77 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/78 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/79 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/80 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/81 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/82 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/83 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/84 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/85 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/86 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/87 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/88 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/89 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/90 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/91 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/92 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/93 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/94 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/95 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/96 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/97 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/98 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/99 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/100 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/101 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/102 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/103 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/104 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/105 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/106 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/107 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/108 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/109 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/110 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/111 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/112 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/113 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/114 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/115 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/116 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/117 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/118 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/119 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/120 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/121 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/122 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/123 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/124 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/125 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/126 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/127 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/128 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/129 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/130 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/131 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/132 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/133 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/134 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/135 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/136 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/137 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/138 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/139 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/140 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/141 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/142 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/143 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/144 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/145 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/146 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/147 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/148 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/149 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/150 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/151 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/152 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/153 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/154 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/155 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/156 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/157 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/158 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/159 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/160 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/161 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/162 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+Codegen: HumanEval/163 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+humaneval •100% ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 164/164 • 0:01:44
+Load from ground-truth from /mnt/home2/giung2/.cache/evalplus/fe585eb4df8c88d844eeb463ea4d0302.pkl
+Reading samples...
+humaneval (base tests)
+pass@1:	0.329
+humaneval+ (base + extra tests)
+pass@1:	0.299
+========================================
+Epoch 0: Generating Data from Student
+Model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model
+========================================
+INFO 01-03 21:21:45 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'tensor_parallel_size': 2, 'disable_log_stats': True, 'model': '/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model'}
+INFO 01-03 21:21:45 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-03 21:21:45 [model.py:1661] Using max model len 32768
+INFO 01-03 21:21:46 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m INFO 01-03 21:21:47 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model', speculative_config=None, tokenizer='/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=32768, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m WARNING 01-03 21:21:47 [multiproc_executor.py:882] Reducing Torch parallelism from 48 threads to 1 to avoid unnecessary CPU contention. Set OMP_NUM_THREADS in the external environment to tune this value as needed.
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m INFO 01-03 21:21:49 [parallel_state.py:1203] world_size=2 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:41547 backend=nccl
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m INFO 01-03 21:21:49 [parallel_state.py:1203] world_size=2 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:41547 backend=nccl
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m INFO 01-03 21:21:49 [pynccl.py:111] vLLM is using nccl==2.27.5
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m WARNING 01-03 21:21:49 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m WARNING 01-03 21:21:49 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m WARNING 01-03 21:21:49 [custom_all_reduce.py:165] Custom allreduce is disabled because your platform lacks GPU P2P capability or P2P test failed. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m WARNING 01-03 21:21:49 [custom_all_reduce.py:165] Custom allreduce is disabled because your platform lacks GPU P2P capability or P2P test failed. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m INFO 01-03 21:21:49 [parallel_state.py:1411] rank 1 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 1, EP rank 1
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m INFO 01-03 21:21:49 [parallel_state.py:1411] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m [0;36m(Worker_TP0 pid=2769857)[0;0m INFO 01-03 21:21:50 [gpu_model_runner.py:3562] Starting to load model /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model...
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m [0;36m(Worker_TP0 pid=2769857)[0;0m INFO 01-03 21:21:51 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m [0;36m(Worker_TP0 pid=2769857)[0;0m INFO 01-03 21:21:51 [default_loader.py:308] Loading weights took 0.17 seconds
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m [0;36m(Worker_TP0 pid=2769857)[0;0m INFO 01-03 21:21:52 [gpu_model_runner.py:3659] Model loading took 0.4643 GiB memory and 0.543581 seconds
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m [0;36m(Worker_TP0 pid=2769857)[0;0m INFO 01-03 21:21:58 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/08065fa455/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m [0;36m(Worker_TP0 pid=2769857)[0;0m INFO 01-03 21:21:58 [backends.py:703] Dynamo bytecode transform time: 5.77 s
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m [0;36m(Worker_TP1 pid=2769859)[0;0m INFO 01-03 21:22:00 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m [0;36m(Worker_TP0 pid=2769857)[0;0m INFO 01-03 21:22:00 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m [0;36m(Worker_TP0 pid=2769857)[0;0m INFO 01-03 21:22:01 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 1.51 s
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m [0;36m(Worker_TP0 pid=2769857)[0;0m INFO 01-03 21:22:01 [monitor.py:34] torch.compile takes 7.28 s in total
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m [0;36m(Worker_TP0 pid=2769857)[0;0m INFO 01-03 21:22:03 [gpu_worker.py:375] Available KV cache memory: 19.28 GiB
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m INFO 01-03 21:22:03 [kv_cache_utils.py:1291] GPU KV cache size: 3,370,176 tokens
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m INFO 01-03 21:22:03 [kv_cache_utils.py:1296] Maximum concurrency for 32,768 tokens per request: 102.85x
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m [0;36m(Worker_TP0 pid=2769857)[0;0m INFO 01-03 21:22:07 [gpu_model_runner.py:4587] Graph capturing finished in 4 secs, took 0.95 GiB
+[0;36m(EngineCore_DP0 pid=2769851)[0;0m INFO 01-03 21:22:07 [core.py:259] init engine (profile, create kv cache, warmup model) took 14.77 seconds
+INFO 01-03 21:22:08 [llm.py:360] Supported tasks: ['generate']
+Loaded model /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_model with vLLM (LoRA=False).
+Sampling params: SamplingParams(n=1, presence_penalty=0.0, frequency_penalty=0.0, repetition_penalty=1.0, temperature=1.0, top_p=1.0, top_k=0, min_p=0.0, seed=0, stop=[], stop_token_ids=[], bad_words=[], include_stop_str_in_output=False, ignore_eos=False, max_tokens=1024, min_tokens=0, logprobs=None, prompt_logprobs=None, skip_special_tokens=True, spaces_between_special_tokens=True, truncate_prompt_tokens=None, structured_outputs=None, extra_args=None)
+Generating responses for 32768 prompts...
+Saving 32768 records to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/generated_student.jsonl...
+Done.
+========================================
+Epoch 1: Distillation Training
+Student Data: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/generated_student.jsonl
+Teacher Data: /mnt/home2/giung2/coder-distill/data/32k/0/Qwen/Qwen2.5-Coder-3B-Instruct.jsonl
+========================================
+Resuming from state: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_state
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-03 22:09:52.401067: world_size=4, micro_batch_size=1, gradient_accumulation_steps=32
+Before initializing optimizer states
+MA 1.38 GB         Max_MA 1.61 GB         CA 1.62 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 45.55 GB, percent = 12.1%
+After initializing optimizer states
+MA 1.38 GB         Max_MA 1.84 GB         CA 2.08 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 45.54 GB, percent = 12.1%
+After initializing ZeRO optimizer
+MA 1.38 GB         Max_MA 1.38 GB         CA 2.08 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 45.53 GB, percent = 12.1%
+DeepSpeedZeRoOffload initialize [begin]
+MA 7.22 GB         Max_MA 7.22 GB         CA 7.35 GB         Max_CA 7 GB 
+CPU Virtual Memory:  used = 45.06 GB, percent = 11.9%
+Parameter Offload - Persistent parameters statistics: param_count = 181, numel = 241664
+DeepSpeedZeRoOffload initialize [end]
+MA 2.83 GB         Max_MA 7.36 GB         CA 7.5 GB         Max_CA 7 GB 
+CPU Virtual Memory:  used = 45.51 GB, percent = 12.0%
+2026-01-03 22:10:07.116971: Resuming from checkpoint: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/final_state
+Loading data: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_0/generated_student.jsonl
+Loading data: /mnt/home2/giung2/coder-distill/data/32k/0/Qwen/Qwen2.5-Coder-3B-Instruct.jsonl
+2026-01-03 22:10:10.736650: Loaded 32768 combined samples.
+2026-01-03 22:10:10.741372: Training started at 2026-01-03 22:10:10.741355
+2026-01-04 02:31:39.311082: Training finished. Saving...
+2026-01-04 02:31:49.799744: Saved DeepSpeed checkpoint to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_state
+2026-01-04 02:31:52.883802: Saved HF model to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+========================================
+Epoch 1: Evaluation
+Model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+========================================
+Greedy decoding ON (--greedy): setting bs=1, n_samples=1, temperature=0
+Initializing a decoder model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model ...
+INFO 01-04 02:32:15 [utils.py:253] non-default args: {'dtype': 'bfloat16', 'max_model_len': 2048, 'tensor_parallel_size': 2, 'enable_prefix_caching': True, 'disable_log_stats': True, 'model': '/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model'}
+INFO 01-04 02:32:15 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-04 02:32:15 [model.py:1661] Using max model len 2048
+INFO 01-04 02:32:21 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m INFO 01-04 02:32:21 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model', speculative_config=None, tokenizer='/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=2048, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m WARNING 01-04 02:32:21 [multiproc_executor.py:882] Reducing Torch parallelism from 48 threads to 1 to avoid unnecessary CPU contention. Set OMP_NUM_THREADS in the external environment to tune this value as needed.
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m INFO 01-04 02:32:23 [parallel_state.py:1203] world_size=2 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:58499 backend=nccl
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m INFO 01-04 02:32:23 [parallel_state.py:1203] world_size=2 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:58499 backend=nccl
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m INFO 01-04 02:32:23 [pynccl.py:111] vLLM is using nccl==2.27.5
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m WARNING 01-04 02:32:24 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m WARNING 01-04 02:32:24 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m WARNING 01-04 02:32:24 [custom_all_reduce.py:165] Custom allreduce is disabled because your platform lacks GPU P2P capability or P2P test failed. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m WARNING 01-04 02:32:24 [custom_all_reduce.py:165] Custom allreduce is disabled because your platform lacks GPU P2P capability or P2P test failed. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m INFO 01-04 02:32:24 [parallel_state.py:1411] rank 1 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 1, EP rank 1
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m INFO 01-04 02:32:24 [parallel_state.py:1411] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m [0;36m(Worker_TP0 pid=2877637)[0;0m INFO 01-04 02:32:25 [gpu_model_runner.py:3562] Starting to load model /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model...
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m [0;36m(Worker_TP0 pid=2877637)[0;0m INFO 01-04 02:32:25 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m [0;36m(Worker_TP0 pid=2877637)[0;0m INFO 01-04 02:32:26 [default_loader.py:308] Loading weights took 0.15 seconds
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m [0;36m(Worker_TP0 pid=2877637)[0;0m INFO 01-04 02:32:26 [gpu_model_runner.py:3659] Model loading took 0.4643 GiB memory and 0.530705 seconds
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m [0;36m(Worker_TP0 pid=2877637)[0;0m INFO 01-04 02:32:32 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/5f09b92c80/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m [0;36m(Worker_TP0 pid=2877637)[0;0m INFO 01-04 02:32:32 [backends.py:703] Dynamo bytecode transform time: 5.78 s
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m [0;36m(Worker_TP0 pid=2877637)[0;0m INFO 01-04 02:32:35 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m [0;36m(Worker_TP1 pid=2877639)[0;0m INFO 01-04 02:32:35 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m [0;36m(Worker_TP0 pid=2877637)[0;0m INFO 01-04 02:32:36 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 1.58 s
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m [0;36m(Worker_TP0 pid=2877637)[0;0m INFO 01-04 02:32:36 [monitor.py:34] torch.compile takes 7.36 s in total
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m [0;36m(Worker_TP0 pid=2877637)[0;0m INFO 01-04 02:32:37 [gpu_worker.py:375] Available KV cache memory: 19.28 GiB
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m INFO 01-04 02:32:38 [kv_cache_utils.py:1291] GPU KV cache size: 3,370,176 tokens
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m INFO 01-04 02:32:38 [kv_cache_utils.py:1296] Maximum concurrency for 2,048 tokens per request: 1645.59x
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m [0;36m(Worker_TP0 pid=2877637)[0;0m INFO 01-04 02:32:41 [gpu_model_runner.py:4587] Graph capturing finished in 3 secs, took 0.95 GiB
+[0;36m(EngineCore_DP0 pid=2877631)[0;0m INFO 01-04 02:32:41 [core.py:259] init engine (profile, create kv cache, warmup model) took 14.73 seconds
+INFO 01-04 02:32:42 [llm.py:360] Supported tasks: ['generate']
+Sanitized code outputs will be saved to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model/humaneval/mnt--home2--giung2--coder-distill--checkpoints--Qwen2.5-0.5B--32k--Qwen2.5-Coder-3B-Instruct_OD_RKL--epoch_1--final_model_vllm_temp_0.0.jsonl
+Raw outputs will be saved to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model/humaneval/mnt--home2--giung2--coder-distill--checkpoints--Qwen2.5-0.5B--32k--Qwen2.5-Coder-3B-Instruct_OD_RKL--epoch_1--final_model_vllm_temp_0.0.raw.jsonl
+Codegen: HumanEval/0 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/1 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/2 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/3 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/4 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/5 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/6 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/7 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/8 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/9 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/10 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/11 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/12 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/13 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/14 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/15 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/16 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/17 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/18 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/19 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/20 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/21 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/22 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/23 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/24 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/25 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/26 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/27 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/28 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/29 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/30 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/31 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/32 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/33 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/34 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/35 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/36 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/37 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/38 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/39 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/40 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/41 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/42 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/43 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/44 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/45 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/46 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/47 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/48 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/49 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/50 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/51 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/52 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/53 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/54 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/55 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/56 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/57 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/58 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/59 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/60 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/61 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/62 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/63 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/64 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/65 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/66 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/67 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/68 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/69 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/70 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/71 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/72 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/73 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/74 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/75 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/76 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/77 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/78 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/79 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/80 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/81 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/82 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/83 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/84 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/85 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/86 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/87 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/88 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/89 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/90 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/91 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/92 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/93 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/94 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/95 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/96 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/97 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/98 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/99 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/100 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/101 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/102 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/103 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/104 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/105 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/106 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/107 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/108 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/109 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/110 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/111 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/112 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/113 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/114 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/115 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/116 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/117 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/118 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/119 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/120 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/121 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/122 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/123 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/124 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/125 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/126 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/127 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/128 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/129 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/130 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/131 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/132 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/133 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/134 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/135 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/136 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/137 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/138 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/139 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/140 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/141 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/142 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/143 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/144 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/145 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/146 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/147 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/148 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/149 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/150 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/151 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/152 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/153 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/154 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/155 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/156 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/157 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/158 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/159 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/160 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/161 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/162 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+Codegen: HumanEval/163 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+humaneval •100% ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 164/164 • 0:01:48
+Load from ground-truth from /mnt/home2/giung2/.cache/evalplus/fe585eb4df8c88d844eeb463ea4d0302.pkl
+Reading samples...
+humaneval (base tests)
+pass@1:	0.366
+humaneval+ (base + extra tests)
+pass@1:	0.305
+========================================
+Epoch 1: Generating Data from Student
+Model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model
+========================================
+INFO 01-04 02:35:11 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'tensor_parallel_size': 2, 'disable_log_stats': True, 'model': '/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model'}
+INFO 01-04 02:35:11 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-04 02:35:11 [model.py:1661] Using max model len 32768
+INFO 01-04 02:35:13 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m INFO 01-04 02:35:14 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model', speculative_config=None, tokenizer='/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=32768, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m WARNING 01-04 02:35:14 [multiproc_executor.py:882] Reducing Torch parallelism from 48 threads to 1 to avoid unnecessary CPU contention. Set OMP_NUM_THREADS in the external environment to tune this value as needed.
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m INFO 01-04 02:35:16 [parallel_state.py:1203] world_size=2 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:50147 backend=nccl
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m INFO 01-04 02:35:16 [parallel_state.py:1203] world_size=2 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:50147 backend=nccl
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m INFO 01-04 02:35:16 [pynccl.py:111] vLLM is using nccl==2.27.5
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m WARNING 01-04 02:35:16 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m WARNING 01-04 02:35:16 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m WARNING 01-04 02:35:16 [custom_all_reduce.py:165] Custom allreduce is disabled because your platform lacks GPU P2P capability or P2P test failed. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m WARNING 01-04 02:35:16 [custom_all_reduce.py:165] Custom allreduce is disabled because your platform lacks GPU P2P capability or P2P test failed. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m INFO 01-04 02:35:16 [parallel_state.py:1411] rank 1 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 1, EP rank 1
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m INFO 01-04 02:35:16 [parallel_state.py:1411] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m [0;36m(Worker_TP0 pid=2879239)[0;0m INFO 01-04 02:35:17 [gpu_model_runner.py:3562] Starting to load model /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model...
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m [0;36m(Worker_TP0 pid=2879239)[0;0m INFO 01-04 02:35:18 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m [0;36m(Worker_TP0 pid=2879239)[0;0m INFO 01-04 02:35:18 [default_loader.py:308] Loading weights took 0.34 seconds
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m [0;36m(Worker_TP0 pid=2879239)[0;0m INFO 01-04 02:35:19 [gpu_model_runner.py:3659] Model loading took 0.4643 GiB memory and 0.639181 seconds
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m [0;36m(Worker_TP0 pid=2879239)[0;0m INFO 01-04 02:35:25 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/08977e24ef/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m [0;36m(Worker_TP0 pid=2879239)[0;0m INFO 01-04 02:35:25 [backends.py:703] Dynamo bytecode transform time: 5.89 s
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m [0;36m(Worker_TP1 pid=2879242)[0;0m INFO 01-04 02:35:27 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m [0;36m(Worker_TP0 pid=2879239)[0;0m INFO 01-04 02:35:27 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m [0;36m(Worker_TP0 pid=2879239)[0;0m INFO 01-04 02:35:29 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 1.51 s
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m [0;36m(Worker_TP0 pid=2879239)[0;0m INFO 01-04 02:35:29 [monitor.py:34] torch.compile takes 7.40 s in total
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m [0;36m(Worker_TP0 pid=2879239)[0;0m INFO 01-04 02:35:30 [gpu_worker.py:375] Available KV cache memory: 19.28 GiB
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m INFO 01-04 02:35:30 [kv_cache_utils.py:1291] GPU KV cache size: 3,370,176 tokens
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m INFO 01-04 02:35:30 [kv_cache_utils.py:1296] Maximum concurrency for 32,768 tokens per request: 102.85x
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m [0;36m(Worker_TP0 pid=2879239)[0;0m INFO 01-04 02:35:34 [gpu_model_runner.py:4587] Graph capturing finished in 4 secs, took 0.95 GiB
+[0;36m(EngineCore_DP0 pid=2879232)[0;0m INFO 01-04 02:35:34 [core.py:259] init engine (profile, create kv cache, warmup model) took 14.94 seconds
+INFO 01-04 02:35:35 [llm.py:360] Supported tasks: ['generate']
+Loaded model /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model with vLLM (LoRA=False).
+Sampling params: SamplingParams(n=1, presence_penalty=0.0, frequency_penalty=0.0, repetition_penalty=1.0, temperature=1.0, top_p=1.0, top_k=0, min_p=0.0, seed=1, stop=[], stop_token_ids=[], bad_words=[], include_stop_str_in_output=False, ignore_eos=False, max_tokens=1024, min_tokens=0, logprobs=None, prompt_logprobs=None, skip_special_tokens=True, spaces_between_special_tokens=True, truncate_prompt_tokens=None, structured_outputs=None, extra_args=None)
+Generating responses for 32768 prompts...
+Saving 32768 records to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/generated_student.jsonl...
+Done.
+========================================
+Epoch 2: Distillation Training
+Student Data: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/generated_student.jsonl
+Teacher Data: /mnt/home2/giung2/coder-distill/data/32k/1/Qwen/Qwen2.5-Coder-3B-Instruct.jsonl
+========================================
+Resuming from state: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_state
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-04 03:21:47.448927: world_size=4, micro_batch_size=1, gradient_accumulation_steps=32
+Before initializing optimizer states
+MA 1.38 GB         Max_MA 1.61 GB         CA 1.62 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 21.91 GB, percent = 5.8%
+After initializing optimizer states
+MA 1.38 GB         Max_MA 1.84 GB         CA 2.08 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 21.61 GB, percent = 5.7%
+After initializing ZeRO optimizer
+MA 1.38 GB         Max_MA 1.38 GB         CA 2.08 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 21.6 GB, percent = 5.7%
+DeepSpeedZeRoOffload initialize [begin]
+MA 7.22 GB         Max_MA 7.22 GB         CA 7.35 GB         Max_CA 7 GB 
+CPU Virtual Memory:  used = 20.16 GB, percent = 5.3%
+Parameter Offload - Persistent parameters statistics: param_count = 181, numel = 241664
+DeepSpeedZeRoOffload initialize [end]
+MA 2.83 GB         Max_MA 7.36 GB         CA 7.5 GB         Max_CA 7 GB 
+CPU Virtual Memory:  used = 20.95 GB, percent = 5.5%
+2026-01-04 03:22:01.509036: Resuming from checkpoint: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_state
+Loading data: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/generated_student.jsonl
+Loading data: /mnt/home2/giung2/coder-distill/data/32k/1/Qwen/Qwen2.5-Coder-3B-Instruct.jsonl
+2026-01-04 03:22:06.215581: Loaded 32768 combined samples.
+2026-01-04 03:22:06.220047: Training started at 2026-01-04 03:22:06.220037
+2026-01-04 07:41:58.974495: Training finished. Saving...
+2026-01-04 07:42:09.941210: Saved DeepSpeed checkpoint to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_state
+2026-01-04 07:42:13.321274: Saved HF model to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+========================================
+Epoch 2: Evaluation
+Model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+========================================
+Greedy decoding ON (--greedy): setting bs=1, n_samples=1, temperature=0
+Initializing a decoder model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model ...
+INFO 01-04 07:42:33 [utils.py:253] non-default args: {'dtype': 'bfloat16', 'max_model_len': 2048, 'tensor_parallel_size': 2, 'enable_prefix_caching': True, 'disable_log_stats': True, 'model': '/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model'}
+INFO 01-04 07:42:33 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-04 07:42:33 [model.py:1661] Using max model len 2048
+INFO 01-04 07:42:39 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m INFO 01-04 07:42:40 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model', speculative_config=None, tokenizer='/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=2048, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m WARNING 01-04 07:42:40 [multiproc_executor.py:882] Reducing Torch parallelism from 48 threads to 1 to avoid unnecessary CPU contention. Set OMP_NUM_THREADS in the external environment to tune this value as needed.
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m INFO 01-04 07:42:42 [parallel_state.py:1203] world_size=2 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:49663 backend=nccl
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m INFO 01-04 07:42:42 [parallel_state.py:1203] world_size=2 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:49663 backend=nccl
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m INFO 01-04 07:42:42 [pynccl.py:111] vLLM is using nccl==2.27.5
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m WARNING 01-04 07:42:42 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m WARNING 01-04 07:42:42 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m WARNING 01-04 07:42:42 [custom_all_reduce.py:165] Custom allreduce is disabled because your platform lacks GPU P2P capability or P2P test failed. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m WARNING 01-04 07:42:42 [custom_all_reduce.py:165] Custom allreduce is disabled because your platform lacks GPU P2P capability or P2P test failed. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m INFO 01-04 07:42:42 [parallel_state.py:1411] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m INFO 01-04 07:42:42 [parallel_state.py:1411] rank 1 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 1, EP rank 1
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m [0;36m(Worker_TP0 pid=2977606)[0;0m INFO 01-04 07:42:43 [gpu_model_runner.py:3562] Starting to load model /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model...
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m [0;36m(Worker_TP0 pid=2977606)[0;0m INFO 01-04 07:42:44 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m [0;36m(Worker_TP0 pid=2977606)[0;0m INFO 01-04 07:42:45 [default_loader.py:308] Loading weights took 1.47 seconds
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m [0;36m(Worker_TP0 pid=2977606)[0;0m INFO 01-04 07:42:46 [gpu_model_runner.py:3659] Model loading took 0.4643 GiB memory and 1.872875 seconds
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m [0;36m(Worker_TP0 pid=2977606)[0;0m INFO 01-04 07:42:52 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/6e3f58b6d5/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m [0;36m(Worker_TP0 pid=2977606)[0;0m INFO 01-04 07:42:53 [backends.py:703] Dynamo bytecode transform time: 6.15 s
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m [0;36m(Worker_TP0 pid=2977606)[0;0m INFO 01-04 07:42:55 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m [0;36m(Worker_TP1 pid=2977608)[0;0m INFO 01-04 07:42:55 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m [0;36m(Worker_TP0 pid=2977606)[0;0m INFO 01-04 07:42:56 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 1.59 s
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m [0;36m(Worker_TP0 pid=2977606)[0;0m INFO 01-04 07:42:56 [monitor.py:34] torch.compile takes 7.74 s in total
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m [0;36m(Worker_TP0 pid=2977606)[0;0m INFO 01-04 07:42:57 [gpu_worker.py:375] Available KV cache memory: 19.28 GiB
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m INFO 01-04 07:42:58 [kv_cache_utils.py:1291] GPU KV cache size: 3,370,176 tokens
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m INFO 01-04 07:42:58 [kv_cache_utils.py:1296] Maximum concurrency for 2,048 tokens per request: 1645.59x
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m [0;36m(Worker_TP0 pid=2977606)[0;0m INFO 01-04 07:43:01 [gpu_model_runner.py:4587] Graph capturing finished in 3 secs, took 0.95 GiB
+[0;36m(EngineCore_DP0 pid=2977600)[0;0m INFO 01-04 07:43:01 [core.py:259] init engine (profile, create kv cache, warmup model) took 15.41 seconds
+INFO 01-04 07:43:03 [llm.py:360] Supported tasks: ['generate']
+Sanitized code outputs will be saved to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model/humaneval/mnt--home2--giung2--coder-distill--checkpoints--Qwen2.5-0.5B--32k--Qwen2.5-Coder-3B-Instruct_OD_RKL--epoch_2--final_model_vllm_temp_0.0.jsonl
+Raw outputs will be saved to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model/humaneval/mnt--home2--giung2--coder-distill--checkpoints--Qwen2.5-0.5B--32k--Qwen2.5-Coder-3B-Instruct_OD_RKL--epoch_2--final_model_vllm_temp_0.0.raw.jsonl
+Codegen: HumanEval/0 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/1 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/2 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/3 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/4 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/5 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/6 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/7 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/8 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/9 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/10 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/11 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/12 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/13 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/14 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/15 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/16 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/17 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/18 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/19 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/20 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/21 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/22 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/23 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/24 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/25 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/26 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/27 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/28 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/29 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/30 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/31 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/32 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/33 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/34 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/35 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/36 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/37 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/38 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/39 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/40 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/41 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/42 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/43 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/44 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/45 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/46 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/47 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/48 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/49 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/50 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/51 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/52 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/53 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/54 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/55 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/56 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/57 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/58 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/59 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/60 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/61 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/62 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/63 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/64 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/65 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/66 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/67 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/68 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/69 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/70 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/71 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/72 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/73 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/74 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/75 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/76 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/77 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/78 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/79 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/80 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/81 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/82 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/83 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/84 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/85 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/86 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/87 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/88 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/89 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/90 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/91 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/92 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/93 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/94 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/95 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/96 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/97 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/98 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/99 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/100 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/101 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/102 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/103 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/104 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/105 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/106 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/107 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/108 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/109 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/110 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/111 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/112 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/113 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/114 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/115 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/116 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/117 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/118 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/119 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/120 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/121 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/122 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/123 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/124 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/125 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/126 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/127 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/128 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/129 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/130 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/131 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/132 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/133 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/134 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/135 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/136 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/137 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/138 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/139 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/140 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/141 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/142 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/143 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/144 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/145 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/146 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/147 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/148 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/149 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/150 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/151 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/152 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/153 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/154 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/155 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/156 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/157 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/158 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/159 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/160 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/161 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/162 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+Codegen: HumanEval/163 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+humaneval •100% ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 164/164 • 0:01:50
+Load from ground-truth from /mnt/home2/giung2/.cache/evalplus/fe585eb4df8c88d844eeb463ea4d0302.pkl
+Reading samples...
+humaneval (base tests)
+pass@1:	0.341
+humaneval+ (base + extra tests)
+pass@1:	0.293
+========================================
+Epoch 2: Generating Data from Student
+Model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model
+========================================
+INFO 01-04 07:45:36 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'tensor_parallel_size': 2, 'disable_log_stats': True, 'model': '/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model'}
+INFO 01-04 07:45:36 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-04 07:45:36 [model.py:1661] Using max model len 32768
+INFO 01-04 07:45:37 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m INFO 01-04 07:45:38 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model', speculative_config=None, tokenizer='/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=32768, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m WARNING 01-04 07:45:38 [multiproc_executor.py:882] Reducing Torch parallelism from 48 threads to 1 to avoid unnecessary CPU contention. Set OMP_NUM_THREADS in the external environment to tune this value as needed.
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m INFO 01-04 07:45:40 [parallel_state.py:1203] world_size=2 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:39835 backend=nccl
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m INFO 01-04 07:45:40 [parallel_state.py:1203] world_size=2 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:39835 backend=nccl
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m INFO 01-04 07:45:40 [pynccl.py:111] vLLM is using nccl==2.27.5
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m WARNING 01-04 07:45:41 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m WARNING 01-04 07:45:41 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m WARNING 01-04 07:45:41 [custom_all_reduce.py:165] Custom allreduce is disabled because your platform lacks GPU P2P capability or P2P test failed. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m WARNING 01-04 07:45:41 [custom_all_reduce.py:165] Custom allreduce is disabled because your platform lacks GPU P2P capability or P2P test failed. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m INFO 01-04 07:45:41 [parallel_state.py:1411] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m INFO 01-04 07:45:41 [parallel_state.py:1411] rank 1 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 1, EP rank 1
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m [0;36m(Worker_TP0 pid=2979218)[0;0m INFO 01-04 07:45:42 [gpu_model_runner.py:3562] Starting to load model /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model...
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m [0;36m(Worker_TP0 pid=2979218)[0;0m INFO 01-04 07:45:42 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m [0;36m(Worker_TP0 pid=2979218)[0;0m INFO 01-04 07:45:42 [default_loader.py:308] Loading weights took 0.15 seconds
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m [0;36m(Worker_TP0 pid=2979218)[0;0m INFO 01-04 07:45:43 [gpu_model_runner.py:3659] Model loading took 0.4643 GiB memory and 0.536017 seconds
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m [0;36m(Worker_TP0 pid=2979218)[0;0m INFO 01-04 07:45:49 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/4ee40d265c/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m [0;36m(Worker_TP0 pid=2979218)[0;0m INFO 01-04 07:45:49 [backends.py:703] Dynamo bytecode transform time: 5.81 s
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m [0;36m(Worker_TP0 pid=2979218)[0;0m INFO 01-04 07:45:51 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m [0;36m(Worker_TP1 pid=2979220)[0;0m INFO 01-04 07:45:51 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m [0;36m(Worker_TP0 pid=2979218)[0;0m INFO 01-04 07:45:52 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 1.51 s
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m [0;36m(Worker_TP0 pid=2979218)[0;0m INFO 01-04 07:45:52 [monitor.py:34] torch.compile takes 7.32 s in total
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m [0;36m(Worker_TP0 pid=2979218)[0;0m INFO 01-04 07:45:54 [gpu_worker.py:375] Available KV cache memory: 19.28 GiB
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m INFO 01-04 07:45:54 [kv_cache_utils.py:1291] GPU KV cache size: 3,370,176 tokens
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m INFO 01-04 07:45:54 [kv_cache_utils.py:1296] Maximum concurrency for 32,768 tokens per request: 102.85x
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m [0;36m(Worker_TP0 pid=2979218)[0;0m INFO 01-04 07:45:58 [gpu_model_runner.py:4587] Graph capturing finished in 4 secs, took 0.95 GiB
+[0;36m(EngineCore_DP0 pid=2979212)[0;0m INFO 01-04 07:45:58 [core.py:259] init engine (profile, create kv cache, warmup model) took 14.64 seconds
+INFO 01-04 07:45:59 [llm.py:360] Supported tasks: ['generate']
+Loaded model /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_model with vLLM (LoRA=False).
+Sampling params: SamplingParams(n=1, presence_penalty=0.0, frequency_penalty=0.0, repetition_penalty=1.0, temperature=1.0, top_p=1.0, top_k=0, min_p=0.0, seed=2, stop=[], stop_token_ids=[], bad_words=[], include_stop_str_in_output=False, ignore_eos=False, max_tokens=1024, min_tokens=0, logprobs=None, prompt_logprobs=None, skip_special_tokens=True, spaces_between_special_tokens=True, truncate_prompt_tokens=None, structured_outputs=None, extra_args=None)
+Generating responses for 32768 prompts...
+Saving 32768 records to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/generated_student.jsonl...
+Done.
+========================================
+Epoch 3: Distillation Training
+Student Data: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/generated_student.jsonl
+Teacher Data: /mnt/home2/giung2/coder-distill/data/32k/2/Qwen/Qwen2.5-Coder-3B-Instruct.jsonl
+========================================
+Resuming from state: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_state
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-04 08:31:50.103868: world_size=4, micro_batch_size=1, gradient_accumulation_steps=32
+Before initializing optimizer states
+MA 1.38 GB         Max_MA 1.61 GB         CA 1.62 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 21.39 GB, percent = 5.7%
+After initializing optimizer states
+MA 1.38 GB         Max_MA 1.84 GB         CA 2.08 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 21.39 GB, percent = 5.7%
+After initializing ZeRO optimizer
+MA 1.38 GB         Max_MA 1.38 GB         CA 2.08 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 21.43 GB, percent = 5.7%
+DeepSpeedZeRoOffload initialize [begin]
+MA 7.22 GB         Max_MA 7.22 GB         CA 7.35 GB         Max_CA 7 GB 
+CPU Virtual Memory:  used = 20.95 GB, percent = 5.5%
+Parameter Offload - Persistent parameters statistics: param_count = 181, numel = 241664
+DeepSpeedZeRoOffload initialize [end]
+MA 2.83 GB         Max_MA 7.36 GB         CA 7.5 GB         Max_CA 7 GB 
+CPU Virtual Memory:  used = 21.7 GB, percent = 5.7%
+2026-01-04 08:32:04.375655: Resuming from checkpoint: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/final_state
+Loading data: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_2/generated_student.jsonl
+Loading data: /mnt/home2/giung2/coder-distill/data/32k/2/Qwen/Qwen2.5-Coder-3B-Instruct.jsonl
+2026-01-04 08:32:11.826409: Loaded 32768 combined samples.
+2026-01-04 08:32:11.830929: Training started at 2026-01-04 08:32:11.830918
+2026-01-04 12:52:33.308317: Training finished. Saving...
+2026-01-04 12:52:44.525553: Saved DeepSpeed checkpoint to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_state
+2026-01-04 12:52:47.676017: Saved HF model to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+========================================
+Epoch 3: Evaluation
+Model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+========================================
+Greedy decoding ON (--greedy): setting bs=1, n_samples=1, temperature=0
+Initializing a decoder model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model ...
+INFO 01-04 12:53:04 [utils.py:253] non-default args: {'dtype': 'bfloat16', 'max_model_len': 2048, 'tensor_parallel_size': 2, 'enable_prefix_caching': True, 'disable_log_stats': True, 'model': '/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model'}
+INFO 01-04 12:53:04 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-04 12:53:04 [model.py:1661] Using max model len 2048
+INFO 01-04 12:53:10 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m INFO 01-04 12:53:10 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model', speculative_config=None, tokenizer='/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=2048, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m WARNING 01-04 12:53:10 [multiproc_executor.py:882] Reducing Torch parallelism from 48 threads to 1 to avoid unnecessary CPU contention. Set OMP_NUM_THREADS in the external environment to tune this value as needed.
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m INFO 01-04 12:53:12 [parallel_state.py:1203] world_size=2 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:56839 backend=nccl
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m INFO 01-04 12:53:12 [parallel_state.py:1203] world_size=2 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:56839 backend=nccl
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m INFO 01-04 12:53:13 [pynccl.py:111] vLLM is using nccl==2.27.5
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m WARNING 01-04 12:53:13 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m WARNING 01-04 12:53:13 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m WARNING 01-04 12:53:13 [custom_all_reduce.py:165] Custom allreduce is disabled because your platform lacks GPU P2P capability or P2P test failed. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m WARNING 01-04 12:53:13 [custom_all_reduce.py:165] Custom allreduce is disabled because your platform lacks GPU P2P capability or P2P test failed. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m INFO 01-04 12:53:13 [parallel_state.py:1411] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m INFO 01-04 12:53:13 [parallel_state.py:1411] rank 1 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 1, EP rank 1
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m [0;36m(Worker_TP0 pid=3077821)[0;0m INFO 01-04 12:53:14 [gpu_model_runner.py:3562] Starting to load model /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model...
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m [0;36m(Worker_TP0 pid=3077821)[0;0m INFO 01-04 12:53:15 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m [0;36m(Worker_TP0 pid=3077821)[0;0m INFO 01-04 12:53:15 [default_loader.py:308] Loading weights took 0.15 seconds
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m [0;36m(Worker_TP0 pid=3077821)[0;0m INFO 01-04 12:53:15 [gpu_model_runner.py:3659] Model loading took 0.4643 GiB memory and 0.527546 seconds
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m [0;36m(Worker_TP0 pid=3077821)[0;0m INFO 01-04 12:53:22 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/8c6f820ab5/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m [0;36m(Worker_TP0 pid=3077821)[0;0m INFO 01-04 12:53:22 [backends.py:703] Dynamo bytecode transform time: 5.95 s
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m [0;36m(Worker_TP1 pid=3077823)[0;0m INFO 01-04 12:53:24 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m [0;36m(Worker_TP0 pid=3077821)[0;0m INFO 01-04 12:53:24 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m [0;36m(Worker_TP0 pid=3077821)[0;0m INFO 01-04 12:53:25 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 1.55 s
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m [0;36m(Worker_TP0 pid=3077821)[0;0m INFO 01-04 12:53:25 [monitor.py:34] torch.compile takes 7.50 s in total
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m [0;36m(Worker_TP0 pid=3077821)[0;0m INFO 01-04 12:53:26 [gpu_worker.py:375] Available KV cache memory: 19.28 GiB
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m INFO 01-04 12:53:27 [kv_cache_utils.py:1291] GPU KV cache size: 3,370,176 tokens
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m INFO 01-04 12:53:27 [kv_cache_utils.py:1296] Maximum concurrency for 2,048 tokens per request: 1645.59x
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m [0;36m(Worker_TP0 pid=3077821)[0;0m INFO 01-04 12:53:30 [gpu_model_runner.py:4587] Graph capturing finished in 4 secs, took 0.95 GiB
+[0;36m(EngineCore_DP0 pid=3077813)[0;0m INFO 01-04 12:53:30 [core.py:259] init engine (profile, create kv cache, warmup model) took 15.01 seconds
+INFO 01-04 12:53:31 [llm.py:360] Supported tasks: ['generate']
+Sanitized code outputs will be saved to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model/humaneval/mnt--home2--giung2--coder-distill--checkpoints--Qwen2.5-0.5B--32k--Qwen2.5-Coder-3B-Instruct_OD_RKL--epoch_3--final_model_vllm_temp_0.0.jsonl
+Raw outputs will be saved to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model/humaneval/mnt--home2--giung2--coder-distill--checkpoints--Qwen2.5-0.5B--32k--Qwen2.5-Coder-3B-Instruct_OD_RKL--epoch_3--final_model_vllm_temp_0.0.raw.jsonl
+Codegen: HumanEval/0 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/1 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/2 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/3 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/4 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/5 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/6 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/7 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/8 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/9 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/10 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/11 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/12 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/13 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/14 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/15 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/16 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/17 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/18 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/19 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/20 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/21 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/22 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/23 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/24 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/25 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/26 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/27 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/28 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/29 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/30 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/31 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/32 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/33 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/34 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/35 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/36 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/37 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/38 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/39 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/40 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/41 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/42 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/43 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/44 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/45 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/46 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/47 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/48 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/49 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/50 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/51 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/52 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/53 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/54 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/55 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/56 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/57 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/58 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/59 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/60 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/61 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/62 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/63 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/64 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/65 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/66 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/67 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/68 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/69 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/70 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/71 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/72 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/73 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/74 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/75 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/76 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/77 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/78 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/79 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/80 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/81 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/82 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/83 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/84 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/85 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/86 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/87 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/88 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/89 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/90 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/91 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/92 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/93 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/94 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/95 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/96 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/97 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/98 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/99 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/100 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/101 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/102 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/103 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/104 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/105 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/106 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/107 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/108 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/109 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/110 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/111 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/112 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/113 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/114 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/115 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/116 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/117 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/118 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/119 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/120 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/121 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/122 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/123 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/124 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/125 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/126 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/127 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/128 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/129 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/130 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/131 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/132 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/133 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/134 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/135 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/136 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/137 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/138 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/139 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/140 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/141 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/142 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/143 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/144 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/145 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/146 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/147 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/148 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/149 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/150 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/151 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/152 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/153 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/154 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/155 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/156 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/157 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/158 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/159 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/160 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/161 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/162 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+Codegen: HumanEval/163 @ /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+humaneval •100% ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 164/164 • 0:01:46
+Load from ground-truth from /mnt/home2/giung2/.cache/evalplus/fe585eb4df8c88d844eeb463ea4d0302.pkl
+Reading samples...
+humaneval (base tests)
+pass@1:	0.360
+humaneval+ (base + extra tests)
+pass@1:	0.317
+========================================
+Epoch 3: Generating Data from Student
+Model: /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model
+========================================
+INFO 01-04 12:55:58 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'tensor_parallel_size': 2, 'disable_log_stats': True, 'model': '/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model'}
+INFO 01-04 12:55:58 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-04 12:55:58 [model.py:1661] Using max model len 32768
+INFO 01-04 12:56:00 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m INFO 01-04 12:56:01 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model', speculative_config=None, tokenizer='/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=32768, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=/mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m WARNING 01-04 12:56:01 [multiproc_executor.py:882] Reducing Torch parallelism from 48 threads to 1 to avoid unnecessary CPU contention. Set OMP_NUM_THREADS in the external environment to tune this value as needed.
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m INFO 01-04 12:56:03 [parallel_state.py:1203] world_size=2 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:44153 backend=nccl
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m INFO 01-04 12:56:03 [parallel_state.py:1203] world_size=2 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:44153 backend=nccl
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m INFO 01-04 12:56:03 [pynccl.py:111] vLLM is using nccl==2.27.5
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m WARNING 01-04 12:56:04 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m WARNING 01-04 12:56:04 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m WARNING 01-04 12:56:04 [custom_all_reduce.py:165] Custom allreduce is disabled because your platform lacks GPU P2P capability or P2P test failed. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m WARNING 01-04 12:56:04 [custom_all_reduce.py:165] Custom allreduce is disabled because your platform lacks GPU P2P capability or P2P test failed. To silence this warning, specify disable_custom_all_reduce=True explicitly.
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m INFO 01-04 12:56:04 [parallel_state.py:1411] rank 1 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 1, EP rank 1
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m INFO 01-04 12:56:04 [parallel_state.py:1411] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m [0;36m(Worker_TP0 pid=3079354)[0;0m INFO 01-04 12:56:05 [gpu_model_runner.py:3562] Starting to load model /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model...
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m [0;36m(Worker_TP0 pid=3079354)[0;0m INFO 01-04 12:56:05 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m [0;36m(Worker_TP0 pid=3079354)[0;0m INFO 01-04 12:56:06 [default_loader.py:308] Loading weights took 0.14 seconds
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m [0;36m(Worker_TP0 pid=3079354)[0;0m INFO 01-04 12:56:06 [gpu_model_runner.py:3659] Model loading took 0.4643 GiB memory and 0.467237 seconds
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m [0;36m(Worker_TP0 pid=3079354)[0;0m INFO 01-04 12:56:12 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/0bba22964a/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m [0;36m(Worker_TP0 pid=3079354)[0;0m INFO 01-04 12:56:12 [backends.py:703] Dynamo bytecode transform time: 5.68 s
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m [0;36m(Worker_TP1 pid=3079356)[0;0m INFO 01-04 12:56:14 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m [0;36m(Worker_TP0 pid=3079354)[0;0m INFO 01-04 12:56:14 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m [0;36m(Worker_TP0 pid=3079354)[0;0m INFO 01-04 12:56:16 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 1.52 s
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m [0;36m(Worker_TP0 pid=3079354)[0;0m INFO 01-04 12:56:16 [monitor.py:34] torch.compile takes 7.20 s in total
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m [0;36m(Worker_TP0 pid=3079354)[0;0m INFO 01-04 12:56:17 [gpu_worker.py:375] Available KV cache memory: 19.28 GiB
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m INFO 01-04 12:56:17 [kv_cache_utils.py:1291] GPU KV cache size: 3,370,176 tokens
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m INFO 01-04 12:56:17 [kv_cache_utils.py:1296] Maximum concurrency for 32,768 tokens per request: 102.85x
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m [0;36m(Worker_TP0 pid=3079354)[0;0m INFO 01-04 12:56:21 [gpu_model_runner.py:4587] Graph capturing finished in 4 secs, took 0.95 GiB
+[0;36m(EngineCore_DP0 pid=3079348)[0;0m INFO 01-04 12:56:21 [core.py:259] init engine (profile, create kv cache, warmup model) took 14.75 seconds
+INFO 01-04 12:56:22 [llm.py:360] Supported tasks: ['generate']
+Loaded model /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/final_model with vLLM (LoRA=False).
+Sampling params: SamplingParams(n=1, presence_penalty=0.0, frequency_penalty=0.0, repetition_penalty=1.0, temperature=1.0, top_p=1.0, top_k=0, min_p=0.0, seed=3, stop=[], stop_token_ids=[], bad_words=[], include_stop_str_in_output=False, ignore_eos=False, max_tokens=1024, min_tokens=0, logprobs=None, prompt_logprobs=None, skip_special_tokens=True, spaces_between_special_tokens=True, truncate_prompt_tokens=None, structured_outputs=None, extra_args=None)
+Generating responses for 32768 prompts...
+Saving 32768 records to /mnt/home2/giung2/coder-distill/checkpoints/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_3/generated_student.jsonl...
+Done.
+Distillation Loop Complete.
