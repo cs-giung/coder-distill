@@ -1,0 +1,7 @@
+export MODEL="Qwen/Qwen2.5-Math-1.5B-Instruct"    ; export SEED=42 ; .venv/bin/python scripts/generate_data.py --input data/32k/math.jsonl --output data/32k/math/$SEED/$MODEL.jsonl --model "$MODEL" --tensor_parallel_size 1 --limit 32768 --seed $SEED
+export MODEL="Qwen/Qwen2.5-Math-1.5B-Instruct"    ; export SEED=0  ; .venv/bin/python scripts/generate_data.py --input data/32k/math.jsonl --output data/32k/math/$SEED/$MODEL.jsonl --model "$MODEL" --tensor_parallel_size 1 --limit 32768 --seed $SEED
+export MODEL="Qwen/Qwen2.5-Math-1.5B-Instruct"    ; export SEED=1  ; .venv/bin/python scripts/generate_data.py --input data/32k/math.jsonl --output data/32k/math/$SEED/$MODEL.jsonl --model "$MODEL" --tensor_parallel_size 1 --limit 32768 --seed $SEED
+export MODEL="Qwen/Qwen2.5-Math-1.5B-Instruct"    ; export SEED=2  ; .venv/bin/python scripts/generate_data.py --input data/32k/math.jsonl --output data/32k/math/$SEED/$MODEL.jsonl --model "$MODEL" --tensor_parallel_size 1 --limit 32768 --seed $SEED
+
+export MODEL="checkpoints/math/Qwen2.5-1.5B/init" ; export SEED=42 ; .venv/bin/python scripts/generate_data.py --input data/32k/math.jsonl --output data/32k/math/$SEED/$MODEL.jsonl --model "$MODEL" --tensor_parallel_size 1 --limit 32768 --seed $SEED
+export MODEL="checkpoints/math/Qwen2.5-0.5B/init" ; export SEED=42 ; .venv/bin/python scripts/generate_data.py --input data/32k/math.jsonl --output data/32k/math/$SEED/$MODEL.jsonl --model "$MODEL" --tensor_parallel_size 1 --limit 32768 --seed $SEED
