@@ -1,0 +1,34 @@
+[project]
+name = "coder-distill"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "accelerate",
+    "datasets",
+    "deepspeed",
+    "evalplus[vllm]",
+    "lm-eval[vllm,ifeval,math]",
+    "peft",
+    "safetensors",
+    "torch==2.9.0",
+    "transformers",
+]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu129" }
+evalplus = { git = "https://github.com/evalplus/evalplus", rev = "e5d0ed0bab96280b60b637ec7f15b5e4841b0cb2" }
+lm-eval = { git = "https://github.com/EleutherAI/lm-evaluation-harness", rev = "ad3f4d0cad1cfcdb815f1e795f7947e49ed9f2e9" }
+
+[[tool.uv.index]]
+name = "pytorch-cu129"
+url = "https://download.pytorch.org/whl/cu129"
+explicit = true
+
+[dependency-groups]
+dev = [
+    "jupyter",
+    "matplotlib",
+    "seaborn",
+]

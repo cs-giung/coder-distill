@@ -1,0 +1,12 @@
+.agent
+.pytest_cache
+.ruff_cache
+.venv
+
+*.safetensors
+*.pt
+*.pyc
+*.so
+
+tmp
+epoch_*

@@ -1,0 +1,63 @@
+# coder-distill
+
+A personal playground for exploring LLM distillation.
+
+## Overview
+
+The basic form of LLM distillation involves finding a student model $p_{\text{stu}}$ that minimizes the divergence relative to a given teacher model $p_{\text{tea}}$:
+
+$$\mathbb{E}_{x \sim \mathcal{D}}
+\mathbb{E}_{y_{1:T} \sim p_{\text{gen}}(\cdot|x)}
+\sum_{t=1}^{T} D(
+p_{\text{tea}}(\cdot|x,y_{<t})
+\parallel
+p_{\text{stu}}(\cdot|x,y_{<t}))$$
+
+1. For $x \sim \mathcal{D}$: We utilize the first 32k samples from nickrosh/Evol-Instruct-Code-80k-v1 and meta-math/MetaMathQA. Refer to data/32k/code.jsonl and data/32k/math.jsonl for the specific instances.
+
+2. For $y_{1:T} \sim p_{\text{gen}}(\cdot | x)$: We distinguish between two distillation settings based on the generator:
+    - Knowledge Distillation (KD): $p_{\text{gen}}$ is the teacher model $p_{\text{tea}}$.
+    - On-policy Distillation (OD): $p_{\text{gen}}$ is the student model $p_{\text{stu}}$.
+
+3. For $D$: We consider the following fundamental divergence measures:
+    - Forward KL (FKL): $D(p_{\text{tea}} \parallel p_{\text{stu}})$, which encourages the student to cover the teacher's entire distribution.
+    - Reverse KL (RKL): $D(p_{\text{stu}} \parallel p_{\text{tea}})$, which encourages the student to focus on the teacher's high-probability modes.
+
+## Pre-trained Models
+
+### Code
+```
+export MODEL="Qwen/Qwen2.5-Coder-1.5B-Instruct"
+evalplus.evaluate --model $MODEL --root $MODEL --dataset humaneval,mbpp --backend vllm --tp 1 --greedy
+```
+
+| model                       | HumanEval   | MBPP        |
+| :-                          | :-          | :-          |
+| Qwen2.5-Coder-14B-Instruct  | 91.5 / 86.0 | 
+| Qwen2.5-Coder-7B-Instruct   | 90.9 / 83.5 | 82.8 / 71.7 |
+| Qwen2.5-Coder-3B-Instruct   | 84.8 / 79.3 | 75.7 / 64.3 |
+| Qwen2.5-Coder-1.5B-Instruct | 69.5 / 63.4 | 68.8 / 59.0 |
+| Qwen2.5-Coder-0.5B-Instruct | 59.8 / 55.5 |
+| Qwen2.5-7B-Instruct         | 82.3 / 73.2 | 78.8 / 67.5 |
+| Qwen2.5-3B-Instruct         | 74.4 / 67.7 | 
+| Qwen2.5-1.5B-Instruct       | 54.9 / 49.4 | 65.3 / 56.6 |
+| Qwen2.5-0.5B-Instruct       | 37.8 / 32.3 | 49.5 / 42.1 |
+| Qwen2.5-1.5B (init)         | 51.2 / 46.3 | 59.0 / 48.9 |
+| Qwen2.5-1.5B                | 37.2 / 31.1 | 60.6 / 50.3 |
+| Qwen2.5-0.5B (init)         | 29.9 / 26.8 | 45.2 / 37.6 |
+| Qwen2.5-0.5B                | 30.5 / 26.2 | 41.0 / 35.2 |
+
+### Math
+```
+export MODEL="Qwen/Qwen2.5-Math-1.5B-Instruct"
+lm_eval --model vllm --model_args pretrained="$MODEL",tensor_parallel_size=1,dtype=auto,gpu_memory_utilization=0.8,data_parallel_size=1 --tasks minerva_math,minerva_math500,gsm8k --batch_size 1 --apply_chat_template --fewshot_as_multiturn --gen_kwargs max_gen_toks=2048
+```
+
+| model                      | GSM8K       | Minerva     | MATH500     |
+| :-                         | :-          | :-          | :-          |
+| Qwen2.5-Math-7B-Instruct   | 91.4 / 89.2 | 44.2 / 80.4 | 39.8 / 80.6 |
+| Qwen2.5-Math-1.5B-Instruct | 75.2 / 74.4 | 18.9 / 53.2 | 17.8 / 53.4 |
+| Qwen2.5-1.5B               | 61.9 / 61.4 | 28.0 / 30.5 | 30.0 / 32.8 |
+| Qwen2.5-1.5B (init)        | 61.3 / 61.6 | 25.3 / 32.1 | 22.0 / 30.4 |
+| Qwen2.5-0.5B               | 35.0 / 34.6 | 11.2 / 17.2 | 10.2 / 15.6 |
+| Qwen2.5-0.5B (init)        | 30.5 / 30.4 | 10.4 / 16.5 | 11.0 / 18.4 |
