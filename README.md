@@ -62,10 +62,10 @@ mkdir -p checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_KD_FKL
 | Qwen2.5-Coder-3B-Instruct (Teacher) | 84.8 / 79.3 | 75.7 / 64.3 | 76.0 |
 | Qwen2.5-0.5B (Student)              | 29.9 / 26.8 | 45.2 / 37.6 | 34.9 |
 ||
-| KD_FKL                              | 34.1 / 28.7 | 41.3 / 34.4 | 34.6 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Coder-3B-Instruct_KD_FKL/epoch_0/final_model) 📉
-| KD_RKL                              | 38.4 / 32.9 | 44.2 / 38.1 | 38.4 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Coder-3B-Instruct_KD_RKL/epoch_3/final_model) 📉
-| OD_FKL                              | 36.0 / 32.3 | 42.1 / 35.7 | 36.5 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Coder-3B-Instruct_OD_FKL/epoch_3/final_model) 📉
-| OD_RKL                              | 36.6 / 30.5 | 41.3 / 34.9 | 35.8 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model) 📉
+| KD_FKL                              | 34.1 / 28.7 | 41.3 / 34.4 | 34.6 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Coder-3B-Instruct_KD_FKL/epoch_0/final_model) [📉](checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_KD_FKL/log.png)
+| KD_RKL                              | 38.4 / 32.9 | 44.2 / 38.1 | 38.4 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Coder-3B-Instruct_KD_RKL/epoch_3/final_model) [📉](checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_KD_RKL/log.png)
+| OD_FKL                              | 36.0 / 32.3 | 42.1 / 35.7 | 36.5 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Coder-3B-Instruct_OD_FKL/epoch_3/final_model) [📉](checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_FKL/log.png)
+| OD_RKL                              | 36.6 / 30.5 | 41.3 / 34.9 | 35.8 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model) [📉](checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/log.png)
 
 ### Math
 ```bash
