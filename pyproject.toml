@@ -31,4 +31,5 @@ dev = [
     "jupyter",
     "matplotlib",
     "seaborn",
+    "simple-gpu-scheduler",
 ]

@@ -588,6 +588,7 @@ dev = [
     { name = "jupyter" },
     { name = "matplotlib" },
     { name = "seaborn" },
+    { name = "simple-gpu-scheduler" },
 ]
 
 [package.metadata]
@@ -608,6 +609,7 @@ dev = [
     { name = "jupyter" },
     { name = "matplotlib" },
     { name = "seaborn" },
+    { name = "simple-gpu-scheduler", specifier = ">=0.1.4" },
 ]
 
 [[package]]
@@ -4859,6 +4861,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/58/15/8b3609fd3830ef7b27b655beb4b4e9c62313a4e8da8c676e142cc210d58e/shellingham-1.5.4.tar.gz", hash = "sha256:8dbca0739d487e5bd35ab3ca4b36e11c4078f3a234bfce294b0a0291363404de", size = 10310, upload-time = "2023-10-24T04:13:40.426Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e0/f9/0595336914c5619e5f28a1fb793285925a8cd4b432c9da0a987836c7f822/shellingham-1.5.4-py2.py3-none-any.whl", hash = "sha256:7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686", size = 9755, upload-time = "2023-10-24T04:13:38.866Z" },
+]
+
+[[package]]
+name = "simple-gpu-scheduler"
+version = "0.1.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/7a/65/0e26c47691274fcb14616f5cd6075c4b67534fadaedee95588c961339114/simple_gpu_scheduler-0.1.4.tar.gz", hash = "sha256:9b976e5ecbda2a4b9ba1e7651995232192572a72acff6176444be9f051b6e13f", size = 18142, upload-time = "2019-10-16T12:59:00.169Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5f/e8/f88a719d4c6c1e58446a126d7a78f17d29df41a23fa15f30542e8c02f245/simple_gpu_scheduler-0.1.4-py3-none-any.whl", hash = "sha256:bc3a8d7268eac63891e051807f61eb2d4155701f3aa821f50052ae128617ebda", size = 20513, upload-time = "2019-10-16T12:58:58.205Z" },
 ]
 
 [[package]]
