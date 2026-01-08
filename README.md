@@ -23,10 +23,33 @@ p_{\text{stu}}(\cdot|x,y_{<t}))$$
     - Forward KL (FKL): $D(p_{\text{tea}} \parallel p_{\text{stu}})$, which encourages the student to cover the teacher's entire distribution.
     - Reverse KL (RKL): $D(p_{\text{stu}} \parallel p_{\text{tea}})$, which encourages the student to focus on the teacher's high-probability modes.
 
+## Distilled Models
+
+### Code
+```bash
+# e.g., KD-FKL
+./scripts_bash/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_KD_FKL.sh > checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_KD_FKL/log.txt
+```
+
+| model                               | HumanEval   | MBPP        | AVG  |
+| :-                                  | :-          | :-          | :-   |
+| Qwen2.5-Coder-3B-Instruct (Teacher) | 84.8 / 79.3 | 75.7 / 64.3 | 76.0 |
+| Qwen2.5-0.5B (Student)              | 29.9 / 26.8 | 45.2 / 37.6 | 34.9 |
+||
+| KD-FKL                              | 34.1 / 28.7 | 41.3 / 34.4 | 34.6 |
+| KD-RKL                              | 38.4 / 32.9 | 44.2 / 38.1 | 38.4 |
+| OD-FKL                              | 36.0 / 32.3 | 42.1 / 35.7 | 36.5 |
+| OD-RKL                              | 36.6 / 30.5 | 41.3 / 34.9 | 35.8 |
+
+### Math
+```bash
+
+```
+
 ## Pre-trained Models
 
 ### Code
-```
+```bash
 export MODEL="Qwen/Qwen2.5-Coder-1.5B-Instruct"
 evalplus.evaluate --model $MODEL --root $MODEL --dataset humaneval,mbpp --backend vllm --tp 1 --greedy
 ```
@@ -48,7 +71,7 @@ evalplus.evaluate --model $MODEL --root $MODEL --dataset humaneval,mbpp --backen
 | Qwen2.5-0.5B                | 30.5 / 26.2 | 41.0 / 35.2 |
 
 ### Math
-```
+```bash
 export MODEL="Qwen/Qwen2.5-Math-1.5B-Instruct"
 lm_eval --model vllm --model_args pretrained="$MODEL",tensor_parallel_size=1,dtype=auto,gpu_memory_utilization=0.8,data_parallel_size=1 --tasks minerva_math,minerva_math500,gsm8k --batch_size 1 --apply_chat_template --fewshot_as_multiturn --gen_kwargs max_gen_toks=2048
 ```
