@@ -179,8 +179,7 @@ def main():
         )
         student_model = get_peft_model(student_model, peft_config)
     else:
-        # student_model.gradient_checkpointing_enable()
-        pass
+        student_model.gradient_checkpointing_enable()
 
     # Teacher Model
     teacher_model = AutoModelForCausalLM.from_pretrained(
