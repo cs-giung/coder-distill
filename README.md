@@ -79,20 +79,20 @@ mkdir -p checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_KD_FKL
 
 ```
 
-| model                                | GSM8K   | Minerva | MATH500 |
-| :-                                   | :-:     | :-:     | :-:     |
-| Qwen2.5-0.5B (Student)               | 30.5    | 16.5    | 18.4    |
-| SFT                                  | 43.6    | 19.0    | 19.6    |
+| model                                | GSM8K   | Minerva | MATH500 | AVG  |
+| :-                                   | :-:     | :-:     | :-:     | :-:  |
+| Qwen2.5-0.5B (Student)               | 30.5    | 16.5    | 18.4    | 21.8 |
+| SFT                                  | 43.6    | 19.0    | 19.6    | 27.4 |
 ||
-| Qwen2.5-Math-1.5B-Instruct (Teacher) | 75.2    | 53.2    | 53.4    |
-| KD_FKL                               | 32.0    | 19.9    | 19.6    |
-| KD_RKL                               |
+| Qwen2.5-Math-1.5B-Instruct (Teacher) | 75.2    | 53.2    | 53.4    | 60.6 |
+| KD_FKL                               | 32.0    | 19.9    | 19.6    | 23.8 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Math-1.5B-Instruct_KD_FKL/epoch_1/final_model) [📉](checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-1.5B-Instruct_KD_FKL/log.png)
+| KD_RKL                               | 30.8    | 22.4    | 22.0    | 25.0 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Math-1.5B-Instruct_KD_RKL/epoch_0/final_model) [📉](checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-1.5B-Instruct_KD_RKL/log.png)
 | OD_FKL                               |
 | OD_RKL                               |
 ||
-| Qwen2.5-Math-7B-Instruct (Teacher)   | 91.4    | 80.4    | 80.6    |
-| KD_FKL                               | 44.8    | 29.1    | 29.6    |
-| KD_RKL                               | 42.2    | 26.2    | 26.4    |
+| Qwen2.5-Math-7B-Instruct (Teacher)   | 91.4    | 80.4    | 80.6    | 84.1 |
+| KD_FKL                               | 44.8    | 29.1    | 29.6    | 34.5 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model) [📉](checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/log.png)
+| KD_RKL                               | 42.2    | 26.2    | 26.4    | 31.6 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Math-7B-Instruct_KD_RKL/epoch_2/final_model) [📉](checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_RKL/log.png)
 | OD_FKL                               |
 | OD_RKL                               |
 
