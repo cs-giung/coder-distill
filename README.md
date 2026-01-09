@@ -79,8 +79,8 @@ mkdir -p checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_KD_FKL
 
 ```
 
-| model                                | GSM8K   | Minerva | MATH500 | AVG  |
-| :-                                   | :-:     | :-:     | :-:     | :-:  |
+| model                                | GSM8K   | Minerva | MATH500 | AVG  | Ref |
+| :-                                   | :-:     | :-:     | :-:     | :-:  | :-: |
 | Qwen2.5-0.5B (Student)               | 30.5    | 16.5    | 18.4    | 21.8 |
 | SFT                                  | 43.6    | 19.0    | 19.6    | 27.4 |
 ||
