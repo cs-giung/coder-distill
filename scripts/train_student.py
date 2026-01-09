@@ -32,7 +32,7 @@ def get_args():
     parser.add_argument("--teacher_model", type=str, required=True)
     parser.add_argument("--student_model", type=str, required=True)
     parser.add_argument("--limit", type=int, default=None)
-    parser.add_argument("--output_dir", type=str, default="checkpoints/train_student")
+    parser.add_argument("--output_dir", type=str, required=True)
     parser.add_argument("--lr", type=float, default=1e-05)
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--max_length", type=int, default=2048)
