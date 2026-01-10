@@ -44,8 +44,8 @@ do
         "--limit" "$LIMIT"
         "--lr" "1e-05"
         "--output_dir" "$EPOCH_DIR"
-        "--fwd_kl_student" "1.0"
-        "--rev_kl_student" "0.0"
+        "--fwd_kl_student" "0.0"
+        "--rev_kl_student" "1.0"
         "--fwd_kl_teacher" "0.0"
         "--rev_kl_teacher" "0.0"
     )
