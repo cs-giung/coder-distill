@@ -73,6 +73,22 @@ mkdir -p checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_KD_FKL
 | KD_RKL                                | 38.4 / 32.9 | 44.2 / 38.1 | 38.4 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Coder-3B-Instruct_KD_RKL/epoch_3/final_model) [📉](checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_KD_RKL/log.png)
 | OD_FKL                                | 36.0 / 32.3 | 42.1 / 35.7 | 36.5 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Coder-3B-Instruct_OD_FKL/epoch_3/final_model) [📉](checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_FKL/log.png)
 | OD_RKL                                | 36.6 / 30.5 | 41.3 / 34.9 | 35.8 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/epoch_1/final_model) [📉](checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_OD_RKL/log.png)
+| Qwen2.5-Coder-7B-Instruct (Teacher)   | 90.9 / 83.5 | 82.8 / 71.7 | 82.2 |
+| KD_FKL                                | 34.1 / 29.9 | 38.4 / 32.3 | 33.7 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Coder-7B-Instruct_KD_FKL/epoch_2/final_model) [📉](checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-7B-Instruct_KD_FKL/log.png)
+| KD_RKL                                | 34.1 / 29.9 | 38.9 / 32.0 | 33.7 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Coder-7B-Instruct_KD_RKL/epoch_3/final_model) [📉](checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-7B-Instruct_KD_RKL/log.png)
+| OD_FKL                                | 36.0 / 31.1 | 37.3 / 31.5 | 34.0 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Coder-7B-Instruct_OD_FKL/epoch_0/final_model) [📉](checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-7B-Instruct_OD_FKL/log.png)
+| OD_RKL                                | 32.9 / 28.7 | 42.1 / 34.9 | 34.7 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Coder-7B-Instruct_OD_RKL/epoch_1/final_model) [📉](checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-7B-Instruct_OD_RKL/log.png)
+
+| model                                 | HumanEval   | MBPP        | AVG  | Ref |
+| :-                                    | :-:         | :-:         | :-:  | :-: |
+| Qwen2.5-Coder-0.5B (Student)          | 36.6 / 34.1 | 49.2 / 40.5 | 40.1 |
+| SFT                                   | 36.0 / 30.5 | 42.1 / 34.1 | 35.7 |
+||
+| Qwen2.5-Coder-1.5B-Instruct (Teacher) | 69.5 / 63.4 | 68.8 / 59.0 | 65.2 |
+| KD_FKL                                | 40.9 / 37.8 | 47.4 / 39.7 | 41.5 |
+| KD_RKL                                | 37.2 / 33.5 | 44.4 / 36.5 | 37.9 |
+| OD_FKL                                | 
+| OD_RKL                                | 
 
 ### Math
 ```bash
@@ -93,7 +109,7 @@ mkdir -p checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_KD_FKL
 | Qwen2.5-Math-7B-Instruct (Teacher)   | 91.4    | 80.4    | 80.6    | 84.1 |
 | KD_FKL                               | 44.8    | 29.1    | 29.6    | 34.5 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model) [📉](checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/log.png)
 | KD_RKL                               | 42.2    | 26.2    | 26.4    | 31.6 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Math-7B-Instruct_KD_RKL/epoch_2/final_model) [📉](checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_RKL/log.png)
-| OD_FKL                               |
+| OD_FKL                               | 43.4    | 22.7    | 25.0    | 30.4 | [🤗](https://huggingface.co/cs-giung/Qwen2.5-0.5B-Distilled/tree/main/32k/Qwen2.5-Math-7B-Instruct_OD_FKL/epoch_2/final_model) [📉](checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_OD_FKL/log.png)
 | OD_RKL                               |
 
 ## Pre-trained Models
