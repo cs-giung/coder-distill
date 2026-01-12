@@ -1,0 +1,557 @@
+========================================
+Epoch 0: Distillation Training
+Student Data: data/32k/math/42/checkpoints/math/Qwen2.5-0.5B/init.jsonl
+Teacher Data: data/32k/math/42/Qwen/Qwen2.5-Math-7B-Instruct.jsonl
+========================================
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-08 18:55:28.597472: world_size=2, micro_batch_size=1, gradient_accumulation_steps=64
+Before initializing optimizer states
+MA 1.84 GB         Max_MA 2.3 GB         CA 2.31 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 39.58 GB, percent = 7.9%
+After initializing optimizer states
+MA 1.84 GB         Max_MA 2.76 GB         CA 3.23 GB         Max_CA 3 GB 
+CPU Virtual Memory:  used = 37.7 GB, percent = 7.5%
+After initializing ZeRO optimizer
+MA 1.84 GB         Max_MA 1.84 GB         CA 3.23 GB         Max_CA 3 GB 
+CPU Virtual Memory:  used = 37.7 GB, percent = 7.5%
+DeepSpeedZeRoOffload initialize [begin]
+MA 16.06 GB         Max_MA 16.06 GB         CA 16.18 GB         Max_CA 16 GB 
+CPU Virtual Memory:  used = 34.66 GB, percent = 6.9%
+Parameter Offload - Persistent parameters statistics: param_count = 141, numel = 333312
+DeepSpeedZeRoOffload initialize [end]
+MA 8.95 GB         Max_MA 16.56 GB         CA 16.68 GB         Max_CA 17 GB 
+CPU Virtual Memory:  used = 34.63 GB, percent = 6.9%
+Loading data: data/32k/math/42/checkpoints/math/Qwen2.5-0.5B/init.jsonl
+Loading data: data/32k/math/42/Qwen/Qwen2.5-Math-7B-Instruct.jsonl
+2026-01-08 18:55:58.821285: Loaded 32768 combined samples.
+2026-01-08 18:55:58.823954: Training started at 2026-01-08 18:55:58.823944
+2026-01-08 22:06:45.723821: Training finished. Saving...
+2026-01-08 22:06:55.356709: Saved DeepSpeed checkpoint to checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_state
+2026-01-08 22:06:57.370447: Saved HF model to checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_model
+========================================
+Epoch 0: Evaluation
+Model: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_model
+========================================
+INFO 01-08 22:07:25 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-08 22:07:25 [model.py:1661] Using max model len 32768
+INFO 01-08 22:08:02 [utils.py:253] non-default args: {'seed': 1234, 'gpu_memory_utilization': 0.8, 'disable_log_stats': True, 'model': 'checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_model'}
+INFO 01-08 22:08:02 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-08 22:08:02 [model.py:1661] Using max model len 32768
+INFO 01-08 22:08:02 [utils.py:253] non-default args: {'seed': 1234, 'gpu_memory_utilization': 0.8, 'disable_log_stats': True, 'model': 'checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_model'}
+INFO 01-08 22:08:02 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-08 22:08:02 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 01-08 22:08:02 [model.py:1661] Using max model len 32768
+INFO 01-08 22:08:02 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:03 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_model', speculative_config=None, tokenizer='checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=32768, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=2, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=1234, served_model_name=checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:04 [parallel_state.py:1203] world_size=2 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:35600 backend=nccl
+[0;36m(EngineCore_DP1 pid=1073504)[0;0m INFO 01-08 22:08:04 [parallel_state.py:1203] world_size=2 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:35600 backend=nccl
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:05 [pynccl.py:111] vLLM is using nccl==2.27.5
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:05 [cuda_communicator.py:120] Using AgRsAll2AllManager all2all manager.
+[0;36m(EngineCore_DP1 pid=1073504)[0;0m INFO 01-08 22:08:05 [parallel_state.py:1411] rank 1 in world size 2 is assigned as DP rank 1, PP rank 0, PCP rank 0, TP rank 0, EP rank 1
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:05 [parallel_state.py:1411] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:07 [gpu_model_runner.py:3562] Starting to load model checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_model...
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:09 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:11 [default_loader.py:308] Loading weights took 2.08 seconds
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:12 [gpu_model_runner.py:3659] Model loading took 0.9269 GiB memory and 3.679107 seconds
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:17 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/20f21e469e/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:17 [backends.py:703] Dynamo bytecode transform time: 4.57 s
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:20 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:21 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 2.12 s
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:21 [monitor.py:34] torch.compile takes 6.69 s in total
+[0;36m(EngineCore_DP1 pid=1073504)[0;0m INFO 01-08 22:08:21 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:22 [gpu_worker.py:375] Available KV cache memory: 35.49 GiB
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:23 [kv_cache_utils.py:1291] GPU KV cache size: 3,101,520 tokens
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:23 [kv_cache_utils.py:1296] Maximum concurrency for 32,768 tokens per request: 94.65x
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:30 [gpu_model_runner.py:4587] Graph capturing finished in 7 secs, took 0.44 GiB
+[0;36m(EngineCore_DP0 pid=1073498)[0;0m INFO 01-08 22:08:30 [core.py:259] init engine (profile, create kv cache, warmup model) took 18.07 seconds
+INFO 01-08 22:08:31 [llm.py:360] Supported tasks: ['generate']
+INFO 01-08 22:08:31 [llm.py:360] Supported tasks: ['generate']
+vllm (pretrained=checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_model,tensor_parallel_size=1,dtype=auto,gpu_memory_utilization=0.8,data_parallel_size=2), gen_kwargs: (max_gen_toks=2048), limit: None, num_fewshot: None, batch_size: 1
+|               Tasks                |Version|     Filter     |n-shot|  Metric   |   |Value |   |Stderr|
+|------------------------------------|------:|----------------|-----:|-----------|---|-----:|---|-----:|
+|gsm8k                               |      3|flexible-extract|     5|exact_match|↑  |0.4443|±  |0.0137|
+|                                    |       |strict-match    |     5|exact_match|↑  |0.1569|±  |0.0100|
+|minerva_math                        |      1|none            |      |exact_match|↑  |0.0012|±  |0.0005|
+|                                    |       |none            |      |math_verify|↑  |0.2786|±  |0.0061|
+| - minerva_math_algebra             |      3|none            |     4|exact_match|↑  |0.0008|±  |0.0008|
+|                                    |       |none            |     4|math_verify|↑  |0.4448|±  |0.0144|
+| - minerva_math_counting_and_prob   |      3|none            |     4|exact_match|↑  |0.0021|±  |0.0021|
+|                                    |       |none            |     4|math_verify|↑  |0.2215|±  |0.0191|
+| - minerva_math_geometry            |      3|none            |     4|exact_match|↑  |0.0021|±  |0.0021|
+|                                    |       |none            |     4|math_verify|↑  |0.2192|±  |0.0189|
+| - minerva_math_intermediate_algebra|      3|none            |     4|exact_match|↑  |0.0011|±  |0.0011|
+|                                    |       |none            |     4|math_verify|↑  |0.1440|±  |0.0117|
+| - minerva_math_num_theory          |      3|none            |     4|exact_match|↑  |0.0019|±  |0.0019|
+|                                    |       |none            |     4|math_verify|↑  |0.1741|±  |0.0163|
+| - minerva_math_prealgebra          |      3|none            |     4|exact_match|↑  |0.0011|±  |0.0011|
+|                                    |       |none            |     4|math_verify|↑  |0.4053|±  |0.0166|
+| - minerva_math_precalc             |      3|none            |     4|exact_match|↑  |0.0000|±  |0.0000|
+|                                    |       |none            |     4|math_verify|↑  |0.1429|±  |0.0150|
+|minerva_math500                     |      3|none            |     4|exact_match|↑  |0.0000|±  |0.0000|
+|                                    |       |none            |     4|math_verify|↑  |0.2620|±  |0.0197|
+
+|   Groups   |Version|Filter|n-shot|  Metric   |   |Value |   |Stderr|
+|------------|------:|------|------|-----------|---|-----:|---|-----:|
+|minerva_math|      1|none  |      |exact_match|↑  |0.0012|±  |0.0005|
+|            |       |none  |      |math_verify|↑  |0.2786|±  |0.0061|
+
+========================================
+Epoch 0: Generating Data from Student
+Model: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_model
+========================================
+INFO 01-08 22:14:53 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'tensor_parallel_size': 2, 'disable_log_stats': True, 'model': 'checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_model'}
+INFO 01-08 22:14:53 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-08 22:14:53 [model.py:1661] Using max model len 32768
+INFO 01-08 22:14:54 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m INFO 01-08 22:14:55 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_model', speculative_config=None, tokenizer='checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=32768, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m WARNING 01-08 22:14:55 [multiproc_executor.py:882] Reducing Torch parallelism from 48 threads to 1 to avoid unnecessary CPU contention. Set OMP_NUM_THREADS in the external environment to tune this value as needed.
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m INFO 01-08 22:14:56 [parallel_state.py:1203] world_size=2 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:57027 backend=nccl
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m INFO 01-08 22:14:56 [parallel_state.py:1203] world_size=2 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:57027 backend=nccl
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m INFO 01-08 22:14:57 [pynccl.py:111] vLLM is using nccl==2.27.5
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m WARNING 01-08 22:14:57 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m WARNING 01-08 22:14:57 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m INFO 01-08 22:14:57 [parallel_state.py:1411] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m INFO 01-08 22:14:57 [parallel_state.py:1411] rank 1 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 1, EP rank 1
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m [0;36m(Worker_TP0 pid=1077382)[0;0m INFO 01-08 22:14:58 [gpu_model_runner.py:3562] Starting to load model checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_model...
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m [0;36m(Worker_TP0 pid=1077382)[0;0m INFO 01-08 22:14:58 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m [0;36m(Worker_TP0 pid=1077382)[0;0m INFO 01-08 22:14:59 [default_loader.py:308] Loading weights took 0.13 seconds
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m [0;36m(Worker_TP0 pid=1077382)[0;0m INFO 01-08 22:14:59 [gpu_model_runner.py:3659] Model loading took 0.4643 GiB memory and 0.418412 seconds
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m [0;36m(Worker_TP0 pid=1077382)[0;0m INFO 01-08 22:15:04 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/a490f421d5/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m [0;36m(Worker_TP0 pid=1077382)[0;0m INFO 01-08 22:15:04 [backends.py:703] Dynamo bytecode transform time: 4.61 s
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m [0;36m(Worker_TP1 pid=1077384)[0;0m INFO 01-08 22:15:05 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m [0;36m(Worker_TP0 pid=1077382)[0;0m INFO 01-08 22:15:05 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m [0;36m(Worker_TP0 pid=1077382)[0;0m INFO 01-08 22:15:07 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 1.17 s
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m [0;36m(Worker_TP0 pid=1077382)[0;0m INFO 01-08 22:15:07 [monitor.py:34] torch.compile takes 5.78 s in total
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m [0;36m(Worker_TP0 pid=1077382)[0;0m INFO 01-08 22:15:08 [gpu_worker.py:375] Available KV cache memory: 40.70 GiB
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m INFO 01-08 22:15:08 [kv_cache_utils.py:1291] GPU KV cache size: 7,112,496 tokens
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m INFO 01-08 22:15:08 [kv_cache_utils.py:1296] Maximum concurrency for 32,768 tokens per request: 217.06x
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m [0;36m(Worker_TP1 pid=1077384)[0;0m INFO 01-08 22:15:10 [custom_all_reduce.py:216] Registering 4214 cuda graph addresses
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m [0;36m(Worker_TP0 pid=1077382)[0;0m INFO 01-08 22:15:10 [custom_all_reduce.py:216] Registering 4214 cuda graph addresses
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m [0;36m(Worker_TP0 pid=1077382)[0;0m INFO 01-08 22:15:10 [gpu_model_runner.py:4587] Graph capturing finished in 2 secs, took 0.44 GiB
+[0;36m(EngineCore_DP0 pid=1077376)[0;0m INFO 01-08 22:15:10 [core.py:259] init engine (profile, create kv cache, warmup model) took 11.06 seconds
+INFO 01-08 22:15:12 [llm.py:360] Supported tasks: ['generate']
+Loaded model checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_model with vLLM (LoRA=False).
+Sampling params: SamplingParams(n=1, presence_penalty=0.0, frequency_penalty=0.0, repetition_penalty=1.0, temperature=1.0, top_p=1.0, top_k=0, min_p=0.0, seed=0, stop=[], stop_token_ids=[], bad_words=[], include_stop_str_in_output=False, ignore_eos=False, max_tokens=1024, min_tokens=0, logprobs=None, prompt_logprobs=None, skip_special_tokens=True, spaces_between_special_tokens=True, truncate_prompt_tokens=None, structured_outputs=None, extra_args=None)
+Generating responses for 32768 prompts...
+Saving 32768 records to checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/generated_student.jsonl...
+Done.
+========================================
+Epoch 1: Distillation Training
+Student Data: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/generated_student.jsonl
+Teacher Data: data/32k/math/0/Qwen/Qwen2.5-Math-7B-Instruct.jsonl
+========================================
+Resuming from state: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_state
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-08 22:45:34.894660: world_size=2, micro_batch_size=1, gradient_accumulation_steps=64
+Before initializing optimizer states
+MA 1.84 GB         Max_MA 2.3 GB         CA 2.31 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 35.89 GB, percent = 7.1%
+After initializing optimizer states
+MA 1.84 GB         Max_MA 2.76 GB         CA 3.23 GB         Max_CA 3 GB 
+CPU Virtual Memory:  used = 35.89 GB, percent = 7.1%
+After initializing ZeRO optimizer
+MA 1.84 GB         Max_MA 1.84 GB         CA 3.23 GB         Max_CA 3 GB 
+CPU Virtual Memory:  used = 35.93 GB, percent = 7.1%
+DeepSpeedZeRoOffload initialize [begin]
+MA 16.06 GB         Max_MA 16.06 GB         CA 16.18 GB         Max_CA 16 GB 
+CPU Virtual Memory:  used = 32.76 GB, percent = 6.5%
+Parameter Offload - Persistent parameters statistics: param_count = 141, numel = 333312
+DeepSpeedZeRoOffload initialize [end]
+MA 8.95 GB         Max_MA 16.56 GB         CA 16.68 GB         Max_CA 17 GB 
+CPU Virtual Memory:  used = 33.12 GB, percent = 6.6%
+2026-01-08 22:45:56.854278: Resuming from checkpoint: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/final_state
+Loading data: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_0/generated_student.jsonl
+Loading data: data/32k/math/0/Qwen/Qwen2.5-Math-7B-Instruct.jsonl
+2026-01-08 22:46:00.385637: Loaded 32768 combined samples.
+2026-01-08 22:46:00.388319: Training started at 2026-01-08 22:46:00.388311
+2026-01-09 01:57:49.694422: Training finished. Saving...
+2026-01-09 01:57:59.898354: Saved DeepSpeed checkpoint to checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_state
+2026-01-09 01:58:01.847211: Saved HF model to checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_model
+========================================
+Epoch 1: Evaluation
+Model: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_model
+========================================
+INFO 01-09 01:58:28 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-09 01:58:28 [model.py:1661] Using max model len 32768
+INFO 01-09 01:59:10 [utils.py:253] non-default args: {'seed': 1234, 'gpu_memory_utilization': 0.8, 'disable_log_stats': True, 'model': 'checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_model'}
+INFO 01-09 01:59:10 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-09 01:59:10 [utils.py:253] non-default args: {'seed': 1234, 'gpu_memory_utilization': 0.8, 'disable_log_stats': True, 'model': 'checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_model'}
+INFO 01-09 01:59:10 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-09 01:59:10 [model.py:1661] Using max model len 32768
+INFO 01-09 01:59:10 [model.py:1661] Using max model len 32768
+INFO 01-09 01:59:10 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 01-09 01:59:10 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:11 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_model', speculative_config=None, tokenizer='checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=32768, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=2, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=1234, served_model_name=checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP1 pid=1187313)[0;0m INFO 01-09 01:59:14 [parallel_state.py:1203] world_size=2 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:54048 backend=nccl
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:14 [parallel_state.py:1203] world_size=2 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:54048 backend=nccl
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:15 [pynccl.py:111] vLLM is using nccl==2.27.5
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:15 [cuda_communicator.py:120] Using AgRsAll2AllManager all2all manager.
+[0;36m(EngineCore_DP1 pid=1187313)[0;0m INFO 01-09 01:59:15 [parallel_state.py:1411] rank 1 in world size 2 is assigned as DP rank 1, PP rank 0, PCP rank 0, TP rank 0, EP rank 1
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:15 [parallel_state.py:1411] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:16 [gpu_model_runner.py:3562] Starting to load model checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_model...
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:17 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:17 [default_loader.py:308] Loading weights took 0.17 seconds
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:18 [gpu_model_runner.py:3659] Model loading took 0.9269 GiB memory and 0.377907 seconds
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:24 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/eee46b8364/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:24 [backends.py:703] Dynamo bytecode transform time: 4.78 s
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:27 [backends.py:226] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 0.522 s
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:27 [monitor.py:34] torch.compile takes 5.30 s in total
+[0;36m(EngineCore_DP1 pid=1187313)[0;0m INFO 01-09 01:59:27 [backends.py:226] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 0.532 s
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:28 [gpu_worker.py:375] Available KV cache memory: 35.49 GiB
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:28 [kv_cache_utils.py:1291] GPU KV cache size: 3,101,520 tokens
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:28 [kv_cache_utils.py:1296] Maximum concurrency for 32,768 tokens per request: 94.65x
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:35 [gpu_model_runner.py:4587] Graph capturing finished in 5 secs, took 0.44 GiB
+[0;36m(EngineCore_DP0 pid=1187310)[0;0m INFO 01-09 01:59:35 [core.py:259] init engine (profile, create kv cache, warmup model) took 16.55 seconds
+INFO 01-09 01:59:36 [llm.py:360] Supported tasks: ['generate']
+INFO 01-09 01:59:36 [llm.py:360] Supported tasks: ['generate']
+vllm (pretrained=checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_model,tensor_parallel_size=1,dtype=auto,gpu_memory_utilization=0.8,data_parallel_size=2), gen_kwargs: (max_gen_toks=2048), limit: None, num_fewshot: None, batch_size: 1
+|               Tasks                |Version|     Filter     |n-shot|  Metric   |   |Value |   |Stderr|
+|------------------------------------|------:|----------------|-----:|-----------|---|-----:|---|-----:|
+|gsm8k                               |      3|flexible-extract|     5|exact_match|↑  |0.4655|±  |0.0137|
+|                                    |       |strict-match    |     5|exact_match|↑  |0.1964|±  |0.0109|
+|minerva_math                        |      1|none            |      |exact_match|↑  |0.0032|±  |0.0008|
+|                                    |       |none            |      |math_verify|↑  |0.2866|±  |0.0062|
+| - minerva_math_algebra             |      3|none            |     4|exact_match|↑  |0.0034|±  |0.0017|
+|                                    |       |none            |     4|math_verify|↑  |0.4389|±  |0.0144|
+| - minerva_math_counting_and_prob   |      3|none            |     4|exact_match|↑  |0.0021|±  |0.0021|
+|                                    |       |none            |     4|math_verify|↑  |0.2447|±  |0.0198|
+| - minerva_math_geometry            |      3|none            |     4|exact_match|↑  |0.0042|±  |0.0029|
+|                                    |       |none            |     4|math_verify|↑  |0.2171|±  |0.0189|
+| - minerva_math_intermediate_algebra|      3|none            |     4|exact_match|↑  |0.0033|±  |0.0019|
+|                                    |       |none            |     4|math_verify|↑  |0.1462|±  |0.0118|
+| - minerva_math_num_theory          |      3|none            |     4|exact_match|↑  |0.0037|±  |0.0026|
+|                                    |       |none            |     4|math_verify|↑  |0.2241|±  |0.0180|
+| - minerva_math_prealgebra          |      3|none            |     4|exact_match|↑  |0.0034|±  |0.0020|
+|                                    |       |none            |     4|math_verify|↑  |0.4133|±  |0.0167|
+| - minerva_math_precalc             |      3|none            |     4|exact_match|↑  |0.0018|±  |0.0018|
+|                                    |       |none            |     4|math_verify|↑  |0.1447|±  |0.0151|
+|minerva_math500                     |      3|none            |     4|exact_match|↑  |0.0040|±  |0.0028|
+|                                    |       |none            |     4|math_verify|↑  |0.2800|±  |0.0201|
+
+|   Groups   |Version|Filter|n-shot|  Metric   |   |Value |   |Stderr|
+|------------|------:|------|------|-----------|---|-----:|---|-----:|
+|minerva_math|      1|none  |      |exact_match|↑  |0.0032|±  |0.0008|
+|            |       |none  |      |math_verify|↑  |0.2866|±  |0.0062|
+
+========================================
+Epoch 1: Generating Data from Student
+Model: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_model
+========================================
+INFO 01-09 02:05:49 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'tensor_parallel_size': 2, 'disable_log_stats': True, 'model': 'checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_model'}
+INFO 01-09 02:05:49 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-09 02:05:49 [model.py:1661] Using max model len 32768
+INFO 01-09 02:05:50 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m INFO 01-09 02:05:51 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_model', speculative_config=None, tokenizer='checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=32768, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m WARNING 01-09 02:05:51 [multiproc_executor.py:882] Reducing Torch parallelism from 48 threads to 1 to avoid unnecessary CPU contention. Set OMP_NUM_THREADS in the external environment to tune this value as needed.
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m INFO 01-09 02:05:52 [parallel_state.py:1203] world_size=2 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:40693 backend=nccl
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m INFO 01-09 02:05:52 [parallel_state.py:1203] world_size=2 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:40693 backend=nccl
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m INFO 01-09 02:05:53 [pynccl.py:111] vLLM is using nccl==2.27.5
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m WARNING 01-09 02:05:53 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m WARNING 01-09 02:05:53 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m INFO 01-09 02:05:53 [parallel_state.py:1411] rank 1 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 1, EP rank 1
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m INFO 01-09 02:05:53 [parallel_state.py:1411] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m [0;36m(Worker_TP0 pid=1191340)[0;0m INFO 01-09 02:05:54 [gpu_model_runner.py:3562] Starting to load model checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_model...
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m [0;36m(Worker_TP0 pid=1191340)[0;0m INFO 01-09 02:05:54 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m [0;36m(Worker_TP0 pid=1191340)[0;0m INFO 01-09 02:05:55 [default_loader.py:308] Loading weights took 0.11 seconds
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m [0;36m(Worker_TP0 pid=1191340)[0;0m INFO 01-09 02:05:55 [gpu_model_runner.py:3659] Model loading took 0.4643 GiB memory and 0.400992 seconds
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m [0;36m(Worker_TP0 pid=1191340)[0;0m INFO 01-09 02:06:00 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/795a0fe83b/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m [0;36m(Worker_TP0 pid=1191340)[0;0m INFO 01-09 02:06:00 [backends.py:703] Dynamo bytecode transform time: 4.32 s
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m [0;36m(Worker_TP0 pid=1191340)[0;0m INFO 01-09 02:06:02 [backends.py:226] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 0.550 s
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m [0;36m(Worker_TP0 pid=1191340)[0;0m INFO 01-09 02:06:02 [monitor.py:34] torch.compile takes 4.87 s in total
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m [0;36m(Worker_TP1 pid=1191342)[0;0m INFO 01-09 02:06:02 [backends.py:226] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 0.546 s
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m [0;36m(Worker_TP0 pid=1191340)[0;0m INFO 01-09 02:06:03 [gpu_worker.py:375] Available KV cache memory: 40.70 GiB
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m INFO 01-09 02:06:03 [kv_cache_utils.py:1291] GPU KV cache size: 7,112,496 tokens
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m INFO 01-09 02:06:03 [kv_cache_utils.py:1296] Maximum concurrency for 32,768 tokens per request: 217.06x
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m [0;36m(Worker_TP0 pid=1191340)[0;0m INFO 01-09 02:06:05 [custom_all_reduce.py:216] Registering 4214 cuda graph addresses
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m [0;36m(Worker_TP1 pid=1191342)[0;0m INFO 01-09 02:06:05 [custom_all_reduce.py:216] Registering 4214 cuda graph addresses
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m [0;36m(Worker_TP0 pid=1191340)[0;0m INFO 01-09 02:06:05 [gpu_model_runner.py:4587] Graph capturing finished in 2 secs, took 0.44 GiB
+[0;36m(EngineCore_DP0 pid=1191333)[0;0m INFO 01-09 02:06:05 [core.py:259] init engine (profile, create kv cache, warmup model) took 10.16 seconds
+INFO 01-09 02:06:07 [llm.py:360] Supported tasks: ['generate']
+Loaded model checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_model with vLLM (LoRA=False).
+Sampling params: SamplingParams(n=1, presence_penalty=0.0, frequency_penalty=0.0, repetition_penalty=1.0, temperature=1.0, top_p=1.0, top_k=0, min_p=0.0, seed=1, stop=[], stop_token_ids=[], bad_words=[], include_stop_str_in_output=False, ignore_eos=False, max_tokens=1024, min_tokens=0, logprobs=None, prompt_logprobs=None, skip_special_tokens=True, spaces_between_special_tokens=True, truncate_prompt_tokens=None, structured_outputs=None, extra_args=None)
+Generating responses for 32768 prompts...
+Saving 32768 records to checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/generated_student.jsonl...
+Done.
+========================================
+Epoch 2: Distillation Training
+Student Data: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/generated_student.jsonl
+Teacher Data: data/32k/math/1/Qwen/Qwen2.5-Math-7B-Instruct.jsonl
+========================================
+Resuming from state: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_state
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-09 02:26:55.879080: world_size=2, micro_batch_size=1, gradient_accumulation_steps=64
+Before initializing optimizer states
+MA 1.84 GB         Max_MA 2.3 GB         CA 2.31 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 34.95 GB, percent = 6.9%
+After initializing optimizer states
+MA 1.84 GB         Max_MA 2.76 GB         CA 3.23 GB         Max_CA 3 GB 
+CPU Virtual Memory:  used = 35.01 GB, percent = 7.0%
+After initializing ZeRO optimizer
+MA 1.84 GB         Max_MA 1.84 GB         CA 3.23 GB         Max_CA 3 GB 
+CPU Virtual Memory:  used = 35.01 GB, percent = 7.0%
+DeepSpeedZeRoOffload initialize [begin]
+MA 16.06 GB         Max_MA 16.06 GB         CA 16.18 GB         Max_CA 16 GB 
+CPU Virtual Memory:  used = 32.19 GB, percent = 6.4%
+Parameter Offload - Persistent parameters statistics: param_count = 141, numel = 333312
+DeepSpeedZeRoOffload initialize [end]
+MA 8.95 GB         Max_MA 16.56 GB         CA 16.68 GB         Max_CA 17 GB 
+CPU Virtual Memory:  used = 32.59 GB, percent = 6.5%
+2026-01-09 02:27:17.925693: Resuming from checkpoint: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/final_state
+Loading data: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_1/generated_student.jsonl
+Loading data: data/32k/math/1/Qwen/Qwen2.5-Math-7B-Instruct.jsonl
+2026-01-09 02:27:26.506342: Loaded 32768 combined samples.
+2026-01-09 02:27:26.509557: Training started at 2026-01-09 02:27:26.509547
+2026-01-09 05:36:31.422037: Training finished. Saving...
+2026-01-09 05:36:42.357639: Saved DeepSpeed checkpoint to checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_state
+2026-01-09 05:36:44.478816: Saved HF model to checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model
+========================================
+Epoch 2: Evaluation
+Model: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model
+========================================
+INFO 01-09 05:37:09 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-09 05:37:09 [model.py:1661] Using max model len 32768
+INFO 01-09 05:37:48 [utils.py:253] non-default args: {'seed': 1234, 'gpu_memory_utilization': 0.8, 'disable_log_stats': True, 'model': 'checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model'}
+INFO 01-09 05:37:48 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-09 05:37:48 [utils.py:253] non-default args: {'seed': 1234, 'gpu_memory_utilization': 0.8, 'disable_log_stats': True, 'model': 'checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model'}
+INFO 01-09 05:37:48 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-09 05:37:50 [model.py:1661] Using max model len 32768
+INFO 01-09 05:37:50 [model.py:1661] Using max model len 32768
+INFO 01-09 05:37:50 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 01-09 05:37:50 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:37:50 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model', speculative_config=None, tokenizer='checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=32768, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=2, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=1234, served_model_name=checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP1 pid=1351412)[0;0m INFO 01-09 05:37:52 [parallel_state.py:1203] world_size=2 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:60452 backend=nccl
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:37:52 [parallel_state.py:1203] world_size=2 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:60452 backend=nccl
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:37:52 [pynccl.py:111] vLLM is using nccl==2.27.5
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:37:53 [cuda_communicator.py:120] Using AgRsAll2AllManager all2all manager.
+[0;36m(EngineCore_DP1 pid=1351412)[0;0m INFO 01-09 05:37:53 [parallel_state.py:1411] rank 1 in world size 2 is assigned as DP rank 1, PP rank 0, PCP rank 0, TP rank 0, EP rank 1
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:37:53 [parallel_state.py:1411] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:37:55 [gpu_model_runner.py:3562] Starting to load model checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model...
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:37:56 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:37:57 [default_loader.py:308] Loading weights took 0.14 seconds
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:37:58 [gpu_model_runner.py:3659] Model loading took 0.9269 GiB memory and 0.321199 seconds
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:38:04 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/6368c7b963/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:38:04 [backends.py:703] Dynamo bytecode transform time: 4.69 s
+[0;36m(EngineCore_DP1 pid=1351412)[0;0m INFO 01-09 05:38:06 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:38:06 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:38:07 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 1.16 s
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:38:07 [monitor.py:34] torch.compile takes 5.85 s in total
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:38:09 [gpu_worker.py:375] Available KV cache memory: 35.49 GiB
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:38:10 [kv_cache_utils.py:1291] GPU KV cache size: 3,101,520 tokens
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:38:10 [kv_cache_utils.py:1296] Maximum concurrency for 32,768 tokens per request: 94.65x
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:38:12 [gpu_model_runner.py:4587] Graph capturing finished in 3 secs, took 0.44 GiB
+[0;36m(EngineCore_DP0 pid=1351409)[0;0m INFO 01-09 05:38:12 [core.py:259] init engine (profile, create kv cache, warmup model) took 14.71 seconds
+INFO 01-09 05:38:13 [llm.py:360] Supported tasks: ['generate']
+INFO 01-09 05:38:13 [llm.py:360] Supported tasks: ['generate']
+vllm (pretrained=checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model,tensor_parallel_size=1,dtype=auto,gpu_memory_utilization=0.8,data_parallel_size=2), gen_kwargs: (max_gen_toks=2048), limit: None, num_fewshot: None, batch_size: 1
+|               Tasks                |Version|     Filter     |n-shot|  Metric   |   |Value |   |Stderr|
+|------------------------------------|------:|----------------|-----:|-----------|---|-----:|---|-----:|
+|gsm8k                               |      3|flexible-extract|     5|exact_match|↑  |0.4481|±  |0.0137|
+|                                    |       |strict-match    |     5|exact_match|↑  |0.2305|±  |0.0116|
+|minerva_math                        |      1|none            |      |exact_match|↑  |0.0004|±  |0.0003|
+|                                    |       |none            |      |math_verify|↑  |0.2912|±  |0.0061|
+| - minerva_math_algebra             |      3|none            |     4|exact_match|↑  |0.0000|±  |0.0000|
+|                                    |       |none            |     4|math_verify|↑  |0.4617|±  |0.0145|
+| - minerva_math_counting_and_prob   |      3|none            |     4|exact_match|↑  |0.0000|±  |0.0000|
+|                                    |       |none            |     4|math_verify|↑  |0.2194|±  |0.0190|
+| - minerva_math_geometry            |      3|none            |     4|exact_match|↑  |0.0000|±  |0.0000|
+|                                    |       |none            |     4|math_verify|↑  |0.2380|±  |0.0195|
+| - minerva_math_intermediate_algebra|      3|none            |     4|exact_match|↑  |0.0011|±  |0.0011|
+|                                    |       |none            |     4|math_verify|↑  |0.1395|±  |0.0115|
+| - minerva_math_num_theory          |      3|none            |     4|exact_match|↑  |0.0000|±  |0.0000|
+|                                    |       |none            |     4|math_verify|↑  |0.1759|±  |0.0164|
+| - minerva_math_prealgebra          |      3|none            |     4|exact_match|↑  |0.0000|±  |0.0000|
+|                                    |       |none            |     4|math_verify|↑  |0.4282|±  |0.0168|
+| - minerva_math_precalc             |      3|none            |     4|exact_match|↑  |0.0018|±  |0.0018|
+|                                    |       |none            |     4|math_verify|↑  |0.1758|±  |0.0163|
+|minerva_math500                     |      3|none            |     4|exact_match|↑  |0.0000|±  |0.0000|
+|                                    |       |none            |     4|math_verify|↑  |0.2960|±  |0.0204|
+
+|   Groups   |Version|Filter|n-shot|  Metric   |   |Value |   |Stderr|
+|------------|------:|------|------|-----------|---|-----:|---|-----:|
+|minerva_math|      1|none  |      |exact_match|↑  |0.0004|±  |0.0003|
+|            |       |none  |      |math_verify|↑  |0.2912|±  |0.0061|
+
+========================================
+Epoch 2: Generating Data from Student
+Model: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model
+========================================
+INFO 01-09 05:44:33 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'tensor_parallel_size': 2, 'disable_log_stats': True, 'model': 'checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model'}
+INFO 01-09 05:44:33 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-09 05:44:33 [model.py:1661] Using max model len 32768
+INFO 01-09 05:44:34 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m INFO 01-09 05:44:35 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model', speculative_config=None, tokenizer='checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=32768, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m WARNING 01-09 05:44:35 [multiproc_executor.py:882] Reducing Torch parallelism from 48 threads to 1 to avoid unnecessary CPU contention. Set OMP_NUM_THREADS in the external environment to tune this value as needed.
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m INFO 01-09 05:44:37 [parallel_state.py:1203] world_size=2 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:56693 backend=nccl
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m INFO 01-09 05:44:37 [parallel_state.py:1203] world_size=2 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:56693 backend=nccl
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m INFO 01-09 05:44:37 [pynccl.py:111] vLLM is using nccl==2.27.5
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m WARNING 01-09 05:44:38 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m WARNING 01-09 05:44:38 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m INFO 01-09 05:44:38 [parallel_state.py:1411] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m INFO 01-09 05:44:38 [parallel_state.py:1411] rank 1 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 1, EP rank 1
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m [0;36m(Worker_TP0 pid=1357250)[0;0m INFO 01-09 05:44:38 [gpu_model_runner.py:3562] Starting to load model checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model...
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m [0;36m(Worker_TP0 pid=1357250)[0;0m INFO 01-09 05:44:39 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m [0;36m(Worker_TP0 pid=1357250)[0;0m INFO 01-09 05:44:39 [default_loader.py:308] Loading weights took 0.10 seconds
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m [0;36m(Worker_TP0 pid=1357250)[0;0m INFO 01-09 05:44:40 [gpu_model_runner.py:3659] Model loading took 0.4643 GiB memory and 0.394306 seconds
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m [0;36m(Worker_TP0 pid=1357250)[0;0m INFO 01-09 05:44:45 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/b68c30f7d3/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m [0;36m(Worker_TP0 pid=1357250)[0;0m INFO 01-09 05:44:45 [backends.py:703] Dynamo bytecode transform time: 4.32 s
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m [0;36m(Worker_TP1 pid=1357252)[0;0m INFO 01-09 05:44:47 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m [0;36m(Worker_TP0 pid=1357250)[0;0m INFO 01-09 05:44:47 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m [0;36m(Worker_TP0 pid=1357250)[0;0m INFO 01-09 05:44:48 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 1.17 s
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m [0;36m(Worker_TP0 pid=1357250)[0;0m INFO 01-09 05:44:48 [monitor.py:34] torch.compile takes 5.49 s in total
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m [0;36m(Worker_TP0 pid=1357250)[0;0m INFO 01-09 05:44:49 [gpu_worker.py:375] Available KV cache memory: 40.70 GiB
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m INFO 01-09 05:44:49 [kv_cache_utils.py:1291] GPU KV cache size: 7,112,496 tokens
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m INFO 01-09 05:44:49 [kv_cache_utils.py:1296] Maximum concurrency for 32,768 tokens per request: 217.06x
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m [0;36m(Worker_TP1 pid=1357252)[0;0m INFO 01-09 05:44:55 [custom_all_reduce.py:216] Registering 4214 cuda graph addresses
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m [0;36m(Worker_TP0 pid=1357250)[0;0m INFO 01-09 05:44:55 [custom_all_reduce.py:216] Registering 4214 cuda graph addresses
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m [0;36m(Worker_TP0 pid=1357250)[0;0m INFO 01-09 05:44:55 [gpu_model_runner.py:4587] Graph capturing finished in 6 secs, took 0.44 GiB
+[0;36m(EngineCore_DP0 pid=1357244)[0;0m INFO 01-09 05:44:55 [core.py:259] init engine (profile, create kv cache, warmup model) took 15.35 seconds
+INFO 01-09 05:44:57 [llm.py:360] Supported tasks: ['generate']
+Loaded model checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_model with vLLM (LoRA=False).
+Sampling params: SamplingParams(n=1, presence_penalty=0.0, frequency_penalty=0.0, repetition_penalty=1.0, temperature=1.0, top_p=1.0, top_k=0, min_p=0.0, seed=2, stop=[], stop_token_ids=[], bad_words=[], include_stop_str_in_output=False, ignore_eos=False, max_tokens=1024, min_tokens=0, logprobs=None, prompt_logprobs=None, skip_special_tokens=True, spaces_between_special_tokens=True, truncate_prompt_tokens=None, structured_outputs=None, extra_args=None)
+Generating responses for 32768 prompts...
+Saving 32768 records to checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/generated_student.jsonl...
+Done.
+========================================
+Epoch 3: Distillation Training
+Student Data: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/generated_student.jsonl
+Teacher Data: data/32k/math/2/Qwen/Qwen2.5-Math-7B-Instruct.jsonl
+========================================
+Resuming from state: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_state
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-09 06:04:24.917709: world_size=2, micro_batch_size=1, gradient_accumulation_steps=64
+Before initializing optimizer states
+MA 1.84 GB         Max_MA 2.3 GB         CA 2.31 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 46.66 GB, percent = 9.3%
+After initializing optimizer states
+MA 1.84 GB         Max_MA 2.76 GB         CA 3.23 GB         Max_CA 3 GB 
+CPU Virtual Memory:  used = 46.67 GB, percent = 9.3%
+After initializing ZeRO optimizer
+MA 1.84 GB         Max_MA 1.84 GB         CA 3.23 GB         Max_CA 3 GB 
+CPU Virtual Memory:  used = 46.66 GB, percent = 9.3%
+DeepSpeedZeRoOffload initialize [begin]
+MA 16.06 GB         Max_MA 16.06 GB         CA 16.18 GB         Max_CA 16 GB 
+CPU Virtual Memory:  used = 43.53 GB, percent = 8.6%
+Parameter Offload - Persistent parameters statistics: param_count = 141, numel = 333312
+DeepSpeedZeRoOffload initialize [end]
+MA 8.95 GB         Max_MA 16.56 GB         CA 16.68 GB         Max_CA 17 GB 
+CPU Virtual Memory:  used = 43.99 GB, percent = 8.7%
+2026-01-09 06:04:47.102086: Resuming from checkpoint: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/final_state
+Loading data: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_2/generated_student.jsonl
+Loading data: data/32k/math/2/Qwen/Qwen2.5-Math-7B-Instruct.jsonl
+2026-01-09 06:05:04.480496: Loaded 32768 combined samples.
+2026-01-09 06:05:04.483983: Training started at 2026-01-09 06:05:04.483966
+2026-01-09 09:20:22.779415: Training finished. Saving...
+2026-01-09 09:20:32.798426: Saved DeepSpeed checkpoint to checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_state
+2026-01-09 09:20:34.754256: Saved HF model to checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_model
+========================================
+Epoch 3: Evaluation
+Model: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_model
+========================================
+INFO 01-09 09:21:00 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-09 09:21:00 [model.py:1661] Using max model len 32768
+INFO 01-09 09:21:40 [utils.py:253] non-default args: {'seed': 1234, 'gpu_memory_utilization': 0.8, 'disable_log_stats': True, 'model': 'checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_model'}
+INFO 01-09 09:21:40 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-09 09:21:40 [utils.py:253] non-default args: {'seed': 1234, 'gpu_memory_utilization': 0.8, 'disable_log_stats': True, 'model': 'checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_model'}
+INFO 01-09 09:21:40 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-09 09:21:42 [model.py:1661] Using max model len 32768
+INFO 01-09 09:21:42 [model.py:1661] Using max model len 32768
+INFO 01-09 09:21:42 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 01-09 09:21:42 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:42 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_model', speculative_config=None, tokenizer='checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=32768, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=2, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=1234, served_model_name=checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP1 pid=1533464)[0;0m INFO 01-09 09:21:45 [parallel_state.py:1203] world_size=2 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:46082 backend=nccl
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:45 [parallel_state.py:1203] world_size=2 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:46082 backend=nccl
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:46 [pynccl.py:111] vLLM is using nccl==2.27.5
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:46 [cuda_communicator.py:120] Using AgRsAll2AllManager all2all manager.
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:46 [parallel_state.py:1411] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP1 pid=1533464)[0;0m INFO 01-09 09:21:46 [parallel_state.py:1411] rank 1 in world size 2 is assigned as DP rank 1, PP rank 0, PCP rank 0, TP rank 0, EP rank 1
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:47 [gpu_model_runner.py:3562] Starting to load model checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_model...
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:48 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:48 [default_loader.py:308] Loading weights took 0.13 seconds
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:49 [gpu_model_runner.py:3659] Model loading took 0.9269 GiB memory and 0.322666 seconds
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:54 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/9f9ad54c99/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:54 [backends.py:703] Dynamo bytecode transform time: 4.52 s
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:56 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP1 pid=1533464)[0;0m INFO 01-09 09:21:56 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:57 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 1.15 s
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:57 [monitor.py:34] torch.compile takes 5.67 s in total
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:58 [gpu_worker.py:375] Available KV cache memory: 35.49 GiB
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:59 [kv_cache_utils.py:1291] GPU KV cache size: 3,101,520 tokens
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:21:59 [kv_cache_utils.py:1296] Maximum concurrency for 32,768 tokens per request: 94.65x
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:22:05 [gpu_model_runner.py:4587] Graph capturing finished in 6 secs, took 0.44 GiB
+[0;36m(EngineCore_DP0 pid=1533458)[0;0m INFO 01-09 09:22:05 [core.py:259] init engine (profile, create kv cache, warmup model) took 15.94 seconds
+INFO 01-09 09:22:06 [llm.py:360] Supported tasks: ['generate']
+INFO 01-09 09:22:06 [llm.py:360] Supported tasks: ['generate']
+vllm (pretrained=checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_model,tensor_parallel_size=1,dtype=auto,gpu_memory_utilization=0.8,data_parallel_size=2), gen_kwargs: (max_gen_toks=2048), limit: None, num_fewshot: None, batch_size: 1
+|               Tasks                |Version|     Filter     |n-shot|  Metric   |   |Value |   |Stderr|
+|------------------------------------|------:|----------------|-----:|-----------|---|-----:|---|-----:|
+|gsm8k                               |      3|flexible-extract|     5|exact_match|↑  |0.4549|±  |0.0137|
+|                                    |       |strict-match    |     5|exact_match|↑  |0.0591|±  |0.0065|
+|minerva_math                        |      1|none            |      |exact_match|↑  |0.0004|±  |0.0003|
+|                                    |       |none            |      |math_verify|↑  |0.2786|±  |0.0061|
+| - minerva_math_algebra             |      3|none            |     4|exact_match|↑  |0.0000|±  |0.0000|
+|                                    |       |none            |     4|math_verify|↑  |0.4541|±  |0.0145|
+| - minerva_math_counting_and_prob   |      3|none            |     4|exact_match|↑  |0.0000|±  |0.0000|
+|                                    |       |none            |     4|math_verify|↑  |0.2089|±  |0.0187|
+| - minerva_math_geometry            |      3|none            |     4|exact_match|↑  |0.0000|±  |0.0000|
+|                                    |       |none            |     4|math_verify|↑  |0.2276|±  |0.0192|
+| - minerva_math_intermediate_algebra|      3|none            |     4|exact_match|↑  |0.0000|±  |0.0000|
+|                                    |       |none            |     4|math_verify|↑  |0.1274|±  |0.0111|
+| - minerva_math_num_theory          |      3|none            |     4|exact_match|↑  |0.0000|±  |0.0000|
+|                                    |       |none            |     4|math_verify|↑  |0.1889|±  |0.0169|
+| - minerva_math_prealgebra          |      3|none            |     4|exact_match|↑  |0.0023|±  |0.0016|
+|                                    |       |none            |     4|math_verify|↑  |0.4064|±  |0.0167|
+| - minerva_math_precalc             |      3|none            |     4|exact_match|↑  |0.0000|±  |0.0000|
+|                                    |       |none            |     4|math_verify|↑  |0.1374|±  |0.0147|
+|minerva_math500                     |      3|none            |     4|exact_match|↑  |0.0020|±  |0.0020|
+|                                    |       |none            |     4|math_verify|↑  |0.2660|±  |0.0198|
+
+|   Groups   |Version|Filter|n-shot|  Metric   |   |Value |   |Stderr|
+|------------|------:|------|------|-----------|---|-----:|---|-----:|
+|minerva_math|      1|none  |      |exact_match|↑  |0.0004|±  |0.0003|
+|            |       |none  |      |math_verify|↑  |0.2786|±  |0.0061|
+
+========================================
+Epoch 3: Generating Data from Student
+Model: checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_model
+========================================
+INFO 01-09 09:28:32 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'tensor_parallel_size': 2, 'disable_log_stats': True, 'model': 'checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_model'}
+INFO 01-09 09:28:32 [model.py:514] Resolved architecture: Qwen2ForCausalLM
+INFO 01-09 09:28:32 [model.py:1661] Using max model len 32768
+INFO 01-09 09:28:33 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m INFO 01-09 09:28:34 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_model', speculative_config=None, tokenizer='checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=32768, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m WARNING 01-09 09:28:34 [multiproc_executor.py:882] Reducing Torch parallelism from 48 threads to 1 to avoid unnecessary CPU contention. Set OMP_NUM_THREADS in the external environment to tune this value as needed.
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m INFO 01-09 09:28:35 [parallel_state.py:1203] world_size=2 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:48727 backend=nccl
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m INFO 01-09 09:28:35 [parallel_state.py:1203] world_size=2 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:48727 backend=nccl
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m INFO 01-09 09:28:36 [pynccl.py:111] vLLM is using nccl==2.27.5
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m WARNING 01-09 09:28:36 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m WARNING 01-09 09:28:36 [symm_mem.py:67] SymmMemCommunicator: Device capability 8.6 not supported, communicator is not available.
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m INFO 01-09 09:28:36 [parallel_state.py:1411] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m INFO 01-09 09:28:36 [parallel_state.py:1411] rank 1 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 1, EP rank 1
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m [0;36m(Worker_TP0 pid=1537076)[0;0m INFO 01-09 09:28:37 [gpu_model_runner.py:3562] Starting to load model checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_model...
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m [0;36m(Worker_TP0 pid=1537076)[0;0m INFO 01-09 09:28:37 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m [0;36m(Worker_TP0 pid=1537076)[0;0m INFO 01-09 09:28:38 [default_loader.py:308] Loading weights took 0.10 seconds
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m [0;36m(Worker_TP0 pid=1537076)[0;0m INFO 01-09 09:28:38 [gpu_model_runner.py:3659] Model loading took 0.4643 GiB memory and 0.445248 seconds
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m [0;36m(Worker_TP0 pid=1537076)[0;0m INFO 01-09 09:28:43 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/3040da8950/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m [0;36m(Worker_TP0 pid=1537076)[0;0m INFO 01-09 09:28:43 [backends.py:703] Dynamo bytecode transform time: 4.20 s
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m [0;36m(Worker_TP1 pid=1537078)[0;0m INFO 01-09 09:28:44 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m [0;36m(Worker_TP0 pid=1537076)[0;0m INFO 01-09 09:28:44 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m [0;36m(Worker_TP0 pid=1537076)[0;0m INFO 01-09 09:28:45 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 1.16 s
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m [0;36m(Worker_TP0 pid=1537076)[0;0m INFO 01-09 09:28:45 [monitor.py:34] torch.compile takes 5.36 s in total
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m [0;36m(Worker_TP0 pid=1537076)[0;0m INFO 01-09 09:28:46 [gpu_worker.py:375] Available KV cache memory: 40.70 GiB
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m INFO 01-09 09:28:46 [kv_cache_utils.py:1291] GPU KV cache size: 7,112,496 tokens
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m INFO 01-09 09:28:46 [kv_cache_utils.py:1296] Maximum concurrency for 32,768 tokens per request: 217.06x
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m [0;36m(Worker_TP0 pid=1537076)[0;0m INFO 01-09 09:28:48 [custom_all_reduce.py:216] Registering 4214 cuda graph addresses
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m [0;36m(Worker_TP1 pid=1537078)[0;0m INFO 01-09 09:28:48 [custom_all_reduce.py:216] Registering 4214 cuda graph addresses
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m [0;36m(Worker_TP0 pid=1537076)[0;0m INFO 01-09 09:28:49 [gpu_model_runner.py:4587] Graph capturing finished in 2 secs, took 0.44 GiB
+[0;36m(EngineCore_DP0 pid=1537070)[0;0m INFO 01-09 09:28:49 [core.py:259] init engine (profile, create kv cache, warmup model) took 10.53 seconds
+INFO 01-09 09:28:50 [llm.py:360] Supported tasks: ['generate']
+Loaded model checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/final_model with vLLM (LoRA=False).
+Sampling params: SamplingParams(n=1, presence_penalty=0.0, frequency_penalty=0.0, repetition_penalty=1.0, temperature=1.0, top_p=1.0, top_k=0, min_p=0.0, seed=3, stop=[], stop_token_ids=[], bad_words=[], include_stop_str_in_output=False, ignore_eos=False, max_tokens=1024, min_tokens=0, logprobs=None, prompt_logprobs=None, skip_special_tokens=True, spaces_between_special_tokens=True, truncate_prompt_tokens=None, structured_outputs=None, extra_args=None)
+Generating responses for 32768 prompts...
+Saving 32768 records to checkpoints/math/Qwen2.5-0.5B/32k/Qwen2.5-Math-7B-Instruct_KD_FKL/epoch_3/generated_student.jsonl...
+Done.
+Distillation Loop Complete.
