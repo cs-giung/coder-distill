@@ -27,7 +27,7 @@ progress_console = Console(stderr=True, force_terminal=True)
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_jsonl", type=str, required=True)
-    parser.add_argument("--student_model", type=str, required=True)
+    parser.add_argument("--model", type=str, required=True)
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--output_dir", type=str, required=True)
     parser.add_argument("--lr", type=float, default=1e-05)
@@ -139,12 +139,12 @@ def main():
     # ------------------------------------------------------------------------ #
     # Model Setup
     # ------------------------------------------------------------------------ #
-    tokenizer = AutoTokenizer.from_pretrained(args.student_model)
+    tokenizer = AutoTokenizer.from_pretrained(args.model)
     tokenizer.pad_token = tokenizer.eos_token
 
-    # Student Model
+    # Model
     model = AutoModelForCausalLM.from_pretrained(
-        args.student_model,
+        args.model,
         torch_dtype=torch.bfloat16,
         attn_implementation="eager",
     )
