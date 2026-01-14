@@ -42,9 +42,17 @@ def get_args():
     parser.add_argument("--rev_kl_teacher", type=float, default=0.0)
     parser.add_argument("--resume_from_checkpoint", type=str, default=None)
     parser.add_argument("--use_lora", action="store_true")
+    parser.add_argument("--use_alpaca_prompt", action="store_true")
     parser.add_argument("--lora_r", type=int, default=16)
     parser.add_argument("--lora_alpha", type=int, default=128)
     parser.add_argument("--lora_dropout", type=float, default=0.05)
+    parser.add_argument(
+        "--lora_target_modules",
+        type=str,
+        nargs="+",
+        default=["all-linear"],
+        help="List of module names or 'all-linear'",
+    )
     parser.add_argument(
         "--local_rank",
         type=int,
@@ -87,7 +95,8 @@ def load_jsonl(path, limit=None, rank=0):
         with open(path, "r") as f:
             for line in f:
                 item = json.loads(line)
-                data.append((item["instruction"], item["response"]))
+                inp = item.get("input", "")
+                data.append((item["instruction"], inp, item["response"]))
         if limit:
             data = data[:limit]
     return data
@@ -175,7 +184,10 @@ def main():
             r=args.lora_r,
             lora_alpha=args.lora_alpha,
             lora_dropout=args.lora_dropout,
-            target_modules="all-linear",
+            target_modules=args.lora_target_modules[0]
+            if len(args.lora_target_modules) == 1
+            and args.lora_target_modules[0] == "all-linear"
+            else args.lora_target_modules,
         )
         student_model = get_peft_model(student_model, peft_config)
     else:
@@ -228,12 +240,17 @@ def main():
     # Data Setup
     # ------------------------------------------------------------------------ #
     combined_data = [
-        {"instruction": e1, "student_response": e2, "teacher_response": e4}
-        for (e1, e2), (e3, e4) in zip(
+        {
+            "instruction": s_ins,
+            "input": s_inp,
+            "student_response": s_res,
+            "teacher_response": t_res,
+        }
+        for (s_ins, s_inp, s_res), (t_ins, t_inp, t_res) in zip(
             load_jsonl(args.student_jsonl, limit=args.limit, rank=rank),
             load_jsonl(args.teacher_jsonl, limit=args.limit, rank=rank),
         )
-        if e1 == e3
+        if s_ins == t_ins and s_inp == t_inp
     ]
 
     if rank == 0:
@@ -248,7 +265,9 @@ def main():
     # ------------------------------------------------------------------------ #
     # Training Loop
     # ------------------------------------------------------------------------ #
-    def process_batch_chunk(prompts, source_label, instructions_for_mask):
+    def process_batch_chunk(
+        prompts, source_label, instructions_for_mask, inputs_for_mask
+    ):
         inputs = tokenizer(
             prompts,
             return_tensors="pt",
@@ -260,12 +279,35 @@ def main():
 
         # Loss Mask logic (same as legacy)
         prompt_only_texts = []
-        for inst in instructions_for_mask:
-            messages = [{"role": "user", "content": inst}]
-            text = tokenizer.apply_chat_template(
-                messages, tokenize=False, add_generation_prompt=True
-            )
-            prompt_only_texts.append(text)
+
+        if args.use_alpaca_prompt:
+            PROMPT_NO_INPUT = "Below is an instruction that describes a task. Write a response that appropriately completes the request."
+            PROMPT_INPUT = "Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request."
+
+            for inst, inp in zip(instructions_for_mask, inputs_for_mask):
+                sys_msg = PROMPT_INPUT if inp else PROMPT_NO_INPUT
+                user_content = inst
+                if inp:
+                    user_content += f"\n\n### Input:\n{inp}"
+
+                messages = [
+                    {"role": "system", "content": sys_msg},
+                    {"role": "user", "content": user_content},
+                ]
+                text = tokenizer.apply_chat_template(
+                    messages, tokenize=False, add_generation_prompt=True
+                )
+                prompt_only_texts.append(text)
+        else:
+            for inst, inp in zip(instructions_for_mask, inputs_for_mask):
+                user_content = inst
+                if inp:
+                    user_content += f"\n\n{inp}"
+                messages = [{"role": "user", "content": user_content}]
+                text = tokenizer.apply_chat_template(
+                    messages, tokenize=False, add_generation_prompt=True
+                )
+                prompt_only_texts.append(text)
 
         prompt_inputs = tokenizer(
             prompt_only_texts, return_tensors="pt", padding=False, truncation=True
@@ -355,30 +397,41 @@ def main():
             total=len(dloader),
         ):
             instructions = batch_data["instruction"]
+            inputs_data = batch_data["input"]
             student_resps = batch_data["student_response"]
             teacher_resps = batch_data["teacher_response"]
 
-            # Student prompts
-            student_prompts = []
-            for inst, resp in zip(instructions, student_resps):
-                messages = [
-                    {"role": "user", "content": inst},
-                    {"role": "assistant", "content": resp},
-                ]
-                student_prompts.append(
-                    tokenizer.apply_chat_template(messages, tokenize=False)
-                )
+            def build_prompts(resps):
+                prompts = []
+                for inst, inp, resp in zip(instructions, inputs_data, resps):
+                    if args.use_alpaca_prompt:
+                        PROMPT_NO_INPUT = "Below is an instruction that describes a task. Write a response that appropriately completes the request."
+                        PROMPT_INPUT = "Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request."
+                        sys_msg = PROMPT_INPUT if inp else PROMPT_NO_INPUT
+                        user_content = inst
+                        if inp:
+                            user_content += f"\n\n### Input:\n{inp}"
 
-            # Teacher prompts
-            teacher_prompts = []
-            for inst, resp in zip(instructions, teacher_resps):
-                messages = [
-                    {"role": "user", "content": inst},
-                    {"role": "assistant", "content": resp},
-                ]
-                teacher_prompts.append(
-                    tokenizer.apply_chat_template(messages, tokenize=False)
-                )
+                        messages = [
+                            {"role": "system", "content": sys_msg},
+                            {"role": "user", "content": user_content},
+                            {"role": "assistant", "content": resp},
+                        ]
+                    else:
+                        user_content = inst
+                        if inp:
+                            user_content += f"\n\n{inp}"
+                        messages = [
+                            {"role": "user", "content": user_content},
+                            {"role": "assistant", "content": resp},
+                        ]
+                    prompts.append(
+                        tokenizer.apply_chat_template(messages, tokenize=False)
+                    )
+                return prompts
+
+            student_prompts = build_prompts(student_resps)
+            teacher_prompts = build_prompts(teacher_resps)
 
             is_log_boundary = (step + 1) % gradient_accumulation_steps == 0
             do_process_s = need_backward_loss_s or is_log_boundary
@@ -388,7 +441,7 @@ def main():
             if do_process_s:
                 with torch.set_grad_enabled(need_backward_loss_s):
                     loss_s, fwd_s, rev_s, mask_s = process_batch_chunk(
-                        student_prompts, "student", instructions
+                        student_prompts, "student", instructions, inputs_data
                     )
                 if need_backward_loss_s:
                     student_engine.backward(loss_s)
@@ -398,7 +451,7 @@ def main():
             if do_process_t:
                 with torch.set_grad_enabled(need_backward_loss_t):
                     loss_t, fwd_t, rev_t, mask_t = process_batch_chunk(
-                        teacher_prompts, "teacher", instructions
+                        teacher_prompts, "teacher", instructions, inputs_data
                     )
                 if need_backward_loss_t:
                     student_engine.backward(loss_t)
