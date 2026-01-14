@@ -94,7 +94,7 @@ mkdir -p checkpoints/code/Qwen2.5-0.5B/32k/Qwen2.5-Coder-3B-Instruct_KD_FKL
 | KD_FKL                                | 41.5 / 37.8 | 43.1 / 33.9 | 39.1 |
 | KD_RKL                                | 39.6 / 37.2 | 41.5 / 33.3 | 37.9 |
 | OD_FKL                                | 39.6 / 35.4 | 46.6 / 38.6 | 40.1 |
-| OD_RKL                                |             |                    |
+| OD_RKL                                | 42.7 / 39.0 | 44.7 / 36.8 | 40.8 |
 
 ### Math
 ```bash
