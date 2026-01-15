@@ -37,6 +37,7 @@ def main():
     parser.add_argument("--temperature", type=float, default=1.0)
     parser.add_argument("--tensor_parallel_size", type=int, default=1)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--use_alpaca_prompt", action="store_true")
     args = parser.parse_args()
 
     tokenizer = AutoTokenizer.from_pretrained(args.model)
@@ -65,20 +66,37 @@ def main():
     )
     print(f"Loaded model {base_model_path} with vLLM (LoRA={enable_lora}).")
 
-    instructions = []
+    items = []
     with open(args.input, "r") as fp:
         for line in fp:
-            instructions.append(json.loads(line)["instruction"])
+            item = json.loads(line)
+            items.append((item["instruction"], item.get("input", "")))
     if args.limit:
-        instructions = instructions[: args.limit]
+        items = items[: args.limit]
 
     output_dir = os.path.dirname(args.output)
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)
 
     prompts = []
-    for inst in instructions:
-        messages = [{"role": "user", "content": inst}]
+    for inst, inp in items:
+        if args.use_alpaca_prompt:
+            PROMPT_NO_INPUT = "Below is an instruction that describes a task. Write a response that appropriately completes the request."
+            PROMPT_INPUT = "Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request."
+            sys_msg = PROMPT_INPUT if inp else PROMPT_NO_INPUT
+            user_content = inst
+            if inp:
+                user_content += f"\n\n### Input:\n{inp}"
+            messages = [
+                {"role": "system", "content": sys_msg},
+                {"role": "user", "content": user_content}
+            ]
+        else:
+            user_content = inst
+            if inp:
+                user_content += f"\n\n{inp}"
+            messages = [{"role": "user", "content": user_content}]
+            
         text = tokenizer.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True
         )
@@ -101,11 +119,12 @@ def main():
     outputs = llm.generate(prompts, sampling_params, lora_request=lora_request)
 
     data_to_save = []
-    for inst, output in zip(instructions, outputs):
+    for (inst, inp), output in zip(items, outputs):
         generated_text = output.outputs[0].text
         data_to_save.append(
             {
                 "instruction": inst,
+                "input": inp,
                 "response": generated_text,
                 "top_p": sampling_params.top_p,
                 "min_p": sampling_params.min_p,

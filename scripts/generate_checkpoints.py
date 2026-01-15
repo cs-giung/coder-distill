@@ -2,7 +2,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 
 
 if __name__ == "__main__":
-    model = "Qwen2.5-0.5B"
+    model = "Qwen2.5-Coder-1.5B"
     # model = "Qwen2.5-1.5B"
 
     math_tokenizer = "Qwen/Qwen2.5-Math-1.5B-Instruct"
