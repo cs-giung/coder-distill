@@ -1,0 +1,639 @@
+========================================
+Epoch 0: SFT Training
+Data: data/dolly/dolly_de.jsonl
+========================================
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-15 04:57:58.656590: world_size=2, micro_batch_size=1, gradient_accumulation_steps=64
+Before initializing optimizer states
+MA 1.35 GB         Max_MA 1.68 GB         CA 1.68 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 36.75 GB, percent = 9.7%
+After initializing optimizer states
+MA 1.35 GB         Max_MA 2.01 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 36.47 GB, percent = 9.7%
+After initializing ZeRO optimizer
+MA 1.35 GB         Max_MA 1.35 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 36.47 GB, percent = 9.7%
+Loading data: data/dolly/dolly_de.jsonl
+2026-01-15 04:58:04.518285: Loaded 13312 samples.
+2026-01-15 04:58:04.519934: Training started at 2026-01-15 04:58:04.519923
+2026-01-15 05:14:29.483203: Training finished. Saving...
+2026-01-15 05:14:38.752649: Saved DeepSpeed checkpoint to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_0/final_state
+2026-01-15 05:14:40.765757: Saved HF model to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_0/final_model
+========================================
+Epoch 0: Evaluation
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_0/final_model
+========================================
+Loading test data from data/dolly_eval/dolly_de.jsonl
+Loading vLLM model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_0/final_model
+INFO 01-15 05:14:52 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'disable_log_stats': True, 'model': 'checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_0/final_model'}
+INFO 01-15 05:14:52 [model.py:514] Resolved architecture: GPT2LMHeadModel
+INFO 01-15 05:14:52 [model.py:1661] Using max model len 1024
+INFO 01-15 05:14:54 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:14:54 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_0/final_model', speculative_config=None, tokenizer='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_0/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=1024, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_0/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:14:55 [parallel_state.py:1203] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://137.68.191.122:41293 backend=nccl
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:14:55 [parallel_state.py:1411] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:14:56 [gpu_model_runner.py:3562] Starting to load model checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_0/final_model...
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:14:57 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:14:57 [default_loader.py:308] Loading weights took 0.42 seconds
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:14:58 [gpu_model_runner.py:3659] Model loading took 0.6611 GiB memory and 0.663833 seconds
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:15:08 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/11152f3306/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:15:08 [backends.py:703] Dynamo bytecode transform time: 9.50 s
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:15:09 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:15:12 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 3.01 s
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:15:12 [monitor.py:34] torch.compile takes 12.51 s in total
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:15:13 [gpu_worker.py:375] Available KV cache memory: 20.03 GiB
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:15:13 [kv_cache_utils.py:1291] GPU KV cache size: 218,720 tokens
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:15:13 [kv_cache_utils.py:1296] Maximum concurrency for 1,024 tokens per request: 213.59x
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:15:15 [gpu_model_runner.py:4587] Graph capturing finished in 2 secs, took 0.30 GiB
+[0;36m(EngineCore_DP0 pid=3897992)[0;0m INFO 01-15 05:15:15 [core.py:259] init engine (profile, create kv cache, warmup model) took 17.37 seconds
+INFO 01-15 05:15:16 [llm.py:360] Supported tasks: ['generate']
+Generating...
+Saved predictions to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_0/final_model/dolly_eval/dolly_de.jsonl
+Computing ROUGE...
+--------------------------------------------------
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_0/final_model
+Data: data/dolly_eval/dolly_de.jsonl
+ROUGE-1: 0.1751
+ROUGE-2: 0.0672
+ROUGE-L: 0.1484
+--------------------------------------------------
+Saved eval results to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_0/final_model/dolly_eval/dolly_de_eval_results.json
+ERROR 01-15 05:15:21 [core_client.py:606] Engine core proc EngineCore_DP0 died unexpectedly, shutting down client.
+========================================
+Epoch 1: SFT Training
+Data: data/dolly/dolly_de.jsonl
+========================================
+Resuming from state: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_0/final_state
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-15 05:15:36.670620: world_size=2, micro_batch_size=1, gradient_accumulation_steps=64
+Before initializing optimizer states
+MA 1.35 GB         Max_MA 1.68 GB         CA 1.68 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 42.66 GB, percent = 11.3%
+After initializing optimizer states
+MA 1.35 GB         Max_MA 2.01 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 42.36 GB, percent = 11.2%
+After initializing ZeRO optimizer
+MA 1.35 GB         Max_MA 1.35 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 42.76 GB, percent = 11.3%
+2026-01-15 05:15:38.604880: Resuming from checkpoint: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_0/final_state
+Loading data: data/dolly/dolly_de.jsonl
+2026-01-15 05:15:40.693425: Loaded 13312 samples.
+2026-01-15 05:15:40.695215: Training started at 2026-01-15 05:15:40.695208
+2026-01-15 05:32:03.963685: Training finished. Saving...
+2026-01-15 05:32:12.760983: Saved DeepSpeed checkpoint to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_1/final_state
+2026-01-15 05:32:14.490391: Saved HF model to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_1/final_model
+========================================
+Epoch 1: Evaluation
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_1/final_model
+========================================
+Loading test data from data/dolly_eval/dolly_de.jsonl
+Loading vLLM model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_1/final_model
+INFO 01-15 05:32:32 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'disable_log_stats': True, 'model': 'checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_1/final_model'}
+INFO 01-15 05:32:32 [model.py:514] Resolved architecture: GPT2LMHeadModel
+INFO 01-15 05:32:32 [model.py:1661] Using max model len 1024
+INFO 01-15 05:32:33 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:33 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_1/final_model', speculative_config=None, tokenizer='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_1/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=1024, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_1/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:34 [parallel_state.py:1203] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://137.68.191.122:47423 backend=nccl
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:35 [parallel_state.py:1411] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:35 [gpu_model_runner.py:3562] Starting to load model checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_1/final_model...
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:36 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:36 [default_loader.py:308] Loading weights took 0.38 seconds
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:37 [gpu_model_runner.py:3659] Model loading took 0.6611 GiB memory and 0.627020 seconds
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:40 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/5ffdfbe72b/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:40 [backends.py:703] Dynamo bytecode transform time: 2.93 s
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:41 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:42 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 0.87 s
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:42 [monitor.py:34] torch.compile takes 3.80 s in total
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:43 [gpu_worker.py:375] Available KV cache memory: 20.02 GiB
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:43 [kv_cache_utils.py:1291] GPU KV cache size: 218,704 tokens
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:43 [kv_cache_utils.py:1296] Maximum concurrency for 1,024 tokens per request: 213.58x
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:45 [gpu_model_runner.py:4587] Graph capturing finished in 2 secs, took 0.30 GiB
+[0;36m(EngineCore_DP0 pid=3914331)[0;0m INFO 01-15 05:32:45 [core.py:259] init engine (profile, create kv cache, warmup model) took 8.45 seconds
+INFO 01-15 05:32:46 [llm.py:360] Supported tasks: ['generate']
+Generating...
+Saved predictions to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_1/final_model/dolly_eval/dolly_de.jsonl
+Computing ROUGE...
+--------------------------------------------------
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_1/final_model
+Data: data/dolly_eval/dolly_de.jsonl
+ROUGE-1: 0.1912
+ROUGE-2: 0.0829
+ROUGE-L: 0.1600
+--------------------------------------------------
+Saved eval results to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_1/final_model/dolly_eval/dolly_de_eval_results.json
+ERROR 01-15 05:32:51 [core_client.py:606] Engine core proc EngineCore_DP0 died unexpectedly, shutting down client.
+========================================
+Epoch 2: SFT Training
+Data: data/dolly/dolly_de.jsonl
+========================================
+Resuming from state: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_1/final_state
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-15 05:33:07.348530: world_size=2, micro_batch_size=1, gradient_accumulation_steps=64
+Before initializing optimizer states
+MA 1.35 GB         Max_MA 1.68 GB         CA 1.68 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 40.83 GB, percent = 10.8%
+After initializing optimizer states
+MA 1.35 GB         Max_MA 2.01 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 40.82 GB, percent = 10.8%
+After initializing ZeRO optimizer
+MA 1.35 GB         Max_MA 1.35 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 40.99 GB, percent = 10.9%
+2026-01-15 05:33:09.181825: Resuming from checkpoint: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_1/final_state
+Loading data: data/dolly/dolly_de.jsonl
+2026-01-15 05:33:10.988543: Loaded 13312 samples.
+2026-01-15 05:33:10.990190: Training started at 2026-01-15 05:33:10.990183
+2026-01-15 05:49:37.813023: Training finished. Saving...
+2026-01-15 05:49:48.313521: Saved DeepSpeed checkpoint to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_2/final_state
+2026-01-15 05:49:52.726192: Saved HF model to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_2/final_model
+========================================
+Epoch 2: Evaluation
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_2/final_model
+========================================
+Loading test data from data/dolly_eval/dolly_de.jsonl
+Loading vLLM model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_2/final_model
+INFO 01-15 05:50:08 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'disable_log_stats': True, 'model': 'checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_2/final_model'}
+INFO 01-15 05:50:08 [model.py:514] Resolved architecture: GPT2LMHeadModel
+INFO 01-15 05:50:08 [model.py:1661] Using max model len 1024
+INFO 01-15 05:50:10 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:10 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_2/final_model', speculative_config=None, tokenizer='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_2/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=1024, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_2/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:11 [parallel_state.py:1203] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://137.68.191.122:54627 backend=nccl
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:11 [parallel_state.py:1411] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:12 [gpu_model_runner.py:3562] Starting to load model checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_2/final_model...
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:13 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:27 [default_loader.py:308] Loading weights took 13.05 seconds
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:27 [gpu_model_runner.py:3659] Model loading took 0.6611 GiB memory and 13.754514 seconds
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:34 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/c97215ef33/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:34 [backends.py:703] Dynamo bytecode transform time: 6.22 s
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:36 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:38 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 2.91 s
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:38 [monitor.py:34] torch.compile takes 9.13 s in total
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:39 [gpu_worker.py:375] Available KV cache memory: 20.02 GiB
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:39 [kv_cache_utils.py:1291] GPU KV cache size: 218,704 tokens
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:39 [kv_cache_utils.py:1296] Maximum concurrency for 1,024 tokens per request: 213.58x
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:41 [gpu_model_runner.py:4587] Graph capturing finished in 2 secs, took 0.30 GiB
+[0;36m(EngineCore_DP0 pid=3931060)[0;0m INFO 01-15 05:50:41 [core.py:259] init engine (profile, create kv cache, warmup model) took 14.03 seconds
+INFO 01-15 05:50:42 [llm.py:360] Supported tasks: ['generate']
+Generating...
+Saved predictions to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_2/final_model/dolly_eval/dolly_de.jsonl
+Computing ROUGE...
+--------------------------------------------------
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_2/final_model
+Data: data/dolly_eval/dolly_de.jsonl
+ROUGE-1: 0.1917
+ROUGE-2: 0.0911
+ROUGE-L: 0.1636
+--------------------------------------------------
+Saved eval results to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_2/final_model/dolly_eval/dolly_de_eval_results.json
+ERROR 01-15 05:50:48 [core_client.py:606] Engine core proc EngineCore_DP0 died unexpectedly, shutting down client.
+========================================
+Epoch 3: SFT Training
+Data: data/dolly/dolly_de.jsonl
+========================================
+Resuming from state: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_2/final_state
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-15 05:51:10.367156: world_size=2, micro_batch_size=1, gradient_accumulation_steps=64
+Before initializing optimizer states
+MA 1.35 GB         Max_MA 1.68 GB         CA 1.68 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 44.98 GB, percent = 11.9%
+After initializing optimizer states
+MA 1.35 GB         Max_MA 2.01 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 44.8 GB, percent = 11.9%
+After initializing ZeRO optimizer
+MA 1.35 GB         Max_MA 1.35 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 44.8 GB, percent = 11.9%
+2026-01-15 05:51:12.251021: Resuming from checkpoint: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_2/final_state
+Loading data: data/dolly/dolly_de.jsonl
+2026-01-15 05:51:14.004557: Loaded 13312 samples.
+2026-01-15 05:51:14.006753: Training started at 2026-01-15 05:51:14.006746
+2026-01-15 06:07:41.161829: Training finished. Saving...
+2026-01-15 06:07:50.023530: Saved DeepSpeed checkpoint to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_3/final_state
+2026-01-15 06:07:51.629320: Saved HF model to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_3/final_model
+========================================
+Epoch 3: Evaluation
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_3/final_model
+========================================
+Loading test data from data/dolly_eval/dolly_de.jsonl
+Loading vLLM model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_3/final_model
+INFO 01-15 06:08:00 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'disable_log_stats': True, 'model': 'checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_3/final_model'}
+INFO 01-15 06:08:00 [model.py:514] Resolved architecture: GPT2LMHeadModel
+INFO 01-15 06:08:00 [model.py:1661] Using max model len 1024
+INFO 01-15 06:08:01 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:01 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_3/final_model', speculative_config=None, tokenizer='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_3/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=1024, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_3/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:02 [parallel_state.py:1203] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://137.68.191.122:34707 backend=nccl
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:02 [parallel_state.py:1411] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:03 [gpu_model_runner.py:3562] Starting to load model checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_3/final_model...
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:04 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:04 [default_loader.py:308] Loading weights took 0.33 seconds
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:05 [gpu_model_runner.py:3659] Model loading took 0.6611 GiB memory and 0.545416 seconds
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:08 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/12e9f4c22d/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:08 [backends.py:703] Dynamo bytecode transform time: 2.84 s
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:09 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:10 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 0.88 s
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:10 [monitor.py:34] torch.compile takes 3.72 s in total
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:11 [gpu_worker.py:375] Available KV cache memory: 20.02 GiB
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:11 [kv_cache_utils.py:1291] GPU KV cache size: 218,704 tokens
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:11 [kv_cache_utils.py:1296] Maximum concurrency for 1,024 tokens per request: 213.58x
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:13 [gpu_model_runner.py:4587] Graph capturing finished in 2 secs, took 0.30 GiB
+[0;36m(EngineCore_DP0 pid=3947928)[0;0m INFO 01-15 06:08:13 [core.py:259] init engine (profile, create kv cache, warmup model) took 8.33 seconds
+INFO 01-15 06:08:14 [llm.py:360] Supported tasks: ['generate']
+Generating...
+Saved predictions to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_3/final_model/dolly_eval/dolly_de.jsonl
+Computing ROUGE...
+--------------------------------------------------
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_3/final_model
+Data: data/dolly_eval/dolly_de.jsonl
+ROUGE-1: 0.1943
+ROUGE-2: 0.0895
+ROUGE-L: 0.1662
+--------------------------------------------------
+Saved eval results to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_3/final_model/dolly_eval/dolly_de_eval_results.json
+ERROR 01-15 06:08:19 [core_client.py:606] Engine core proc EngineCore_DP0 died unexpectedly, shutting down client.
+========================================
+Epoch 4: SFT Training
+Data: data/dolly/dolly_de.jsonl
+========================================
+Resuming from state: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_3/final_state
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-15 06:08:33.376703: world_size=2, micro_batch_size=1, gradient_accumulation_steps=64
+Before initializing optimizer states
+MA 1.35 GB         Max_MA 1.68 GB         CA 1.68 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 40.03 GB, percent = 10.6%
+After initializing optimizer states
+MA 1.35 GB         Max_MA 2.01 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 40.17 GB, percent = 10.6%
+After initializing ZeRO optimizer
+MA 1.35 GB         Max_MA 1.35 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 40.19 GB, percent = 10.6%
+2026-01-15 06:08:35.145424: Resuming from checkpoint: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_3/final_state
+Loading data: data/dolly/dolly_de.jsonl
+2026-01-15 06:08:36.932485: Loaded 13312 samples.
+2026-01-15 06:08:36.934575: Training started at 2026-01-15 06:08:36.934567
+2026-01-15 06:25:05.768668: Training finished. Saving...
+2026-01-15 06:25:15.472980: Saved DeepSpeed checkpoint to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_4/final_state
+2026-01-15 06:25:17.244555: Saved HF model to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_4/final_model
+========================================
+Epoch 4: Evaluation
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_4/final_model
+========================================
+Loading test data from data/dolly_eval/dolly_de.jsonl
+Loading vLLM model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_4/final_model
+INFO 01-15 06:25:28 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'disable_log_stats': True, 'model': 'checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_4/final_model'}
+INFO 01-15 06:25:28 [model.py:514] Resolved architecture: GPT2LMHeadModel
+INFO 01-15 06:25:28 [model.py:1661] Using max model len 1024
+INFO 01-15 06:25:29 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:29 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_4/final_model', speculative_config=None, tokenizer='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_4/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=1024, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_4/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:30 [parallel_state.py:1203] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://137.68.191.122:47095 backend=nccl
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:30 [parallel_state.py:1411] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:31 [gpu_model_runner.py:3562] Starting to load model checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_4/final_model...
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:31 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:32 [default_loader.py:308] Loading weights took 0.44 seconds
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:32 [gpu_model_runner.py:3659] Model loading took 0.6611 GiB memory and 0.651390 seconds
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:35 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/620cf57ed7/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:35 [backends.py:703] Dynamo bytecode transform time: 2.66 s
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:36 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:37 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 0.86 s
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:37 [monitor.py:34] torch.compile takes 3.52 s in total
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:38 [gpu_worker.py:375] Available KV cache memory: 20.02 GiB
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:39 [kv_cache_utils.py:1291] GPU KV cache size: 218,704 tokens
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:39 [kv_cache_utils.py:1296] Maximum concurrency for 1,024 tokens per request: 213.58x
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:41 [gpu_model_runner.py:4587] Graph capturing finished in 2 secs, took 0.30 GiB
+[0;36m(EngineCore_DP0 pid=3965146)[0;0m INFO 01-15 06:25:41 [core.py:259] init engine (profile, create kv cache, warmup model) took 8.09 seconds
+INFO 01-15 06:25:41 [llm.py:360] Supported tasks: ['generate']
+Generating...
+Saved predictions to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_4/final_model/dolly_eval/dolly_de.jsonl
+Computing ROUGE...
+--------------------------------------------------
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_4/final_model
+Data: data/dolly_eval/dolly_de.jsonl
+ROUGE-1: 0.2001
+ROUGE-2: 0.1002
+ROUGE-L: 0.1745
+--------------------------------------------------
+Saved eval results to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_4/final_model/dolly_eval/dolly_de_eval_results.json
+ERROR 01-15 06:25:47 [core_client.py:606] Engine core proc EngineCore_DP0 died unexpectedly, shutting down client.
+========================================
+Epoch 5: SFT Training
+Data: data/dolly/dolly_de.jsonl
+========================================
+Resuming from state: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_4/final_state
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-15 06:26:03.260888: world_size=2, micro_batch_size=1, gradient_accumulation_steps=64
+Before initializing optimizer states
+MA 1.35 GB         Max_MA 1.68 GB         CA 1.68 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 49.41 GB, percent = 13.1%
+After initializing optimizer states
+MA 1.35 GB         Max_MA 2.01 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 49.4 GB, percent = 13.1%
+After initializing ZeRO optimizer
+MA 1.35 GB         Max_MA 1.35 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 49.71 GB, percent = 13.2%
+2026-01-15 06:26:05.212458: Resuming from checkpoint: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_4/final_state
+Loading data: data/dolly/dolly_de.jsonl
+2026-01-15 06:26:07.485808: Loaded 13312 samples.
+2026-01-15 06:26:07.487849: Training started at 2026-01-15 06:26:07.487840
+2026-01-15 06:42:34.307355: Training finished. Saving...
+2026-01-15 06:42:47.869995: Saved DeepSpeed checkpoint to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_5/final_state
+2026-01-15 06:42:49.526125: Saved HF model to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_5/final_model
+========================================
+Epoch 5: Evaluation
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_5/final_model
+========================================
+Loading test data from data/dolly_eval/dolly_de.jsonl
+Loading vLLM model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_5/final_model
+INFO 01-15 06:43:07 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'disable_log_stats': True, 'model': 'checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_5/final_model'}
+INFO 01-15 06:43:07 [model.py:514] Resolved architecture: GPT2LMHeadModel
+INFO 01-15 06:43:07 [model.py:1661] Using max model len 1024
+INFO 01-15 06:43:08 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:08 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_5/final_model', speculative_config=None, tokenizer='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_5/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=1024, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_5/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:10 [parallel_state.py:1203] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://137.68.191.122:38829 backend=nccl
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:10 [parallel_state.py:1411] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:11 [gpu_model_runner.py:3562] Starting to load model checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_5/final_model...
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:12 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:12 [default_loader.py:308] Loading weights took 0.56 seconds
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:13 [gpu_model_runner.py:3659] Model loading took 0.6611 GiB memory and 0.838554 seconds
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:18 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/5d93c08ce3/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:18 [backends.py:703] Dynamo bytecode transform time: 4.76 s
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:19 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:20 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 0.97 s
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:20 [monitor.py:34] torch.compile takes 5.73 s in total
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:21 [gpu_worker.py:375] Available KV cache memory: 20.02 GiB
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:21 [kv_cache_utils.py:1291] GPU KV cache size: 218,704 tokens
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:21 [kv_cache_utils.py:1296] Maximum concurrency for 1,024 tokens per request: 213.58x
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:23 [gpu_model_runner.py:4587] Graph capturing finished in 2 secs, took 0.30 GiB
+[0;36m(EngineCore_DP0 pid=3986616)[0;0m INFO 01-15 06:43:23 [core.py:259] init engine (profile, create kv cache, warmup model) took 10.53 seconds
+INFO 01-15 06:43:24 [llm.py:360] Supported tasks: ['generate']
+Generating...
+Saved predictions to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_5/final_model/dolly_eval/dolly_de.jsonl
+Computing ROUGE...
+--------------------------------------------------
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_5/final_model
+Data: data/dolly_eval/dolly_de.jsonl
+ROUGE-1: 0.1933
+ROUGE-2: 0.0884
+ROUGE-L: 0.1633
+--------------------------------------------------
+Saved eval results to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_5/final_model/dolly_eval/dolly_de_eval_results.json
+ERROR 01-15 06:43:30 [core_client.py:606] Engine core proc EngineCore_DP0 died unexpectedly, shutting down client.
+========================================
+Epoch 6: SFT Training
+Data: data/dolly/dolly_de.jsonl
+========================================
+Resuming from state: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_5/final_state
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-15 06:43:49.457559: world_size=2, micro_batch_size=1, gradient_accumulation_steps=64
+Before initializing optimizer states
+MA 1.35 GB         Max_MA 1.68 GB         CA 1.68 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 55.41 GB, percent = 14.7%
+After initializing optimizer states
+MA 1.35 GB         Max_MA 2.01 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 54.9 GB, percent = 14.5%
+After initializing ZeRO optimizer
+MA 1.35 GB         Max_MA 1.35 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 55.44 GB, percent = 14.7%
+2026-01-15 06:43:51.507459: Resuming from checkpoint: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_5/final_state
+Loading data: data/dolly/dolly_de.jsonl
+2026-01-15 06:43:53.676568: Loaded 13312 samples.
+2026-01-15 06:43:53.678668: Training started at 2026-01-15 06:43:53.678658
+2026-01-15 07:00:19.769388: Training finished. Saving...
+2026-01-15 07:00:33.716299: Saved DeepSpeed checkpoint to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_6/final_state
+2026-01-15 07:00:35.377192: Saved HF model to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_6/final_model
+========================================
+Epoch 6: Evaluation
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_6/final_model
+========================================
+Loading test data from data/dolly_eval/dolly_de.jsonl
+Loading vLLM model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_6/final_model
+INFO 01-15 07:00:46 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'disable_log_stats': True, 'model': 'checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_6/final_model'}
+INFO 01-15 07:00:46 [model.py:514] Resolved architecture: GPT2LMHeadModel
+INFO 01-15 07:00:46 [model.py:1661] Using max model len 1024
+INFO 01-15 07:00:48 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:00:48 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_6/final_model', speculative_config=None, tokenizer='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_6/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=1024, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_6/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:00:50 [parallel_state.py:1203] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://137.68.191.122:33793 backend=nccl
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:00:51 [parallel_state.py:1411] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:00:52 [gpu_model_runner.py:3562] Starting to load model checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_6/final_model...
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:00:53 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:00:53 [default_loader.py:308] Loading weights took 0.52 seconds
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:00:54 [gpu_model_runner.py:3659] Model loading took 0.6611 GiB memory and 0.758967 seconds
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:00:57 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/dc1e7a2ee4/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:00:57 [backends.py:703] Dynamo bytecode transform time: 2.90 s
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:00:58 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:00:59 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 0.89 s
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:00:59 [monitor.py:34] torch.compile takes 3.79 s in total
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:01:00 [gpu_worker.py:375] Available KV cache memory: 20.02 GiB
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:01:01 [kv_cache_utils.py:1291] GPU KV cache size: 218,704 tokens
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:01:01 [kv_cache_utils.py:1296] Maximum concurrency for 1,024 tokens per request: 213.58x
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:01:03 [gpu_model_runner.py:4587] Graph capturing finished in 2 secs, took 0.30 GiB
+[0;36m(EngineCore_DP0 pid=4004143)[0;0m INFO 01-15 07:01:03 [core.py:259] init engine (profile, create kv cache, warmup model) took 8.67 seconds
+INFO 01-15 07:01:03 [llm.py:360] Supported tasks: ['generate']
+Generating...
+Saved predictions to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_6/final_model/dolly_eval/dolly_de.jsonl
+Computing ROUGE...
+--------------------------------------------------
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_6/final_model
+Data: data/dolly_eval/dolly_de.jsonl
+ROUGE-1: 0.1928
+ROUGE-2: 0.0901
+ROUGE-L: 0.1645
+--------------------------------------------------
+Saved eval results to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_6/final_model/dolly_eval/dolly_de_eval_results.json
+ERROR 01-15 07:01:09 [core_client.py:606] Engine core proc EngineCore_DP0 died unexpectedly, shutting down client.
+========================================
+Epoch 7: SFT Training
+Data: data/dolly/dolly_de.jsonl
+========================================
+Resuming from state: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_6/final_state
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-15 07:01:27.051101: world_size=2, micro_batch_size=1, gradient_accumulation_steps=64
+Before initializing optimizer states
+MA 1.35 GB         Max_MA 1.68 GB         CA 1.68 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 59.23 GB, percent = 15.7%
+After initializing optimizer states
+MA 1.35 GB         Max_MA 2.01 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 60.18 GB, percent = 15.9%
+After initializing ZeRO optimizer
+MA 1.35 GB         Max_MA 1.35 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 61.16 GB, percent = 16.2%
+2026-01-15 07:01:28.931445: Resuming from checkpoint: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_6/final_state
+Loading data: data/dolly/dolly_de.jsonl
+2026-01-15 07:01:30.774016: Loaded 13312 samples.
+2026-01-15 07:01:30.775514: Training started at 2026-01-15 07:01:30.775507
+2026-01-15 07:17:55.720472: Training finished. Saving...
+2026-01-15 07:18:13.027778: Saved DeepSpeed checkpoint to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_7/final_state
+2026-01-15 07:18:15.631758: Saved HF model to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_7/final_model
+========================================
+Epoch 7: Evaluation
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_7/final_model
+========================================
+Loading test data from data/dolly_eval/dolly_de.jsonl
+Loading vLLM model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_7/final_model
+INFO 01-15 07:18:27 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'disable_log_stats': True, 'model': 'checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_7/final_model'}
+INFO 01-15 07:18:27 [model.py:514] Resolved architecture: GPT2LMHeadModel
+INFO 01-15 07:18:27 [model.py:1661] Using max model len 1024
+INFO 01-15 07:18:28 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:28 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_7/final_model', speculative_config=None, tokenizer='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_7/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=1024, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_7/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:29 [parallel_state.py:1203] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://137.68.191.122:57155 backend=nccl
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:30 [parallel_state.py:1411] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:30 [gpu_model_runner.py:3562] Starting to load model checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_7/final_model...
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:31 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:32 [default_loader.py:308] Loading weights took 0.53 seconds
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:32 [gpu_model_runner.py:3659] Model loading took 0.6611 GiB memory and 0.793445 seconds
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:36 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/f0cc593dbb/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:36 [backends.py:703] Dynamo bytecode transform time: 2.98 s
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:37 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:37 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 0.88 s
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:37 [monitor.py:34] torch.compile takes 3.86 s in total
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:38 [gpu_worker.py:375] Available KV cache memory: 20.02 GiB
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:39 [kv_cache_utils.py:1291] GPU KV cache size: 218,704 tokens
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:39 [kv_cache_utils.py:1296] Maximum concurrency for 1,024 tokens per request: 213.58x
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:41 [gpu_model_runner.py:4587] Graph capturing finished in 2 secs, took 0.30 GiB
+[0;36m(EngineCore_DP0 pid=4021407)[0;0m INFO 01-15 07:18:41 [core.py:259] init engine (profile, create kv cache, warmup model) took 8.46 seconds
+INFO 01-15 07:18:41 [llm.py:360] Supported tasks: ['generate']
+Generating...
+Saved predictions to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_7/final_model/dolly_eval/dolly_de.jsonl
+Computing ROUGE...
+--------------------------------------------------
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_7/final_model
+Data: data/dolly_eval/dolly_de.jsonl
+ROUGE-1: 0.1878
+ROUGE-2: 0.0887
+ROUGE-L: 0.1593
+--------------------------------------------------
+Saved eval results to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_7/final_model/dolly_eval/dolly_de_eval_results.json
+ERROR 01-15 07:18:47 [core_client.py:606] Engine core proc EngineCore_DP0 died unexpectedly, shutting down client.
+========================================
+Epoch 8: SFT Training
+Data: data/dolly/dolly_de.jsonl
+========================================
+Resuming from state: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_7/final_state
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-15 07:19:05.289962: world_size=2, micro_batch_size=1, gradient_accumulation_steps=64
+Before initializing optimizer states
+MA 1.35 GB         Max_MA 1.68 GB         CA 1.68 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 48.9 GB, percent = 13.0%
+After initializing optimizer states
+MA 1.35 GB         Max_MA 2.01 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 49.29 GB, percent = 13.1%
+After initializing ZeRO optimizer
+MA 1.35 GB         Max_MA 1.35 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 50.27 GB, percent = 13.3%
+2026-01-15 07:19:07.176694: Resuming from checkpoint: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_7/final_state
+Loading data: data/dolly/dolly_de.jsonl
+2026-01-15 07:19:08.985721: Loaded 13312 samples.
+2026-01-15 07:19:08.987526: Training started at 2026-01-15 07:19:08.987518
+2026-01-15 07:35:36.995258: Training finished. Saving...
+2026-01-15 07:35:45.852560: Saved DeepSpeed checkpoint to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_8/final_state
+2026-01-15 07:35:48.066726: Saved HF model to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_8/final_model
+========================================
+Epoch 8: Evaluation
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_8/final_model
+========================================
+Loading test data from data/dolly_eval/dolly_de.jsonl
+Loading vLLM model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_8/final_model
+INFO 01-15 07:36:10 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'disable_log_stats': True, 'model': 'checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_8/final_model'}
+INFO 01-15 07:36:10 [model.py:514] Resolved architecture: GPT2LMHeadModel
+INFO 01-15 07:36:10 [model.py:1661] Using max model len 1024
+INFO 01-15 07:36:11 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:11 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_8/final_model', speculative_config=None, tokenizer='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_8/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=1024, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_8/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:13 [parallel_state.py:1203] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://137.68.191.122:55771 backend=nccl
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:13 [parallel_state.py:1411] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:14 [gpu_model_runner.py:3562] Starting to load model checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_8/final_model...
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:15 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:15 [default_loader.py:308] Loading weights took 0.40 seconds
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:16 [gpu_model_runner.py:3659] Model loading took 0.6611 GiB memory and 0.721359 seconds
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:19 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/e62b1860e4/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:19 [backends.py:703] Dynamo bytecode transform time: 3.02 s
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:21 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:21 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 0.88 s
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:21 [monitor.py:34] torch.compile takes 3.90 s in total
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:22 [gpu_worker.py:375] Available KV cache memory: 20.02 GiB
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:23 [kv_cache_utils.py:1291] GPU KV cache size: 218,704 tokens
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:23 [kv_cache_utils.py:1296] Maximum concurrency for 1,024 tokens per request: 213.58x
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:25 [gpu_model_runner.py:4587] Graph capturing finished in 2 secs, took 0.30 GiB
+[0;36m(EngineCore_DP0 pid=4038675)[0;0m INFO 01-15 07:36:25 [core.py:259] init engine (profile, create kv cache, warmup model) took 8.67 seconds
+INFO 01-15 07:36:25 [llm.py:360] Supported tasks: ['generate']
+Generating...
+Saved predictions to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_8/final_model/dolly_eval/dolly_de.jsonl
+Computing ROUGE...
+--------------------------------------------------
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_8/final_model
+Data: data/dolly_eval/dolly_de.jsonl
+ROUGE-1: 0.1882
+ROUGE-2: 0.0864
+ROUGE-L: 0.1634
+--------------------------------------------------
+Saved eval results to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_8/final_model/dolly_eval/dolly_de_eval_results.json
+ERROR 01-15 07:36:32 [core_client.py:606] Engine core proc EngineCore_DP0 died unexpectedly, shutting down client.
+========================================
+Epoch 9: SFT Training
+Data: data/dolly/dolly_de.jsonl
+========================================
+Resuming from state: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_8/final_state
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /mnt/home2/giung2/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+2026-01-15 07:37:11.401459: world_size=2, micro_batch_size=1, gradient_accumulation_steps=64
+Before initializing optimizer states
+MA 1.35 GB         Max_MA 1.68 GB         CA 1.68 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 45.0 GB, percent = 11.9%
+After initializing optimizer states
+MA 1.35 GB         Max_MA 2.01 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 45.01 GB, percent = 11.9%
+After initializing ZeRO optimizer
+MA 1.35 GB         Max_MA 1.35 GB         CA 2.34 GB         Max_CA 2 GB 
+CPU Virtual Memory:  used = 45.25 GB, percent = 12.0%
+2026-01-15 07:37:13.484095: Resuming from checkpoint: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_8/final_state
+Loading data: data/dolly/dolly_de.jsonl
+2026-01-15 07:37:15.858605: Loaded 13312 samples.
+2026-01-15 07:37:15.860650: Training started at 2026-01-15 07:37:15.860643
+2026-01-15 07:53:42.306893: Training finished. Saving...
+2026-01-15 07:53:55.165234: Saved DeepSpeed checkpoint to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_9/final_state
+2026-01-15 07:53:57.286682: Saved HF model to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_9/final_model
+========================================
+Epoch 9: Evaluation
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_9/final_model
+========================================
+Loading test data from data/dolly_eval/dolly_de.jsonl
+Loading vLLM model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_9/final_model
+INFO 01-15 07:54:07 [utils.py:253] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'disable_log_stats': True, 'model': 'checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_9/final_model'}
+INFO 01-15 07:54:07 [model.py:514] Resolved architecture: GPT2LMHeadModel
+INFO 01-15 07:54:07 [model.py:1661] Using max model len 1024
+INFO 01-15 07:54:08 [scheduler.py:230] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:08 [core.py:93] Initializing a V1 LLM engine (v0.13.0) with config: model='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_9/final_model', speculative_config=None, tokenizer='checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_9/final_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=1024, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False), seed=0, served_model_name=checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_9/final_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:09 [parallel_state.py:1203] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://137.68.191.122:46831 backend=nccl
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:09 [parallel_state.py:1411] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:10 [gpu_model_runner.py:3562] Starting to load model checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_9/final_model...
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:11 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:11 [default_loader.py:308] Loading weights took 0.48 seconds
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:12 [gpu_model_runner.py:3659] Model loading took 0.6611 GiB memory and 0.693595 seconds
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:15 [backends.py:643] Using cache directory: /mnt/home2/giung2/.cache/vllm/torch_compile_cache/46715b1f9e/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:15 [backends.py:703] Dynamo bytecode transform time: 2.70 s
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:16 [backends.py:261] Cache the graph of compile range (1, 8192) for later use
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:17 [backends.py:278] Compiling a graph for compile range (1, 8192) takes 0.87 s
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:17 [monitor.py:34] torch.compile takes 3.56 s in total
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:18 [gpu_worker.py:375] Available KV cache memory: 20.02 GiB
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:18 [kv_cache_utils.py:1291] GPU KV cache size: 218,704 tokens
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:18 [kv_cache_utils.py:1296] Maximum concurrency for 1,024 tokens per request: 213.58x
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:20 [gpu_model_runner.py:4587] Graph capturing finished in 2 secs, took 0.30 GiB
+[0;36m(EngineCore_DP0 pid=4055138)[0;0m INFO 01-15 07:54:20 [core.py:259] init engine (profile, create kv cache, warmup model) took 8.20 seconds
+INFO 01-15 07:54:21 [llm.py:360] Supported tasks: ['generate']
+Generating...
+Saved predictions to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_9/final_model/dolly_eval/dolly_de.jsonl
+Computing ROUGE...
+--------------------------------------------------
+Model: checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_9/final_model
+Data: data/dolly_eval/dolly_de.jsonl
+ROUGE-1: 0.1980
+ROUGE-2: 0.0914
+ROUGE-L: 0.1701
+--------------------------------------------------
+Saved eval results to checkpoints/dolly/gpt2-medium/dolly_de/SFT/epoch_9/final_model/dolly_eval/dolly_de_eval_results.json
+ERROR 01-15 07:54:26 [core_client.py:606] Engine core proc EngineCore_DP0 died unexpectedly, shutting down client.
+SFT Loop Complete.
