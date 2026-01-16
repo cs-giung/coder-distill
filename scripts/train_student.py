@@ -36,6 +36,7 @@ def get_args():
     parser.add_argument("--output_dir", type=str, required=True)
     parser.add_argument("--lr", type=float, default=1e-05)
     parser.add_argument("--batch_size", type=int, default=128)
+    parser.add_argument("--micro_batch_size", type=int, default=1)
     parser.add_argument("--max_length", type=int, default=2048)
     parser.add_argument("--fwd_kl_student", type=float, default=0.0)
     parser.add_argument("--rev_kl_student", type=float, default=0.0)
@@ -139,8 +140,8 @@ def main():
     need_backward_loss_t = args.fwd_kl_teacher > 0 or args.rev_kl_teacher > 0
     assert need_backward_loss_s or need_backward_loss_t
 
-    micro_batch_size = 1
-    gradient_accumulation_steps = args.batch_size // (world_size * micro_batch_size)
+    micro_batch_size = args.micro_batch_size
+    gradient_accumulation_steps = max(1, args.batch_size // (world_size * micro_batch_size))
     if need_backward_loss_s and need_backward_loss_t:
         gradient_accumulation_steps *= 2
 
@@ -326,13 +327,13 @@ def main():
                 prompt_only_texts.append(text)
 
         prompt_inputs = tokenizer(
-            prompt_only_texts, return_tensors="pt", padding=False, truncation=True
+            prompt_only_texts, return_tensors=None, padding=False, truncation=True
         )
 
         loss_mask = torch.zeros_like(inputs.input_ids, dtype=torch.float32)
 
         for b in range(inputs.input_ids.shape[0]):
-            p_len = len(prompt_inputs.input_ids[b])
+            p_len = len(prompt_inputs["input_ids"][b])
             non_pad_len = torch.sum(inputs.attention_mask[b]).item()
             pad_len = inputs.input_ids.shape[1] - non_pad_len
             start_response = pad_len + p_len

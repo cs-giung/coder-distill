@@ -33,6 +33,7 @@ def get_args():
     parser.add_argument("--output_dir", type=str, required=True)
     parser.add_argument("--lr", type=float, default=1e-05)
     parser.add_argument("--batch_size", type=int, default=128)
+    parser.add_argument("--micro_batch_size", type=int, default=1)
     parser.add_argument("--max_length", type=int, default=2048)
     parser.add_argument("--resume_from_checkpoint", type=str, default=None)
     parser.add_argument("--use_lora", action="store_true")
@@ -128,8 +129,8 @@ def main():
     rank = dist.get_rank()
 
     # Calculate Gradient Accumulation Steps
-    micro_batch_size = 1
-    gradient_accumulation_steps = args.batch_size // (world_size * micro_batch_size)
+    micro_batch_size = args.micro_batch_size
+    gradient_accumulation_steps = max(1, args.batch_size // (world_size * micro_batch_size))
 
     if rank == 0:
         print_fn(
@@ -304,7 +305,7 @@ def main():
                 prompt_only_texts.append(text)
 
         prompt_inputs = tokenizer(
-            prompt_only_texts, return_tensors="pt", padding=False, truncation=True
+            prompt_only_texts, return_tensors=None, padding=False, truncation=True
         )
 
         labels = inputs.input_ids.clone()
@@ -322,7 +323,7 @@ def main():
             # Note: prompt_inputs might not align perfectly if left-padding vs no-padding changes tokenization slightly
             # (usually fine for sentencepiece, but we need to be careful).
             # A robust way is to measure length of prompt tokens.
-            p_len = len(prompt_inputs.input_ids[b])
+            p_len = len(prompt_inputs["input_ids"][b])
 
             # Since inputs are left-padded, the actual content starts after the padding.
             non_pad_len = torch.sum(inputs.attention_mask[b]).item()
