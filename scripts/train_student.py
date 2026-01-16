@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import socket
 from datetime import datetime
 
 import deepspeed
@@ -113,7 +114,22 @@ def main():
     if args.local_rank != -1:
         torch.cuda.set_device(args.local_rank)
 
-    deepspeed.init_distributed()
+    # Fallback for single-process execution
+    if "RANK" not in os.environ:
+        os.environ["RANK"] = "0"
+    if "WORLD_SIZE" not in os.environ:
+        os.environ["WORLD_SIZE"] = "1"
+    if "MASTER_ADDR" not in os.environ:
+        os.environ["MASTER_ADDR"] = "localhost"
+    if "MASTER_PORT" not in os.environ:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.bind(("", 0))
+            port = s.getsockname()[1]
+        os.environ["MASTER_PORT"] = str(port)
+    if "LOCAL_RANK" not in os.environ:
+        os.environ["LOCAL_RANK"] = "0"
+
+    deepspeed.init_distributed(dist_backend="nccl", auto_mpi_discovery=False)
 
     world_size = dist.get_world_size()
     rank = dist.get_rank()
