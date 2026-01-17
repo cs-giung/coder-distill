@@ -1,10 +1,10 @@
 #!/bin/bash
-export CUDA_VISIBLE_DEVICES=0,1,2,3
-NUM_PROCESSES=4
+export CUDA_VISIBLE_DEVICES=7
+NUM_PROCESSES=1
 
 # Models
-TEACHER_MODEL="checkpoints/dolly/gpt2-large/dolly_en/SFT/epoch_9/final_model"
-STUDENT_MODEL="checkpoints/dolly/gpt2/dolly_en/SFT/epoch_9/final_model"
+TEACHER_MODEL="checkpoints/dolly/gpt2-xl/dolly_en/SFT/epoch_6/final_model"
+STUDENT_MODEL="checkpoints/dolly/gpt2-large/dolly_en/SFT/epoch_9/final_model"
 
 # Datasets
 INITIAL_TEACHER_JSONL="data/dolly/dolly_en/42/$TEACHER_MODEL.jsonl"
@@ -12,7 +12,7 @@ INITIAL_STUDENT_JSONL="data/dolly/dolly_en/42/$STUDENT_MODEL.jsonl"
 
 # Parameters
 EPOCHS=10
-OUTPUT_ROOT="checkpoints/dolly/gpt2/dolly_en/gpt2-large_KD_RKL"
+OUTPUT_ROOT="checkpoints/dolly/gpt2-large/dolly_en/gpt2-xl_KD_FKL"
 
 set -e
 
@@ -42,8 +42,8 @@ do
         "--output_dir" "$EPOCH_DIR"
         "--fwd_kl_student" "0.0"
         "--rev_kl_student" "0.0"
-        "--fwd_kl_teacher" "0.0"
-        "--rev_kl_teacher" "1.0"
+        "--fwd_kl_teacher" "1.0"
+        "--rev_kl_teacher" "0.0"
         "--max_length" "1024"
         "--use_alpaca_prompt"
         "--micro_batch_size" "8"
