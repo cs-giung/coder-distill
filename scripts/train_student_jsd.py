@@ -1,5 +1,6 @@
 import argparse
 import json
+import math
 import os
 import socket
 from datetime import datetime
@@ -38,10 +39,8 @@ def get_args():
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--micro_batch_size", type=int, default=1)
     parser.add_argument("--max_length", type=int, default=2048)
-    parser.add_argument("--fwd_kl_student", type=float, default=0.0)
-    parser.add_argument("--rev_kl_student", type=float, default=0.0)
-    parser.add_argument("--fwd_kl_teacher", type=float, default=1.0)
-    parser.add_argument("--rev_kl_teacher", type=float, default=0.0)
+    parser.add_argument("--jsd_beta", type=float, default=0.9)
+    parser.add_argument("--jsd_lambda", type=float, default=1.0)
     parser.add_argument("--resume_from_checkpoint", type=str, default=None)
     parser.add_argument("--use_lora", action="store_true")
     parser.add_argument("--use_alpaca_prompt", action="store_true")
@@ -136,8 +135,8 @@ def main():
     rank = dist.get_rank()
 
     # Calculate Gradient Accumulation Steps
-    need_backward_loss_s = args.fwd_kl_student > 0 or args.rev_kl_student > 0
-    need_backward_loss_t = args.fwd_kl_teacher > 0 or args.rev_kl_teacher > 0
+    need_backward_loss_s = args.jsd_lambda > 0
+    need_backward_loss_t = args.jsd_lambda < 1
     assert need_backward_loss_s or need_backward_loss_t
 
     micro_batch_size = args.micro_batch_size
@@ -371,17 +370,28 @@ def main():
             student_probs * (student_log_probs - teacher_log_probs), dim=-1
         )
 
-        fwd_coeff = 0.0
-        rev_coeff = 0.0
-
         if source_label == "student":
-            fwd_coeff = args.fwd_kl_student
-            rev_coeff = args.rev_kl_student
+            jsd_coeff = args.jsd_lambda
         elif source_label == "teacher":
-            fwd_coeff = args.fwd_kl_teacher
-            rev_coeff = args.rev_kl_teacher
+            jsd_coeff = 1 - args.jsd_lambda
 
-        total_loss_map = (fwd_kl_pt * fwd_coeff) + (rev_kl_pt * rev_coeff)
+        mixed_log_probs = torch.logsumexp(
+            torch.stack(
+                [
+                    math.log(args.jsd_beta) + teacher_log_probs,
+                    math.log(1 - args.jsd_beta) + student_log_probs,
+                ],
+                dim=0,
+            ),
+            dim=0,
+        )
+        total_loss_map = args.jsd_beta * torch.sum(
+            teacher_probs * (teacher_log_probs - mixed_log_probs), dim=-1
+        ) + (1 - args.jsd_beta) * torch.sum(
+            student_probs * (student_log_probs - mixed_log_probs), dim=-1
+        )
+
+        total_loss_map = total_loss_map * jsd_coeff
         masked_loss = total_loss_map * loss_mask_shifted
         num_valid_tokens = torch.sum(loss_mask_shifted)
         loss = torch.sum(masked_loss) / (num_valid_tokens + 1e-9)
