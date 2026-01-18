@@ -106,6 +106,12 @@ def load_jsonl(path, limit=None, rank=0):
 def main():
     args = get_args()
 
+    if not (0.0 < args.jsd_beta < 1.0):
+        raise ValueError(
+            f"jsd_beta must be strictly between 0.0 and 1.0 (got {args.jsd_beta}). "
+            "For pure FKL (beta -> 0) or RKL (beta -> 1), use scripts/train_student.py."
+        )
+
     # Initialize Distributed
     # Get local rank and set device to prevent memory imbalance (context on GPU 0)
     if args.local_rank == -1:
@@ -375,16 +381,21 @@ def main():
         elif source_label == "teacher":
             jsd_coeff = 1 - args.jsd_lambda
 
-        mixed_log_probs = torch.logsumexp(
-            torch.stack(
-                [
-                    math.log(args.jsd_beta) + teacher_log_probs,
-                    math.log(1 - args.jsd_beta) + student_log_probs,
-                ],
+        if args.jsd_beta == 0.0:
+            mixed_log_probs = student_log_probs
+        elif args.jsd_beta == 1.0:
+            mixed_log_probs = teacher_log_probs
+        else:
+            mixed_log_probs = torch.logsumexp(
+                torch.stack(
+                    [
+                        math.log(args.jsd_beta) + teacher_log_probs,
+                        math.log(1 - args.jsd_beta) + student_log_probs,
+                    ],
+                    dim=0,
+                ),
                 dim=0,
-            ),
-            dim=0,
-        )
+            )
         total_loss_map = args.jsd_beta * torch.sum(
             teacher_probs * (teacher_log_probs - mixed_log_probs), dim=-1
         ) + (1 - args.jsd_beta) * torch.sum(
