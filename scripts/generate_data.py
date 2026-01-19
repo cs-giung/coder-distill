@@ -4,7 +4,6 @@ import json
 import os
 
 import vllm
-from datasets import load_dataset
 from transformers import AutoTokenizer
 from vllm.lora.request import LoRARequest
 
@@ -89,14 +88,14 @@ def main():
                 user_content += f"\n\n### Input:\n{inp}"
             messages = [
                 {"role": "system", "content": sys_msg},
-                {"role": "user", "content": user_content}
+                {"role": "user", "content": user_content},
             ]
         else:
             user_content = inst
             if inp:
                 user_content += f"\n\n{inp}"
             messages = [{"role": "user", "content": user_content}]
-            
+
         text = tokenizer.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True
         )
