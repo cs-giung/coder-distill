@@ -31,7 +31,13 @@ def main():
         print("ROUGE-L: \\NA")
         return False
 
-    references = [item["response"] for item in test_data]
+    references = []
+    for item in test_data:
+        response = item["response"]
+        if isinstance(response, list):
+            references.append(response)
+        else:
+            references.append([response])
     generated_texts = []
 
     # Check if output_file exists and try to load predictions
@@ -126,11 +132,10 @@ def main():
     google_bleu = evaluate.load("google_bleu")
 
     # BLEU and GLEU expect list of lists for references
-    refs_list = [[r] for r in references]
-
-    bleu_results = bleu.compute(predictions=generated_texts, references=refs_list)
+    # references is already normalized to list of lists
+    bleu_results = bleu.compute(predictions=generated_texts, references=references)
     google_bleu_results = google_bleu.compute(
-        predictions=generated_texts, references=refs_list
+        predictions=generated_texts, references=references
     )
 
     results["bleu"] = bleu_results["bleu"]
